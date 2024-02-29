@@ -1,4 +1,5 @@
 const express = require("express");
+const boardRouter = require("./routes/board");
 const app = express();
 const PORT = 8080;
 const URL = "localhost";
@@ -10,14 +11,7 @@ app.set("views", "./views");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.render("index");
-});
-
-app.get("*", (req, res) => {
-    res.render("404");
-});
-
+app.use("/board", boardRouter);
 sequelize
     .sync({ force: false })
     .then(() => {
