@@ -1,5 +1,5 @@
 {
-  "semi": true,
-  "tablWidth": 4,
-  "printWidth": 100
+    "semi": true,
+    "tabWidth": 4,
+    "printWidth": 100
 }
