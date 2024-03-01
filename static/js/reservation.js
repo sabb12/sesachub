@@ -42,10 +42,10 @@ function renderCalendar() {
             currentMonth === new Date().getMonth() &&
             currentYear === new Date().getFullYear()
         ) {
-            days += `<div class="day today">${i}</div>`;
+            days += `<div class="day cur today">${i}</div>`;
         } else {
             // else "today" 클래스 추가 안함
-            days += `<div class="day">${i}</div>`;
+            days += `<div class="day cur">${i}</div>`;
         }
     }
 
@@ -85,7 +85,7 @@ function goToday() {
 }
 
 function selectDay(selectYear, selectMonth) {
-    const allDays = document.querySelectorAll(".days .day");
+    const allDays = document.querySelectorAll(".days .day.cur");
     const yearMonth = selectYear + "-" + (selectMonth + 1);
     allDays.forEach(function (day) {
         day.addEventListener("click", function () {
