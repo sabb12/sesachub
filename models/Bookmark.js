@@ -8,6 +8,14 @@ const bookMarkModel = (sequelize, DataTypes) => {
                 allowNull: false,
                 primaryKey: true,
             },
+            b_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            u_id: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            },
         },
         {
             freezeTableName: true,

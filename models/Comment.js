@@ -8,6 +8,14 @@ const commentModel = (sequelize, DataTypes) => {
                 allowNull: false,
                 primaryKey: true,
             },
+            b_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            u_id: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            },
             content: {
                 type: DataTypes.STRING(255),
                 allowNull: false,
