@@ -56,3 +56,20 @@ exports.signin = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const { u_id, pw } = req.body;
+        const isUser = await user.findOne({ where: { u_id } });
+        if (isUser && comparePw(pw, isUser.pw)) {
+            const isDelete = await user.destroy({ where: { u_id } }).then(() => {
+                res.send("회원 탈퇴");
+            });
+        } else {
+            res.send("아이디와 비밀번호를 다시 입력해주세요.");
+        }
+    } catch (error) {
+        console.log("deleteUser controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
