@@ -1,4 +1,4 @@
-const { board } = require("../models");
+const { board, boardLike } = require("../models");
 
 exports.boardList = async (req, res) => {
     const page = req.query.page || 1; // 요청된 페이지 번호, 기본값은 1
@@ -11,7 +11,10 @@ exports.boardList = async (req, res) => {
             limit: pageSize,
             offset: offset,
         });
-
+        for (let board of boardList) {
+            const likeCount = await boardLike.count({ where: { b_id: board.b_id } });
+            board.setDataValue("like_count", likeCount); // 보드 객체에 좋아요 수를 추가
+        }
         res.render("board/main", { boardList: boardList, totalPages: totalPages });
     } catch (error) {
         console.error(error);

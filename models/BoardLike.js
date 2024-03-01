@@ -8,6 +8,15 @@ const boardLikeModel = (sequelize, DataTypes) => {
                 allowNull: false,
                 primaryKey: true,
             },
+            u_id: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+                unique: "unique",
+            },
+            b_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             freezeTableName: true,

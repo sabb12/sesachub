@@ -8,6 +8,10 @@ const boardModel = (sequelize, DataTypes) => {
                 allowNull: false,
                 primaryKey: true,
             },
+            u_id: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            },
             title: {
                 type: DataTypes.STRING(30),
                 allowNull: false,

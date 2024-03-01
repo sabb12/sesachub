@@ -8,6 +8,10 @@ const reservationModel = (sequelize, DataTypes) => {
                 allowNull: false,
                 primaryKey: true,
             },
+            u_id: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            },
             day: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
