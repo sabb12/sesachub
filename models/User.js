@@ -8,7 +8,7 @@ const UserModel = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             pw: {
-                type: DataTypes.STRING(30),
+                type: DataTypes.STRING(255),
                 allowNull: false,
             },
             name: {
