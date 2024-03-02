@@ -49,10 +49,32 @@ exports.signin = async (req, res) => {
     try {
         const { u_id, pw } = req.body;
         const isUser = await user.findOne({ where: { u_id } });
-        if (isUser && comparePw(pw, isUser.pw)) res.send("로그인 성공");
-        else res.send("로그인 실패");
+        // 회원 정보 없는 경우
+        if (!isUser) res.send({ success: false });
+        // 회원이면 비밀번호 일치 여부 확인
+        else if (isUser && comparePw(pw, isUser.pw)) {
+            // 세션 생성
+            req.session.u_id = u_id;
+            res.send({ success: true });
+        } else res.send({ success: false });
     } catch (error) {
         console.log("signin controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
+exports.logout = async (req, res) => {
+    try {
+        if (req.session && req.session.u_id) {
+            req.session.destroy(() => {
+                res.send({ msg: "로그아웃 되었습니다." });
+            });
+        } else {
+            // 세션 만료된 회원
+            res.send({ msg: "이미 세션이 만료되었습니다." });
+        }
+    } catch (error) {
+        console.log("logout controller err :: ", error);
         res.status(500).send("server error!");
     }
 };
