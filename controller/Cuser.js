@@ -6,6 +6,10 @@ const saltRounds = 10;
 function hashPw(pw) {
     return bcrypt.hashSync(pw, saltRounds);
 }
+// 로그인 >> 해시값(hashPw) 일치 확인
+function comparePw(inputPw, hashedPw) {
+    return bcrypt.compareSync(inputPw, hashedPw);
+}
 
 exports.main = (req, res) => {
     res.render("user/signin");
@@ -37,6 +41,18 @@ exports.signup = async (req, res) => {
         }
     } catch (error) {
         console.log("signup controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
+exports.signin = async (req, res) => {
+    try {
+        const { u_id, pw } = req.body;
+        const isUser = await user.findOne({ where: { u_id } });
+        if (isUser && comparePw(pw, isUser.pw)) res.send("로그인 성공");
+        else res.send("로그인 실패");
+    } catch (error) {
+        console.log("signin controller err :: ", error);
         res.status(500).send("server error!");
     }
 };
