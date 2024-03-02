@@ -11,7 +11,6 @@ const boardLikeModel = (sequelize, DataTypes) => {
             u_id: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
-                unique: "unique",
             },
             b_id: {
                 type: DataTypes.INTEGER,
