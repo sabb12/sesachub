@@ -1,0 +1,331 @@
+html {
+    height: 100%;
+}
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.loginInnerWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 41px;
+}
+.tabContainer .tabPanel {
+    display: none;
+}
+
+.logReBtnContainer {
+    width: 391px;
+    display: flex;
+    justify-content: center;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.logReButton {
+    border: 0.1px solid #dcdcdc;
+    border-bottom: none;
+    background: none;
+    outline: none;
+    width: 50%;
+    height: 40px;
+    cursor: pointer;
+}
+
+.buttonLog {
+    border-right: none;
+}
+
+.loginInnerWrapper .logReBtnContainer button:hover {
+    background-color: #dcdcdc;
+}
+
+.loginContainer,
+.registerContainer {
+    border: 1px solid #dcdcdc;
+    display: grid;
+    grid-auto-flow: row;
+    align-items: center;
+    width: 389px;
+    height: 480px;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    font-size: 33px;
+    font-weight: bold;
+}
+
+.inputandButton {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.inputWrapper {
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    /* height: 99px; */
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.inputContainer {
+    border: 1px solid #dcdcdc;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    width: 312px;
+    height: 48px;
+}
+
+.registerInputContainer {
+    border: 1px solid #dcdcdc;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    width: 312px;
+    height: 35px;
+}
+
+.emailInput {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.passwordInput {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.registerImage {
+    height: 70px;
+}
+
+.registerTextArea {
+    height: 75px;
+}
+
+.input {
+    border: none;
+    width: 237px;
+    height: 20px;
+}
+.input::placeholder {
+    color: #c0c0c0;
+}
+
+.input:focus {
+    outline-style: none;
+    box-shadow: none;
+}
+
+.button {
+    width: 313px;
+    height: 48px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #00c471;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.options {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    padding-top: 10px;
+    gap: 10px;
+    color: #c0c0c0;
+    padding-top: 13px;
+    padding-bottom: 30px;
+}
+
+.options,
+.option {
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.registerOption {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 26px;
+}
+
+.loginOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.hr {
+    border: 1px solid #f1f3f5;
+    width: 100px;
+    height: 0px;
+}
+
+.loginTitle {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    color: #c0c0c0;
+    font-size: 11px;
+    width: 70px;
+}
+
+/**/
+.circleContainer {
+    position: relative;
+    height: 23px;
+    width: 23px;
+}
+
+/*passwork icon*/
+.circle {
+    width: 6px;
+    height: 6px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 50%;
+    transform: translate(7px, 4px);
+}
+
+.halfCircle {
+    width: 12px;
+    height: 3px;
+    border: 1.5px solid #c0c0c0;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    position: relative;
+    border-bottom: none;
+    transform: translate(4px, 5px);
+}
+
+/*lock icon*/
+.halfUCircle {
+    width: 3px;
+    height: 5px;
+    border: 1.5px solid #c0c0c0;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    position: relative;
+    border-bottom: none;
+    transform: translate(8.5px, 3px);
+}
+
+.lockCircle {
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 50%;
+    transform: translate(5px, 2px);
+}
+
+.dot {
+    width: 2px;
+    height: 2px;
+    background: #c0c0c0;
+    border-radius: 50%;
+    /* position: absolute; */
+    transform: translate(10px, -7.4px);
+}
+
+.verticalLine {
+    width: 1px;
+    height: 4px;
+    /* position: absolute; */
+    background-color: #c0c0c0;
+    transform: translate(10.4px, -8px);
+}
+
+.squareContainer {
+    position: relative;
+    height: 23px;
+    width: 23px;
+    transform: translate(2px, -1px);
+}
+
+.squareShape {
+    width: 13px;
+    height: 10px;
+    border: 1.5px solid #c0c0c0;
+    transform: translate(2px, 6px);
+}
+
+.squareLeftLine {
+    width: 1.1px;
+    height: 9px;
+    background-color: #c0c0c0;
+    transform: translate(5px, -7.5px) rotate(125deg);
+}
+.squareRightLine {
+    width: 1.1px;
+    height: 8px;
+    background-color: #c0c0c0;
+    transform: translate(12px, -15.5px) rotate(55deg);
+}
+
+.phoneSquareContainer {
+    position: relative;
+    height: 23px;
+    width: 23px;
+    transform: translate(2.7px, -4px);
+}
+
+.phoneSquareShape {
+    width: 11px;
+    height: 15px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 3px;
+    transform: translate(2px, 6px);
+}
+
+.phoneTopLine {
+    width: 3px;
+    height: 6px;
+    background-color: #c0c0c0;
+    border-radius: 1px;
+    transform: translate(6.8px, -12px) rotate(90deg);
+}
+
+.phoneBottomLine {
+    width: 1px;
+    height: 5px;
+    background-color: #c0c0c0;
+    border-radius: 1px;
+    transform: translate(7.5px, -5px) rotate(90deg);
+}
+
+.sigintype {
+    cursor: pointer;
+}
+
+img {
+    width: 40px;
+    height: 40px;
+}
