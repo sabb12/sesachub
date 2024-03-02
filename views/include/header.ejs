@@ -1,25 +1,30 @@
 <!doctype html>
 <html lang="en">
     <style>
+        
         .wrapper {
             display: flex;
             flex-direction: column;
         }
-
+        
         .headerContainer {
-            border-bottom: 1px solid gray;
-            padding-bottom: 5px;
+           background-color: #E7FFE8;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .menuList {
             display: flex;
-            gap: 15px;
+            margin-left: 15rem;
+            gap: 30px;
         }
 
         .aTag {
             display: flex;
             align-items: end;
-            gap: 12px;
+            gap: 15px;
+            margin-bottom: 5px;
         }
 
         .aTag,
@@ -29,93 +34,48 @@
             font-weight: bold;
         }
 
-        .bodyContainer {
+        .logout {
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            align-items: end;
+            margin-right: 15rem;
+            
         }
 
-        .sidebarContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 1px solid black;
-            border-radius: 5px;
-            width: 100px;
-            height: 200px;
-        }
-
-        .topContainer {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .tabContainer {
-            width: 100%;
-            height: 350px;
-        }
-
-        .tabContainer .buttonContainer {
-            height: 15%;
-        }
-
-        .tabContainer .buttonContainer button {
-            width: 25%;
-            height: 100%;
-            float: left;
+        .logout button {
             border: none;
-            outline: none;
+            background-color: #6FC274;
+            color: white;
+            border-radius: 5px;
+            font-weight: 700;
+            padding: 8px;
             cursor: pointer;
-            padding: 10px;
-            background-color: #eee;
         }
 
-        .tabContainer .buttonContainer button:hover {
-            background-color: #d7d4d4;
-        }
 
-        .tabContainer .tabPanel {
-            border: 1px solid red;
-            height: 85%;
-            background-color: gray;
-            color: black;
-            box-sizing: border-box;
-            display: none;
-        }
-
-        .checkboxAll {
-            display: flex;
-        }
-
-        .allUserTable,
-        .standbyUserTable {
-            display: flex;
-            border: 1px solid black;
-            background-color: lightgray;
-            text-align: center;
-            justify-content: center;
-            gap: 50px;
-        }
     </style>
 
     <body>
         <div class=".wrapper">
             <div class="headerContainer">
                 <div class="menuList">
-                    <a href="/user">
-                        <img
-                        src="/static/images/logo&title.png"
-                        alt="sesachub image"
-                        style="width: 80px; height: 80px"
-                        />
-                    </a>
-                    <div class="aTag">
-                        <a href="/reservation">예약하기</a>
-                        <a href="/board">커뮤니티</a>
-                    </div>
+                        <a href="/user">
+                            <img
+                            src="/static/images/logo&title.png"
+                            alt="sesachub image"
+                            style="width: 80px; height: 80px"
+                            />
+                        </a>
+                        <div class="aTag">
+                            <a href="/reservation">예약하기</a>
+                            <a href="/board">커뮤니티</a>
+                        </div>
+                </div>
+                <div class="logout">
+                    <%if(session && session.u_id) {%>
+                    <button type="button" onclick="logout()">로그아웃</button>
+                    <%}%>
                 </div>
             </div>
+            <script src="/static/js/logout.js"></script>
     </body>
 </html>

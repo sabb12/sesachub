@@ -13,7 +13,11 @@ router.post("/signup", controller.signup);
 // /user/signin
 router.post("/signin", controller.signin);
 
+// /user/logout
+router.post("/logout", controller.logout);
+
 /* Delete */
+
 // /user
 router.delete("/", controller.deleteUser);
 
