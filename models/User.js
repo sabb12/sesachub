@@ -18,7 +18,6 @@ const UserModel = (sequelize, DataTypes) => {
             nk_name: {
                 type: DataTypes.STRING(30),
                 allowNull: true,
-                defaultValue: "student",
             },
             profile_img: {
                 type: DataTypes.STRING(255),
@@ -38,8 +37,7 @@ const UserModel = (sequelize, DataTypes) => {
             },
             permission: {
                 type: DataTypes.ENUM("user", "student", "admin"),
-                allowNull: false,
-                defaultValue: "user",
+                allowNull: true,
             },
         },
         {
