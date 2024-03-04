@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<%- include('../include/include.ejs',{title:"커뮤니티"}) %>
+    <link rel="stylesheet" href="/static/css/board.css">
+
+    <body>
+        <%- include('../include/header.ejs') %>
+            <div class="container">
+                <div class="sideLeft">ㅇㅇ</div>
+                <div class="center">
+                    <header>
+                        <div class="title">커뮤니티</div>
+
+                        <div class="sortPost">
+                            <div class="sortCategory">
+                                <div class="showAllCategory"><a href=""><a href="/board">전체글</a></div>
+                                <div class="showFreeCategory"><a href="/board?category=study">자유</a></div>
+                                <div class="showStudyCategory"><a href="/board?category=employ">공부 팁</a></div>
+                                <div class="showEmployCategory"><a href="/board?category=qualification">자격증 & 어학</a>
+                                </div>
+                            </div>
+                            <select class="sortList" onchange="sort()">
+                                <option value="latestDate">최근 등록 순</option>
+                                <option value="like">좋아요 순</option>
+                            </select>
+
+                        </div>
+
+                    </header>
+                    <article>
+                        <div class="boardHeader">
+                            <div class="postNum">번호</div>
+                            <div class="postTitle">제목</div>
+                            <div class="postWriter">작성자</div>
+                            <div class="postCreatedAt">작성일</div>
+                            <div class="postLike">좋아요</div>
+                        </div>
+                        <div class="boardList">
+                            <% for (let i of boardList) {%>
+                                <div class="postInfo">
+                                    <div class="postNum">
+                                        <%=i.b_id%>
+                                    </div>
+                                    <a href="/board?b_id=<%=i.b_id%>" class="postTitle">
+                                        <%=i.title%>
+                                    </a>
+                                    <div class="postWriter">
+                                        <%=i.u_id%>
+                                    </div>
+                                    <div class="postCreatedAt">
+                                        <%= i.createdAt.toLocaleString('ko-KR', { year: '2-digit' , month: '2-digit' ,
+                                            day: '2-digit' }) %>
+                                    </div>
+                                    <div class="postLike">
+                                        <%=i.like_count%>
+                                    </div>
+                                </div>
+                                <%}%>
+                        </div>
+                        <div class="boardFooter">
+                            <select name="" id=""></select>
+                            <input type="text" class="searchBar" placeholder="검색어를 입력해주세요" />
+                            <button class="btn searchBtn" onclick="searchPost()">검색</button>
+                            <button class="btn writePost" onclick="location.href='/board/board'">글 작성</button>
+                            <div class="boardPage">
+                                <% for (i=1; i <=totalPages; i++) { %>
+                                    <div class="pageNumber"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                            <%= i %>
+                                        </a></div>
+                                    <% } %>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="sideRight">ㅇㅇ</div>
+            </div>
+            <script>
+                const sortList = document.querySelector('.sortList');
+
+                function sort() {
+                    let selectedValue = sortList.value;
+                    if (selectedValue === "latestDate") {
+                        location.href = `/board?category=<%= category%>&sort=latestDate`
+                    } else if (selectedValue === "like") {
+                        location.href = `/board?category=<%= category%>&sort=like`
+                    }
+                }
+
+                function searchPost() {
+                    const keyword = document.querySelector('.searchBar').value;
+                }
+
+            </script>
+    </body>
+
+</html>
