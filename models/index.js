@@ -70,12 +70,15 @@ commentModel.belongsTo(boardModel, {
     foreignKey: "b_id",
 });
 userModel.hasMany(commentModel, {
-    foreignKey: "u_id",
+    foreignKey: "nk_name",
 });
 commentModel.belongsTo(userModel, {
-    foreignKey: "u_id",
+    foreignKey: "nk_name",
 });
-
+commentModel.hasMany(commentModel, {
+    foreignKey: 'parent_id', // 부모 댓글 id가 저장된 컬럼
+    as: 'replies', // 대댓글 모델의 별칭
+});
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.user = userModel;
