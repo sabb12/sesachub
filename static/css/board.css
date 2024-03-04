@@ -1,0 +1,100 @@
+body {
+    margin: 0 auto;
+}
+
+.btn {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+}
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.container > * {
+    padding: 20px;
+}
+
+.container .sideLeft,
+.container .sideRight {
+    width: 200px;
+}
+
+.container .center {
+    width: 1000px;
+}
+
+.container .center .title {
+    font-weight: bold;
+    font-size: 40px;
+    padding: 20px;
+}
+
+.container .center header .sortPost {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .center header .sortPost .sortCategory {
+    display: flex;
+}
+
+.container .center header .sortPost .sortCategory > * {
+    padding: 10px;
+}
+
+.container .center header .sortPost .sortCategory > *:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+/* .container .center header .sortPost .sortLike {
+} */
+.boardFooter {
+    text-align: center;
+}
+.writePost {
+    float: right;
+}
+
+.container .center article .boardHeader {
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+
+.boardList > a {
+    text-decoration: none;
+    color: black;
+    font-weight: normal;
+}
+.container .center article .boardList .postInfo {
+    border-bottom: 1px solid lightgray;
+    padding: 5px;
+}
+
+.container .center article .boardHeader {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    /* background-color: */
+}
+
+* > .postNum {
+    width: 10%;
+}
+
+.container .center article .boardList .postInfo {
+    display: flex;
+    justify-content: space-between;
+    /* background-color: */
+}
+
+.container .center .boardFooter .boardPage {
+    display: flex;
+    justify-content: center;
+}
+
+.boardPage > * {
+    padding: 10px;
+}
