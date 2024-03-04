@@ -12,7 +12,7 @@ const commentModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            u_id: {
+            nk_name: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },

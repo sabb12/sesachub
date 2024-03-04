@@ -1,12 +1,12 @@
 const { board, boardLike, comment } = require("../models");
 const sequelize = require("sequelize");
 exports.boardList = async (req, res) => {
-    console.log('진입')
-    console.log(req.query)
+    console.log("진입");
+    console.log(req.query);
     const page = req.query.page || 1; // 요청된 페이지 번호, 기본값은 1
     const category = req.query.category;
     const like = req.query.like;
-    console.log(like,category)
+    console.log(like, category);
     const pageSize = 2; // 한 페이지에 표시할 항목의 수
     try {
         const totalCount = await board.count(); // 전체 데이터의 수
@@ -101,29 +101,38 @@ exports.board = async (req, res) => {
             },
             include: [
                 {
-                    model: boardLike, //모델연결
+                    model: boardLike,
                     attributes: [],
                 },
                 {
                     model: comment,
-                    attributes: ["b_id", "u_id", "content"], //코멘트 조인후 값 가져오기
+                    attributes: ["c_id", "nk_name", "content", "parent_id", "createdAt"], // 댓글 가져오기
+                    include: [
+                        {
+                            model: comment, // 대댓글 모델 include
+                            as: "replies", // 대댓글 모델의 별칭 설정
+                            attributes: ["parent_id", "nk_name", "content", "createdAt"], // 대댓글의 속성 선택
+                        },
+                    ],
                 },
-                
+            ],
+            order: [
+                [comment, "c_id", "ASC"], // 댓글 오름차순으로 정렬
+                [comment, "replies", "c_id", "ASC"], // 대댓글 오름차순으로 정렬
             ],
             attributes: {
                 include: [
                     [
                         sequelize.literal(
-                            "(SELECT COUNT(*) FROM `board_like` WHERE `board_likes`.`b_id` = `board`.`b_id`)", //이게시물의 총 좋아요수
+                            "(SELECT COUNT(*) FROM `board_like` WHERE `board_likes`.`b_id` = `board`.`b_id`)",
                         ),
                         "like_count",
                     ],
                 ],
             },
         });
-        console.log(boarder.comment);
-        // res.render('board/board',{board:boarder}); // 뷰 생성시 값전달
-        res.json(boarder)
+
+        res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
