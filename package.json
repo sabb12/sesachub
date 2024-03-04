@@ -1,31 +1,35 @@
 {
-  "name": "sesachub",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sabb12/sesachub.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sabb12/sesachub/issues"
-  },
-  "homepage": "https://github.com/sabb12/sesachub#readme",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-session": "^1.18.0",
-    "mysql2": "^3.9.2",
-    "prettier": "^3.2.5",
-    "sequelize": "^6.37.1",
-    "sequelize-cli": "^6.6.2"
-  }
+    "name": "sesachub",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "cross-env NODE_ENV=prod pm2 start app.js",
+        "start:watch": "cross-evn NODE_ENV=prod pm2 start app.js --watch",
+        "dev": "cross-env NODE_ENV=development nodemon app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sabb12/sesachub.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sabb12/sesachub/issues"
+    },
+    "homepage": "https://github.com/sabb12/sesachub#readme",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "cross-env": "^7.0.3",
+        "dotenv": "^16.4.5",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "express-session": "^1.18.0",
+        "mysql2": "^3.9.2",
+        "prettier": "^3.2.5",
+        "sequelize": "^6.37.1",
+        "sequelize-cli": "^6.6.2"
+    }
 }
