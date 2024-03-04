@@ -1,64 +1,15 @@
 <!doctype html>
 <html lang="en">
-    <style>
-        
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .headerContainer {
-           background-color: #E7FFE8;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .menuList {
-            display: flex;
-            margin-left: 15rem;
-            gap: 30px;
-        }
-
-        .aTag {
-            display: flex;
-            align-items: end;
-            gap: 15px;
-            margin-bottom: 5px;
-        }
-
-        .aTag,
-        a {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-        }
-
-        .logout {
-            display: flex;
-            align-items: end;
-            margin-right: 15rem;
-            
-        }
-
-        .logout button {
-            border: none;
-            background-color: #6FC274;
-            color: white;
-            border-radius: 5px;
-            font-weight: 700;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-
-    </style>
-
+<link rel="stylesheet" href="/static/css/header.css">
     <body>
         <div class=".wrapper">
             <div class="headerContainer">
                 <div class="menuList">
+                    <%if(session && session.u_id){%>
+                        <a href="/reservation">
+                    <%} else {%>
                         <a href="/user">
+                    <%}%>
                             <img
                             src="/static/images/logo&title.png"
                             alt="sesachub image"
@@ -71,11 +22,14 @@
                         </div>
                 </div>
                 <div class="logout">
-                    <%if(session && session.u_id) {%>
-                    <button type="button" onclick="logout()">로그아웃</button>
-                    <%}%>
+                     <%if(session && session.u_id) {%>
+                        <button type="button" class="mypage-btn">마이페이지</button>
+                        <button type="button" class="logout-btn">로그아웃</button>
+                     <%} else {%>
+                        <button type="button" class="login-btn">로그인 &nbsp; | &nbsp; 회원가입</button>
+                     <%}%>
                 </div>
             </div>
-            <script src="/static/js/logout.js"></script>
+            <script src="/static/js/header.js"></script>
     </body>
 </html>

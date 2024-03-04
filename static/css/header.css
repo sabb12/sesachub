@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.headerContainer {
+    background-color: #e7ffe8;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menuList {
+    display: flex;
+    margin-left: 15rem;
+    gap: 30px;
+}
+
+.aTag {
+    display: flex;
+    align-items: end;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.aTag,
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.logout {
+    display: flex;
+    align-items: end;
+    margin-right: 15rem;
+    gap: 6px;
+}
+
+.logout button {
+    border: none;
+    background-color: #6fc274;
+    color: white;
+    border-radius: 5px;
+    font-weight: 700;
+    padding: 8px;
+    cursor: pointer;
+}
