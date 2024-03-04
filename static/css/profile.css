@@ -1,0 +1,109 @@
+.bodyContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 100px 0 100px;
+    gap: 10px;
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.sidebarContainer a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.section1Container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.section2Container {
+    width: 567px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.usermyPageWrapper {
+    display: flex;
+    width: 1000px;
+    height: 500px;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.wrapper {
+    display: flex;
+    height: 70px;
+}
+
+.imageWrapper {
+    height: 150px;
+}
+
+img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.outerImageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    gap: 5px;
+}
+
+.imageButtonContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.subTitle {
+    display: flex;
+    padding: 10px 0 0 10px;
+    width: 150px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+input {
+    width: 200px;
+    height: 20px;
+}
+
+/*top right bottom left*/
+button {
+    background: #fff;
+    cursor: pointer;
+    color: #363636;
+    border: 1px solid #dbdbdb;
+    font-size: 1rem;
+    border-radius: 4px;
+    box-shadow: none;
+    width: auto;
+    padding: 2px 5px 2px 5px;
+}
