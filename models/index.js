@@ -80,10 +80,10 @@ commentModel.belongsTo(boardModel, {
     foreignKey: "b_id",
 });
 userModel.hasMany(commentModel, {
-    foreignKey: "nk_name",
+    foreignKey: "u_id",
 });
 commentModel.belongsTo(userModel, {
-    foreignKey: "nk_name",
+    foreignKey: "u_id",
 });
 commentModel.hasMany(commentModel, {
     foreignKey: 'parent_id', // 부모 댓글 id가 저장된 컬럼

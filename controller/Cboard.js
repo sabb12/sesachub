@@ -1,13 +1,12 @@
 const { board, boardLike, comment } = require("../models");
 const sequelize = require("sequelize");
+const { Op } = require('sequelize');
+
 exports.boardList = async (req, res) => {
-    console.log("진입");
-    console.log(req.query);
     const page = req.query.page || 1; // 요청된 페이지 번호, 기본값은 1
     const category = req.query.category;
     const like = req.query.like;
-    console.log(like, category);
-    const pageSize = 2; // 한 페이지에 표시할 항목의 수
+    const pageSize = 10; // 한 페이지에 표시할 항목의 수
     try {
         const totalCount = await board.count(); // 전체 데이터의 수
         const totalPages = Math.ceil(totalCount / pageSize); // 전체 페이지 수
@@ -19,6 +18,16 @@ exports.boardList = async (req, res) => {
             } else {
                 orderby.push("b_id");
             }
+        
+            // 검색어가 있는 경우에만 검색 쿼리를 적용
+            const search = {};
+            if (req.query.search) {
+                search[Op.or] = [
+                    { title: { [Op.like]: `%${req.query.search}%` } },
+                    { content: { [Op.like]: `%${req.query.search}%` } },
+                ];
+            }
+        
             const boardList = await board.findAll({
                 limit: pageSize,
                 offset: offset,
@@ -38,10 +47,12 @@ exports.boardList = async (req, res) => {
                         ],
                     ],
                 },
+                where: search,
                 order: [
                     [sequelize.literal(orderby), "DESC"], // 카테고리가 없을시 전체리스트에서 좋아요순
                 ],
             });
+
             res.render("board/main", {
                 boardList: boardList,
                 category: category,
@@ -54,9 +65,17 @@ exports.boardList = async (req, res) => {
             } else {
                 orderby.push("b_id");
             }
+            const search = {};
+            if (req.query.search) {
+                search[Op.or] = [
+                    { title: { [Op.like]: `%${req.query.search}%` } },
+                    { content: { [Op.like]: `%${req.query.search}%` } },
+                ];
+            }
             const boardList = await board.findAll({
                 where: {
-                    category: category, // category가 있는 경우만 조회
+                    category: category, // 카테고리가 있는 경우만 조회
+                    ...search, // 검색어 조건 추가
                 },
                 limit: pageSize,
                 offset: offset,
@@ -107,6 +126,7 @@ exports.board = async (req, res) => {
                 {
                     model: comment,
                     attributes: ["c_id", "nk_name", "content", "parent_id", "createdAt"], // 댓글 가져오기
+                    as: "comments", // 별칭 추가
                     include: [
                         {
                             model: comment, // 대댓글 모델 include
@@ -117,21 +137,21 @@ exports.board = async (req, res) => {
                 },
             ],
             order: [
-                [comment, "c_id", "ASC"], // 댓글 오름차순으로 정렬
-                [comment, "replies", "c_id", "ASC"], // 대댓글 오름차순으로 정렬
+                ["comments", "c_id", "ASC"], // 댓글 오름차순으로 정렬
+                [{ model: comment, as: "comments", include: "replies" }, "c_id", "ASC"], // 대댓글 오름차순으로 정렬
             ],
             attributes: {
                 include: [
                     [
                         sequelize.literal(
-                            "(SELECT COUNT(*) FROM `board_like` WHERE `board_likes`.`b_id` = `board`.`b_id`)",
+                            "(SELECT COUNT(*) FROM `board_like` WHERE `board_like`.`b_id` = `board`.`b_id`)",
                         ),
                         "like_count",
                     ],
                 ],
             },
         });
-
+        
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
@@ -140,7 +160,6 @@ exports.board = async (req, res) => {
 };
 exports.handleLike = async (req, res) => {
     try {
-        console.log(req.session);
         const { b_id, u_id } = req.body; //현재 게시글 b_id와 세션에 u_id를 받아온다
         const likeId = await boardLike.findOne({
             where: {
@@ -156,10 +175,12 @@ exports.handleLike = async (req, res) => {
             res.end();
         } else {
             //해당값이 없을시 추가
+            console.log(b_id,u_id)
             await boardLike.create({
                 b_id: b_id,
                 u_id: u_id,
             });
+            
             res.end();
         }
     } catch (error) {
@@ -201,7 +222,6 @@ exports.boardInsert = async (req, res) => {
 };
 
 exports.boardPatch = async (req, res) => {
-    console.log(req.body);
     const { b_id, title, content, category } = req.body;
     const update = await board.update(
         {
@@ -219,3 +239,16 @@ exports.boardPatch = async (req, res) => {
         res.send("수정실패");
     }
 };
+exports.commentInsert=async (req,res)=>{
+    console.log('댓글',req.body)
+    const {u_id,nk_name,b_id,content,parent_id}=req.body;
+
+    const result=await comment.create({
+        nk_name:nk_name,
+        u_id:u_id,
+        b_id:b_id,
+        parent_id:parent_id,
+        content:content
+    })
+    res.end();
+}
