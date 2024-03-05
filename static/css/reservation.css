@@ -163,7 +163,6 @@ input[type="radio"] {
     text-align: center;
     width: 80px;
     height: 80px;
-    margin-bottom: 60px;
     background-color: #e7ffe8;
     border-collapse: collapse;
     border-top: 2px solid var(--text-color);
@@ -179,6 +178,20 @@ input[type="radio"] {
 .selected-time {
     color: #fff;
     background-color: var(--primary-color);
+}
+
+.time-wrapper .disabled {
+    /* 예약 있는 경우 시간 div 비활성화*/
+    opacity: 0.5;
+    background-color: var(--bg-color);
+    pointer-events: none;
+}
+
+.no-session {
+    margin-top: 20px;
+    margin-bottom: 60px;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 /* 인원 */
