@@ -4,7 +4,10 @@ const controller = require("../controller/Creservation");
 
 /* GET */
 // /reservation
-router.get("/", controller.findAllReservation);
+router.get("/", controller.main);
+
+// /reservation/reserved
+router.get("/reserved", controller.clickDay);
 
 /* POST */
 // /reservation

@@ -1,24 +1,30 @@
 const { reservation, user } = require("../models");
 
-exports.findAllReservation = (req, res) => {
+exports.main = (req, res) => {
     res.render("reservation/reservation");
 };
 
+exports.clickDay = async (req, res) => {};
+
 exports.createReservation = async (req, res) => {
     try {
-        const { u_id, day, st_room, time, count } = req.body;
+        const { u_id } = req.session;
+        const { day, st_room, time, count } = req.body;
+
+        // TODO: 시간 여러개 선택 시 처리
 
         // TODO: 세션이 만료된 회원은 예약 불가능
-        // if (!req.session && !req.session.u_id) {
-        //     res.send("세션이 만료되었습니다. 다시 로그인 해주세요.");
-        // return;
-        // }
+        if (!req.session || req.session.u_id === undefined) {
+            res.send({ status: "expired", msg: "세션이 만료되었습니다. 다시 로그인 해주세요." });
+            return;
+        }
 
         // 회원 id, 권한 있는지 확인 (권한은 join)
         const isUser = await user.findOne({ where: { u_id } });
 
+        console.log("isUser ::", isUser);
         if (!isUser || !["user", "student", "admin"].includes(isUser.permission)) {
-            res.send("예약할 수 없는 회원입니다.");
+            res.send({ status: "noPermission", msg: "예약할 수 없는 회원입니다." });
             return;
         }
 
@@ -26,7 +32,10 @@ exports.createReservation = async (req, res) => {
         const existReservation = await reservation.findAll({ where: { st_room, day } });
         console.log("existReservation ::", existReservation);
         if (existReservation.some((reservation) => reservation.time === time)) {
-            res.send("선택한 날짜와 시간에 해당 공간은 이미 예약이 있습니다.");
+            res.send({
+                status: "booked",
+                msg: "선택한 날짜와 시간에 해당 공간은 이미 예약이 있습니다.",
+            });
             return;
         }
 
@@ -40,7 +49,7 @@ exports.createReservation = async (req, res) => {
                 count,
             })
             .then(() => {
-                res.send("예약 완료");
+                res.send({ status: "success", msg: "예약 완료" });
             });
     } catch (error) {
         console.log("createReservation controller err :: ", error);

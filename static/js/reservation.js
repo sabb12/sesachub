@@ -9,6 +9,9 @@ let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 let selected = ["", "", "", ""];
 
+const kstToday = new Date(date.getTime() + 9 * 60 * 60 * 1000); // 한국 표준시 기준
+selected[0] = kstToday.toISOString().slice(0, 10);
+
 function renderCalendar() {
     // 이전 달, 현재 달, 다음 달의 날짜 가져오기
     date.setDate(1); // 1일로 설정
@@ -98,6 +101,8 @@ function selectDay(selectYear, selectMonth) {
         });
     });
 }
+
+/* --------------------------------------- 이벤트 --------------------------------------- */
 
 // 날짜 선택 이벤트
 function getCalendarValue(yearMonth, day) {
@@ -230,3 +235,31 @@ window.onload = function () {
 };
 
 // TODO: 예약 확인 <div>에 selected 배열의 값 넣기
+
+/* --------------------------------------- axios --------------------------------------- */
+
+// 예약하기 버튼 클릭 시 post 요청
+function reservation() {
+    // selected가 다 채워저야 예약 가능
+    if (selected.includes("")) alert("날짜, 공간, 시간, 인원을 모두 선택해주세요");
+    axios({
+        method: "post",
+        url: "/reservation",
+        data: {
+            day: selected[0],
+            st_room: selected[1],
+            time: selected[2],
+            count: selected[3],
+        },
+    }).then((res) => {
+        const { status, msg } = res.data;
+        switch (status) {
+            case "expired":
+            case "noPermission":
+            case "booked":
+            case "success":
+                alert(msg);
+                break;
+        }
+    });
+}
