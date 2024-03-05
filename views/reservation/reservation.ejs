@@ -8,6 +8,10 @@
     <%-include("../include/header")%>
 
 <div class="container">
+    <form name="form-id">
+        <input type="hidden" >
+    </form>
+    <p class="title">날짜 선택</p>
     <div class="calendar">
         <div class="header">
             <div class="month"></div>
@@ -36,6 +40,69 @@
            
         </div>
     </div>
+
+    <p class="title">공간 선택</p>
+    <div class="st-room">
+        <div>
+            <input type="radio" name="st-room" id="room1" value="소회의실">
+            <label for="room1">소회의실</label>
+        </div>
+        <div>
+            <input type="radio" name="st-room" id="room2" value="대회의실">
+            <label for="room2">대회의실</label>
+        </div>
+        <div>
+            <input type="radio" name="st-room" id="room3" value="잡코디룸1">
+            <label for="room3">잡코디룸1</label>
+        </div>
+        <div>
+            <input type="radio" name="st-room" id="room4" value="잡코디룸2">
+            <label for="room4">잡코디룸2</label>
+        </div>
+        <div>
+            <input type="radio" name="st-room" id="room5" value="상담부스1">
+            <label for="room5">상담부스1</label>
+        </div>
+        <div>
+            <input type="radio" name="st-room" id="room6" value="상담부스2">
+            <label for="room6">상담부스2</label>
+        </div>
+    </div>
+
+    <!-- TODO: 맵 이미지 추가하기 -->
+
+    <p class="title">시간 선택</p>
+
+    <div class="time-wrapper">
+        <div class="time1">09:00 ~ 10:00</div>
+        <div class="time2">10:00 ~ 11:00</div>
+        <div class="time3">11:00 ~ 12:00</div>
+        <div class="time4">12:00 ~ 13:00</div>
+        <div class="time5">13:00 ~ 14:00</div>
+        <div class="time6">14:00 ~ 15:00</div>
+        <div class="time7">15:00 ~ 16:00</div>
+        <div class="time8">16:00 ~ 17:00</div>
+        <div class="time9">17:00 ~ 18:00</div>
+        <div class="time10">18:00 ~ 19:00</div>
+        <div class="time11">19:00 ~ 20:00</div>
+        <div class="time12">20:00 ~ 21:00</div>
+        <div class="time13">21:00 ~ 22:00</div>
+    </div>
+
+    <p class="title">인원</p>
+    <div class="count-select">
+        <select name="count-person" id="count-person" required>
+        </select>
+    </div>
+    
+    <p class="title">예약 확인</p>
+
+    <div class="reservation-result"></div>
+
+    <div class="reservation-btn">
+        <button type="button" onclick="reservation()">예약 하기</button>
+    </div>
+
 </div>
     <script src="/static/js/reservation.js"></script>
 </body>

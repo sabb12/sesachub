@@ -7,6 +7,7 @@ const date = new Date();
 let currentMonth = date.getMonth();
 // 현재 년
 let currentYear = date.getFullYear();
+let selected = ["", "", "", ""];
 
 function renderCalendar() {
     // 이전 달, 현재 달, 다음 달의 날짜 가져오기
@@ -93,12 +94,139 @@ function selectDay(selectYear, selectMonth) {
                 day.classList.remove("today");
             });
             this.classList.add("today");
-            getValue(yearMonth, this);
+            getCalendarValue(yearMonth, this);
         });
     });
 }
 
-function getValue(yearMonth, day) {
+// 날짜 선택 이벤트
+function getCalendarValue(yearMonth, day) {
     const dayValue = yearMonth + "-" + day.textContent;
-    console.log("getValue result : ", dayValue);
+    selected[0] = dayValue;
+    selected[1] = "";
+    selected[2] = "";
+    selected[3] = "";
+    document.querySelectorAll("input[type=radio]").forEach((radio) => {
+        radio.checked = false;
+    });
 }
+
+// 공간 선택 이벤트
+function getRoomValue() {
+    const roomInputs = document.querySelectorAll("input[type=radio]");
+    const timeDivs = document.querySelectorAll(".time-wrapper div");
+
+    roomInputs.forEach((input) => {
+        input.addEventListener("change", function () {
+            if (this.checked) {
+                selected[1] = this.value;
+            }
+            // 공간 선택 시 시간 div의 스타일 초기화
+            timeDivs.forEach((div) => {
+                div.classList.remove("selected-time");
+                selected[2] = "";
+            });
+        });
+    });
+}
+
+getRoomValue();
+
+// 시간 선택 이벤트
+function getTimeValue() {
+    const timeDivs = document.querySelectorAll(".time-wrapper div");
+
+    timeDivs.forEach((div) => {
+        div.addEventListener("click", function () {
+            // 모든 div의 선택 스타일을 초기화
+            timeDivs.forEach((div) => {
+                div.classList.remove("selected-time");
+            });
+            // 클릭된 div에 선택 스타일 적용
+            this.classList.add("selected-time");
+
+            const timeText = this.textContent; // 클릭한 div의 텍스트를 가져옵니다.
+            const startTime = String(parseInt(timeText)); // 텍스트에서 시작 시간을 추출하고 정수로 변환합니다.
+            selected[2] = startTime;
+            selected[3] = "";
+            let select = document.getElementById("count-person");
+            select.value = "1";
+        });
+    });
+}
+getTimeValue();
+
+// 인원 선택 이벤트
+window.onload = function () {
+    let roomInputs = document.querySelectorAll("input[type=radio]");
+    let selectElement = document.getElementById("count-person");
+    let timeElements = document.querySelectorAll(".time-wrapper div");
+
+    // 처음 로드될 때 선택 옵션이 없다면 '공간 선택을 해주세요.' 옵션 추가
+    if (!selectElement.options.length) {
+        let option = document.createElement("option");
+        option.value = "none";
+        option.text = "공간 선택을 해주세요.";
+        selectElement.appendChild(option);
+    }
+
+    roomInputs.forEach((input) => {
+        input.addEventListener("change", function () {
+            let roomValue = this.value;
+
+            // 기존 옵션 제거
+            while (selectElement.firstChild) {
+                selectElement.removeChild(selectElement.firstChild);
+            }
+
+            // '인원을 선택해주세요.' 옵션 추가
+            let defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "인원을 선택해주세요.";
+            defaultOption.selected = true;
+            defaultOption.disabled = true;
+            defaultOption.hidden = true;
+            selectElement.appendChild(defaultOption);
+
+            // 공간에 따른 인원 선택 옵션 추가
+            let options;
+            switch (roomValue) {
+                case "소회의실":
+                    options = [1, 2, 3, 4];
+                    break;
+                case "대회의실":
+                    options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                    break;
+                case "잡코디룸1":
+                case "잡코디룸2":
+                    options = [1, 2, 3, 4, 5];
+                    break;
+                case "상담부스1":
+                case "상담부스2":
+                    options = [1, 2, 3, 4];
+                    break;
+                default:
+                    options = ["공간 선택을 해 주세요."];
+            }
+
+            options.forEach(function (optionValue) {
+                let option = document.createElement("option");
+                option.value = optionValue;
+                option.text = optionValue;
+                selectElement.appendChild(option);
+            });
+        });
+    });
+    // 시간 선택 이벤트 추가
+    timeElements.forEach((time) => {
+        time.addEventListener("click", function () {
+            selectElement.value = ""; // '인원을 선택해주세요.' 옵션 다시 선택
+        });
+    });
+    selectElement.addEventListener("change", function () {
+        selected[3] = this.value;
+        console.log(selected);
+    });
+};
+
+// TODO: 예약 확인 <div>에 selected 배열의 값 넣기
