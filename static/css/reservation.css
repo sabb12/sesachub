@@ -4,13 +4,14 @@
     --bg-color: #f1f1fb;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+html {
+    height: 100%;
 }
-
 body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100%;
     background-color: #fff;
 }
 
@@ -132,14 +133,14 @@ body {
 }
 
 /* 공간 선택 */
-.st-room {
+.st_room {
     display: flex;
     flex-direction: row;
     gap: 15px;
     margin-bottom: 60px;
 }
 
-.st-room label {
+.st_room label {
     cursor: pointer;
     font-size: 20px;
 }
@@ -150,13 +151,13 @@ input[type="radio"] {
 }
 
 /* 시간 선택 */
-.time-wrapper {
+.time_wrapper {
     display: flex;
     flex-direction: row;
     border-collapse: collapse;
 }
 
-.time-wrapper > * {
+.time_wrapper > * {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -171,23 +172,23 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-.time-wrapper > *:last-child {
+.time_wrapper > *:last-child {
     border-right: 2px solid var(--text-color);
 }
 
-.selected-time {
+.selected_time {
     color: #fff;
     background-color: var(--primary-color);
 }
 
-.time-wrapper .disabled {
+.time_wrapper .disabled {
     /* 예약 있는 경우 시간 div 비활성화*/
     opacity: 0.5;
     background-color: var(--bg-color);
     pointer-events: none;
 }
 
-.no-session {
+.no_session {
     margin-top: 20px;
     margin-bottom: 60px;
     font-size: 18px;
@@ -195,13 +196,13 @@ input[type="radio"] {
 }
 
 /* 인원 */
-.count-select select {
+.count_select select {
     padding: 10px 25px;
     margin-bottom: 60px;
 }
 
 /* 예약 확인 */
-.reservation-result {
+.reservation_result {
     width: 1040px;
     height: 200px;
     margin-bottom: 60px;
@@ -209,11 +210,11 @@ input[type="radio"] {
 }
 
 /* 예약하기 버튼 */
-.reservation-btn {
+.reservation_btn {
     margin-bottom: 100px;
 }
 
-.reservation-btn button {
+.reservation_btn button {
     padding: 15px 25px;
     border: none;
     border-radius: 5px;
