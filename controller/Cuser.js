@@ -50,7 +50,7 @@ exports.signin = async (req, res) => {
         const { u_id, pw } = req.body;
         const isUser = await user.findOne({ where: { u_id } });
         const { nk_name, permission } = isUser;
-        console.log("isUser ::", isUser);
+        // console.log("isUser ::", isUser);
         // 회원 정보 없는 경우
         if (!isUser) res.send({ success: false });
         // 회원이면 비밀번호 일치 여부 확인
@@ -60,7 +60,7 @@ exports.signin = async (req, res) => {
             req.session.nk_name = nk_name;
             req.session.permission = permission;
             res.send({ success: true });
-            console.log("req.session ::", req.session);
+            // console.log("req.session ::", req.session);
         } else res.send({ success: false });
     } catch (error) {
         console.log("signin controller err :: ", error);

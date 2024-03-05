@@ -104,6 +104,26 @@ function selectDay(selectYear, selectMonth) {
 
 /* --------------------------------------- 이벤트 --------------------------------------- */
 
+function dayReset() {
+    let selectElement = document.getElementById("count-person");
+    let option = document.createElement("option");
+    document.querySelectorAll("input[type=radio]").forEach((radio) => {
+        radio.checked = false;
+    });
+    document.querySelectorAll(".time-wrapper div").forEach((div) => {
+        div.classList.remove("selected-time");
+        div.classList.remove("disabled");
+    });
+
+    while (selectElement.firstChild) {
+        selectElement.removeChild(selectElement.firstChild);
+    }
+
+    option.value = "none";
+    option.text = "공간 선택을 해주세요.";
+    selectElement.appendChild(option);
+}
+
 // 날짜 선택 이벤트
 function getCalendarValue(yearMonth, day) {
     const dayValue = yearMonth + "-" + day.textContent;
@@ -111,9 +131,9 @@ function getCalendarValue(yearMonth, day) {
     selected[1] = "";
     selected[2] = "";
     selected[3] = "";
-    document.querySelectorAll("input[type=radio]").forEach((radio) => {
-        radio.checked = false;
-    });
+    dayReset();
+
+    if (selected[1]) dayRoomChoice(selected[0], selected[1]);
 }
 
 // 공간 선택 이벤트
@@ -130,7 +150,9 @@ function getRoomValue() {
             timeDivs.forEach((div) => {
                 div.classList.remove("selected-time");
                 selected[2] = "";
+                dayRoomChoice(selected[0], selected[1]);
             });
+            reservationResult();
         });
     });
 }
@@ -150,12 +172,12 @@ function getTimeValue() {
             // 클릭된 div에 선택 스타일 적용
             this.classList.add("selected-time");
 
-            const timeText = this.textContent; // 클릭한 div의 텍스트를 가져옵니다.
-            const startTime = String(parseInt(timeText)); // 텍스트에서 시작 시간을 추출하고 정수로 변환합니다.
+            const startTime = String(parseInt(this.textContent)); // 클릭한 div의 텍스트에서 시작 시간을 추출
             selected[2] = startTime;
             selected[3] = "";
-            let select = document.getElementById("count-person");
-            select.value = "1";
+            // let select = document.getElementById("count-person");
+            // select.value = "";
+            reservationResult();
         });
     });
 }
@@ -230,13 +252,55 @@ window.onload = function () {
     });
     selectElement.addEventListener("change", function () {
         selected[3] = this.value;
-        console.log(selected);
+        reservationResult();
     });
+    getRoomValue();
+    getTimeValue();
+    reservationResult();
 };
 
 // TODO: 예약 확인 <div>에 selected 배열의 값 넣기
+function reservationResult() {
+    const reservationResult = document.querySelector(".reservation-result");
+
+    const date = selected[0] ? `날짜: ${selected[0]}<br>` : "";
+    const room = selected[1] ? `공간: ${selected[1]}<br>` : "";
+    const time = selected[2] ? `시간: ${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>` : "";
+    const count = selected[3] ? `인원: ${selected[3]}명<br>` : "";
+
+    reservationResult.innerHTML = `${date}${room}${time}${count}`;
+}
 
 /* --------------------------------------- axios --------------------------------------- */
+
+function dayRoomChoice(day, st_room) {
+    axios({
+        method: "get",
+        url: `/reservation/data?day=${day}&st_room=${st_room}`,
+    }).then((res) => {
+        const { msg, reservationData } = res.data;
+        const timeElements = document.querySelectorAll(".time-wrapper div");
+
+        if (msg) {
+            timeElements.forEach((el) => {
+                el.classList.add("disabled");
+            });
+            document.querySelector(".no-session").innerHTML = `${msg}`;
+            return;
+        }
+
+        timeElements.forEach((element) => {
+            element.classList.remove("disabled");
+        });
+
+        reservationData.forEach((data) => {
+            if (selected[0] === data.day && selected[1] === data.st_room) {
+                const timeElement = document.querySelector(`.time${data.time}`);
+                if (timeElement) timeElement.classList.add("disabled");
+            }
+        });
+    });
+}
 
 // 예약하기 버튼 클릭 시 post 요청
 function reservation() {

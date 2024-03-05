@@ -6,8 +6,8 @@ const controller = require("../controller/Creservation");
 // /reservation
 router.get("/", controller.main);
 
-// /reservation/reserved
-router.get("/reserved", controller.clickDay);
+// /reservation
+router.get("/data", controller.reservationData);
 
 /* POST */
 // /reservation

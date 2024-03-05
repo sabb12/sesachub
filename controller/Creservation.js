@@ -4,7 +4,24 @@ exports.main = (req, res) => {
     res.render("reservation/reservation");
 };
 
-exports.clickDay = async (req, res) => {};
+exports.reservationData = async (req, res) => {
+    try {
+        // 로그인 정보가 없거나 세션이 만료된 회원
+        if (!req.session || req.session.u_id === undefined) {
+            return res.send({ msg: "로그인 후 이용 가능합니다." });
+        }
+
+        // 전체 예약 데이터 불러오기
+        const reservationData = await reservation.findAll();
+        // console.log("reservationData ::", reservationData); // reservationData :: [전체 데이터]
+
+        // reservation 페이지에 데이터 뿌리기
+        res.send({ reservationData });
+    } catch (error) {
+        console.log("reserved controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
 
 exports.createReservation = async (req, res) => {
     try {
@@ -15,8 +32,10 @@ exports.createReservation = async (req, res) => {
 
         // TODO: 세션이 만료된 회원은 예약 불가능
         if (!req.session || req.session.u_id === undefined) {
-            res.send({ status: "expired", msg: "세션이 만료되었습니다. 다시 로그인 해주세요." });
-            return;
+            return res.send({
+                status: "expired",
+                msg: "세션이 만료되었습니다. 다시 로그인 후 이용해주세요.",
+            });
         }
 
         // 회원 id, 권한 있는지 확인 (권한은 join)
@@ -24,8 +43,7 @@ exports.createReservation = async (req, res) => {
 
         console.log("isUser ::", isUser);
         if (!isUser || !["user", "student", "admin"].includes(isUser.permission)) {
-            res.send({ status: "noPermission", msg: "예약할 수 없는 회원입니다." });
-            return;
+            return res.send({ status: "noPermission", msg: "예약할 수 없는 회원입니다." });
         }
 
         // 선택한 공간에 해당 날짜와 시간에 예약 있는지 확인

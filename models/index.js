@@ -1,14 +1,13 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-console.log("corssenv: ", process.env.NODE_ENV); // prod or development
+// console.log("corssenv: ", process.env.NODE_ENV); // prod or development
 // const config = require(__dirname + "/../config/config.js")["prod"];
 let config;
 if (process.env.NODE_ENV) {
     // npm run dev, npm start
     config = require(__dirname + "/../config/config.js")[process.env.NODE_ENV];
 } else {
-    
     config = require(__dirname + "/../config/config.js")["development"];
 }
 
@@ -86,8 +85,8 @@ commentModel.belongsTo(userModel, {
     foreignKey: "u_id",
 });
 commentModel.hasMany(commentModel, {
-    foreignKey: 'parent_id', // 부모 댓글 id가 저장된 컬럼
-    as: 'replies', // 대댓글 모델의 별칭
+    foreignKey: "parent_id", // 부모 댓글 id가 저장된 컬럼
+    as: "replies", // 대댓글 모델의 별칭
 });
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
