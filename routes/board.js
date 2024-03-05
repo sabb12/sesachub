@@ -9,7 +9,8 @@ router.patch("/", controller.boardPatch); //게시글 수정
 router.get("/board", controller.board); //커뮤니티 해당글 진입경로
 
 router.post("/comment", controller.commentInsert); //댓글 대댓글 등록
-
+router.delete("/comment", controller.commentDelete); //댓글 대댓글 삭제
+router.patch("/comment", controller.commentPatch); //댓글 대댓글 수정
 router.post("/like", controller.handleLike); //해당 게시글 좋아요 등록 취소
 
 router.post("/bookmark", controller.bookmarkInsert); //북마크 등록

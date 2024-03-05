@@ -126,13 +126,20 @@ exports.board = async (req, res) => {
                 },
                 {
                     model: comment,
-                    attributes: ["c_id", "nk_name", "content", "parent_id", "createdAt"], // 댓글 가져오기
+                    attributes: ["c_id", "nk_name", "content", "parent_id", "createdAt", "u_id"], // 댓글 가져오기
                     as: "comments", // 별칭 추가
                     include: [
                         {
                             model: comment, // 대댓글 모델 include
                             as: "replies", // 대댓글 모델의 별칭 설정
-                            attributes: ["parent_id", "nk_name", "content", "createdAt"], // 대댓글의 속성 선택
+                            attributes: [
+                                "c_id",
+                                "parent_id",
+                                "nk_name",
+                                "content",
+                                "createdAt",
+                                "u_id",
+                            ], // 대댓글의 속성 선택
                         },
                     ],
                     where: { parent_id: null }, // 부모 댓글만 가져오도록 추가된 where 조건
@@ -154,7 +161,6 @@ exports.board = async (req, res) => {
                 ],
             },
         });
-
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
@@ -253,6 +259,29 @@ exports.commentInsert = async (req, res) => {
         b_id: b_id,
         parent_id: parent_id,
         content: content,
+    });
+    res.end();
+};
+// 댓글 대댓글 수정
+exports.commentPatch = async (req, res) => {
+    const { c_id, content, status } = req.body;
+    const result = await comment.update(
+        {
+            content: content,
+            status: status,
+        },
+        {
+            where: { c_id: c_id },
+        },
+    );
+    res.end();
+};
+// 댓글 대댓글 삭제
+exports.commentDelete = async (req, res) => {
+    const result = await comment.destroy({
+        where: {
+            c_id: req.query.c_id,
+        },
     });
     res.end();
 };
