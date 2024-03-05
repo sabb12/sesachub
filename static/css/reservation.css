@@ -16,16 +16,26 @@ body {
 
 .container {
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.title {
+    display: flex;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+/* 달력 */
 .calendar {
     width: 100%;
     max-width: 600px;
     padding: 30px 20px;
+    margin-bottom: 60px;
     border-radius: 10px;
     background-color: var(--bg-color);
 }
@@ -119,4 +129,82 @@ body {
 .days .day.prev,
 .days .day.next {
     color: #ccc;
+}
+
+/* 공간 선택 */
+.st-room {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 60px;
+}
+
+.st-room label {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* 시간 선택 */
+.time-wrapper {
+    display: flex;
+    flex-direction: row;
+    border-collapse: collapse;
+}
+
+.time-wrapper > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 60px;
+    background-color: #e7ffe8;
+    border-collapse: collapse;
+    border-top: 2px solid var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+    border-left: 1px solid var(--text-color);
+    cursor: pointer;
+}
+
+.time-wrapper > *:last-child {
+    border-right: 2px solid var(--text-color);
+}
+
+.selected-time {
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+/* 인원 */
+.count-select select {
+    padding: 10px 25px;
+    margin-bottom: 60px;
+}
+
+/* 예약 확인 */
+.reservation-result {
+    width: 1040px;
+    height: 200px;
+    margin-bottom: 60px;
+    border: 1px solid var(--text-color);
+}
+
+/* 예약하기 버튼 */
+.reservation-btn {
+    margin-bottom: 100px;
+}
+
+.reservation-btn button {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: var(--primary-color);
+    cursor: pointer;
 }
