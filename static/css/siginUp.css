@@ -1,3 +1,9 @@
+:root {
+    --primary-color: #6fc274;
+    --text-color: #1d1d1d;
+    --bg-color: #f1f1fb;
+}
+
 html {
     height: 100%;
 }
@@ -120,10 +126,6 @@ body {
     height: 70px;
 }
 
-.registerTextArea {
-    height: 75px;
-}
-
 .input {
     border: none;
     width: 237px;
@@ -144,7 +146,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: white;
-    background-color: #00c471;
+    background-color: var(--primary-color);
     border: none;
     text-align: center;
     display: inline-block;

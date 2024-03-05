@@ -18,7 +18,33 @@ function showPanel(panelIndex, colorCode) {
 
 showPanel(0, "white");
 
-function login() {
+function signup() {
+    const form = document.forms["sign_up_form"];
+    // 유효성 체크
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    axios({
+        method: "post",
+        url: "/user/signup",
+        data: {
+            u_id: form.u_id.value,
+            pw: form.pw.value,
+            name: form.name.value,
+            nk_name: form.nk_name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            study_class: form.study_class.value,
+        },
+    }).then((res) => {
+        alert(res.data);
+        document.location.reload();
+    });
+}
+
+function signin() {
     const form = document.forms["sign_in_form"];
 
     // 유효성 체크

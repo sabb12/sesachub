@@ -43,7 +43,10 @@ exports.createReservation = async (req, res) => {
 
         console.log("isUser ::", isUser);
         if (!isUser || !["user", "student", "admin"].includes(isUser.permission)) {
-            return res.send({ status: "noPermission", msg: "예약할 수 없는 회원입니다." });
+            return res.send({
+                status: "noPermission",
+                msg: "예약할 수 없는 회원입니다. 관리자에게 권한을 요청하세요.",
+            });
         }
 
         // 선택한 공간에 해당 날짜와 시간에 예약 있는지 확인

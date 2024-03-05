@@ -32,7 +32,7 @@ const UserModel = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             study_class: {
-                type: DataTypes.ENUM("1", "2", "3", "4", "5", "6", "7", "8", "9"),
+                type: DataTypes.ENUM("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
                 allowNull: false,
             },
             permission: {
