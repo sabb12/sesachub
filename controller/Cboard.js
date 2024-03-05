@@ -1,7 +1,7 @@
 const { board, boardLike, comment } = require("../models");
 const sequelize = require("sequelize");
-const { Op } = require('sequelize');
-
+const { Op } = require("sequelize");
+// 전체 게시글 조회 ( 카테,좋아요,최신순,검색)
 exports.boardList = async (req, res) => {
     const page = req.query.page || 1; // 요청된 페이지 번호, 기본값은 1
     const category = req.query.category;
@@ -18,16 +18,15 @@ exports.boardList = async (req, res) => {
             } else {
                 orderby.push("b_id");
             }
-        
-            // 검색어가 있는 경우에만 검색 쿼리를 적용
+
+            // 검색어가 있는 경우에만 검색 쿼리를 적용 추후 검색엔진 추가예정
             const search = {};
             if (req.query.search) {
                 search[Op.or] = [
                     { title: { [Op.like]: `%${req.query.search}%` } },
-                    { content: { [Op.like]: `%${req.query.search}%` } },
                 ];
             }
-        
+
             const boardList = await board.findAll({
                 limit: pageSize,
                 offset: offset,
@@ -110,10 +109,11 @@ exports.boardList = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-
+// 해당 게시글 조회
 exports.board = async (req, res) => {
     try {
         const b_id = req.query.b_id;
+        console.log(b_id);
         const boarder = await board.findOne({
             where: {
                 b_id: b_id,
@@ -134,6 +134,8 @@ exports.board = async (req, res) => {
                             attributes: ["parent_id", "nk_name", "content", "createdAt"], // 대댓글의 속성 선택
                         },
                     ],
+                    where: { parent_id: null }, // 부모 댓글만 가져오도록 추가된 where 조건
+                    required: false, // 해당 모델이 없는 경우에도 결과를 반환하도록 설정
                 },
             ],
             order: [
@@ -151,13 +153,15 @@ exports.board = async (req, res) => {
                 ],
             },
         });
-        
+
+        console.log(boarder);
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
     }
 };
+// 좋아요 추가 취소
 exports.handleLike = async (req, res) => {
     try {
         const { b_id, u_id } = req.body; //현재 게시글 b_id와 세션에 u_id를 받아온다
@@ -175,12 +179,12 @@ exports.handleLike = async (req, res) => {
             res.end();
         } else {
             //해당값이 없을시 추가
-            console.log(b_id,u_id)
+            console.log(b_id, u_id);
             await boardLike.create({
                 b_id: b_id,
                 u_id: u_id,
             });
-            
+
             res.end();
         }
     } catch (error) {
@@ -188,7 +192,7 @@ exports.handleLike = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-
+// 게시글 삭제
 exports.boardDelete = async (req, res) => {
     try {
         const b_id = Number(req.query.b_id);
@@ -201,6 +205,7 @@ exports.boardDelete = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+// 게시글등록
 exports.boardInsert = async (req, res) => {
     try {
         const { u_id, title, content, category } = req.body;
@@ -220,7 +225,7 @@ exports.boardInsert = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
-
+// 게시글 수정
 exports.boardPatch = async (req, res) => {
     const { b_id, title, content, category } = req.body;
     const update = await board.update(
@@ -239,16 +244,17 @@ exports.boardPatch = async (req, res) => {
         res.send("수정실패");
     }
 };
-exports.commentInsert=async (req,res)=>{
-    console.log('댓글',req.body)
-    const {u_id,nk_name,b_id,content,parent_id}=req.body;
+// 댓글 대댓글 등록
+exports.commentInsert = async (req, res) => {
+    console.log("댓글처음", req.body);
+    const { u_id, nk_name, b_id, content, parent_id } = req.body;
 
-    const result=await comment.create({
-        nk_name:nk_name,
-        u_id:u_id,
-        b_id:b_id,
-        parent_id:parent_id,
-        content:content
-    })
+    const result = await comment.create({
+        nk_name: nk_name,
+        u_id: u_id,
+        b_id: b_id,
+        parent_id: parent_id,
+        content: content,
+    });
     res.end();
-}
+};
