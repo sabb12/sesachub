@@ -3,6 +3,7 @@ const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
 const reservationRouter = require("./routes/reservation");
 const boardRouter = require("./routes/board");
+const adminRouter = require("./routes/admin");
 const app = express();
 const PORT = 8080;
 const URL = "localhost";
@@ -40,6 +41,7 @@ app.use("/user", userRouter);
 app.use("/profile", profileRouter);
 app.use("/reservation", reservationRouter);
 app.use("/board", boardRouter);
+app.use("/admin", adminRouter);
 
 app.get("*", (req, res) => {
     res.render("404");
