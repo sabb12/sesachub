@@ -1,4 +1,4 @@
-const { board, boardLike, comment } = require("../models");
+const { board, boardLike, comment, bookMark } = require("../models");
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 // 전체 게시글 조회 ( 카테,좋아요,최신순,검색)
@@ -22,9 +22,7 @@ exports.boardList = async (req, res) => {
             // 검색어가 있는 경우에만 검색 쿼리를 적용 추후 검색엔진 추가예정
             const search = {};
             if (req.query.search) {
-                search[Op.or] = [
-                    { title: { [Op.like]: `%${req.query.search}%` } },
-                ];
+                search[Op.or] = [{ title: { [Op.like]: `%${req.query.search}%` } }];
             }
 
             const boardList = await board.findAll({
@@ -113,7 +111,6 @@ exports.boardList = async (req, res) => {
 exports.board = async (req, res) => {
     try {
         const b_id = req.query.b_id;
-        console.log(b_id);
         const boarder = await board.findOne({
             where: {
                 b_id: b_id,
@@ -122,6 +119,10 @@ exports.board = async (req, res) => {
                 {
                     model: boardLike,
                     attributes: [],
+                },
+                {
+                    model: bookMark,
+                    attributes: ["u_id"],
                 },
                 {
                     model: comment,
@@ -154,7 +155,6 @@ exports.board = async (req, res) => {
             },
         });
 
-        console.log(boarder);
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
@@ -179,7 +179,6 @@ exports.handleLike = async (req, res) => {
             res.end();
         } else {
             //해당값이 없을시 추가
-            console.log(b_id, u_id);
             await boardLike.create({
                 b_id: b_id,
                 u_id: u_id,
@@ -246,7 +245,6 @@ exports.boardPatch = async (req, res) => {
 };
 // 댓글 대댓글 등록
 exports.commentInsert = async (req, res) => {
-    console.log("댓글처음", req.body);
     const { u_id, nk_name, b_id, content, parent_id } = req.body;
 
     const result = await comment.create({
@@ -257,4 +255,26 @@ exports.commentInsert = async (req, res) => {
         content: content,
     });
     res.end();
+};
+// 북마크등록
+exports.bookmarkInsert = async (req, res) => {
+    const { u_id, b_id } = req.body;
+    const result = await bookMark.findOne({
+        where: { u_id: u_id, b_id: b_id },
+    });
+    if (result) {
+        const bookMarkDelete = await bookMark.destroy({
+            where: {
+                b_id: b_id,
+                u_id: u_id,
+            },
+        });
+        res.end();
+    } else {
+        const insert = await bookMark.create({
+            b_id: b_id,
+            u_id: u_id,
+        });
+        res.end();
+    }
 };
