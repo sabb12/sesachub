@@ -20,6 +20,10 @@ document.addEventListener("click", (e) => {
     document.location.href = "/admin/user";
 });
 document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("reserve-btn")) return;
+    document.location.href = "/admin/reserve";
+});
+document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("logout-btn")) return;
     axios({
         method: "post",
@@ -40,18 +44,18 @@ document.addEventListener("click", (e) => {
 
 function toggleDropdown() {
     document.getElementById("myDropdown").classList.toggle("show");
-  }
-  
-  // 사용자가 다른 곳을 클릭했을 때 드롭다운 내용이 닫히도록 설정
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
+}
+
+// 사용자가 다른 곳을 클릭했을 때 드롭다운 내용이 닫히도록 설정
+window.onclick = function (event) {
+    if (!event.target.matches(".dropbtn")) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+                openDropdown.classList.remove("show");
+            }
         }
-      }
     }
-  }
+};

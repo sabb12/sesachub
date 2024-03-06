@@ -11,8 +11,15 @@ exports.main = (req, res) => {
 //전체회원조희
 exports.userList = async (req, res) => {
     try {
-        const userList = await user.findAll();
-        res.render('admin/user',{userList:userList});
+        if (req.query.permission === "null") {
+            const userList = await user.findAll({
+                where: { permission: null },
+            });
+            res.render("admin/user", { userList: userList });
+        } else {
+            const userList = await user.findAll();
+            res.render("admin/user", { userList: userList });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
@@ -22,11 +29,21 @@ exports.userList = async (req, res) => {
 exports.reserveList = async (req, res) => {
     try {
         const { day, st_room } = req.query;
-        const reserveList = await reservation.findAll({
-            day: day,
-            st_room: st_room,
-        });
-        res.render('admin/reservation',reserveList);
+        console.log(day, st_room);
+
+        if ((day, st_room)) {
+            const reserveList = await reservation.findAll({
+                where: {
+                    day: day,
+                    st_room: st_room,
+                },
+            });
+            console.log("진입");
+
+            res.send(reserveList);
+        } else {
+            res.render("admin/reservation");
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
@@ -43,20 +60,6 @@ exports.reserveDelete = async (req, res) => {
         } else {
             res.send(false);
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server Error");
-    }
-};
-// 권한 없는 리스트 출력
-exports.permissionList = async (req, res) => {
-    try {
-        const permissionList = await user.findAll({
-            where: {
-                permission: null,
-            },
-        });
-        res.json(permissionList);
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
