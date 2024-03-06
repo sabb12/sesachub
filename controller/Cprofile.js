@@ -1,4 +1,4 @@
-const { user, reservation } = require("../models");
+const { user, reservation, board } = require("../models");
 
 exports.main = async (req, res) => {
     try {
@@ -24,14 +24,16 @@ exports.confirmation = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
-exports.posting = (req, res) => {
-    res.render("profile/posting");
+exports.findAllPosting = async (req, res) => {
+    try {
+        const { u_id } = req.session;
+        const postings = await board.findAll({ where: { u_id } });
+        res.render("profile/posting", { postings });
+    } catch (error) {}
 };
 exports.deleteAccount = (req, res) => {
     res.render("profile/deleteAccount");
 };
-
-exports.findOneUser = async (req, res) => {};
 
 exports.updateProfile = async (req, res) => {
     try {
@@ -48,8 +50,6 @@ exports.updateProfile = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
-
-exports.findAllReservation = async (req, res) => {};
 
 exports.deleteReservation = async (req, res) => {
     try {
