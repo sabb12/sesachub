@@ -40,12 +40,18 @@ function renderCalendar() {
 
     // 현재 달의 날짜 추가
     for (let i = 1; i <= lastDayDate; i++) {
-        // 현재 날짜에는 "today" 클래스 추가된 날짜 추가
+        const comparingDate = new Date(currentYear, currentMonth, i);
+        comparingDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정
+
         if (
-            i === new Date().getDate() &&
-            currentMonth === new Date().getMonth() &&
-            currentYear === new Date().getFullYear()
+            comparingDate.getTime() < kstToday.setHours(0, 0, 0, 0) // 오늘 이전 날짜 확인
         ) {
+            // 오늘 이전 날짜에는 "prev" 클래스 추가
+            days += `<div class="day prev">${i}</div>`;
+        } else if (
+            comparingDate.getTime() === kstToday.getTime() // 오늘 날짜 확인
+        ) {
+            // 현재 날짜에는 "today" 클래스 추가된 날짜 추가
             days += `<div class="day cur today">${i}</div>`;
         } else {
             // else "today" 클래스 추가 안함
@@ -126,7 +132,24 @@ function dayReset() {
 
 // 날짜 선택 이벤트
 function getCalendarValue(yearMonth, day) {
-    const dayValue = yearMonth + "-" + day.textContent;
+    let dayValue;
+    let year = yearMonth.split("-")[0];
+    let month = yearMonth.split("-")[1];
+    let newDay;
+    if (day.textContent < 10 || month < 10) {
+        if (day.textContent < 10) {
+            newDay = 0 + day.textContent;
+        } else {
+            newDay = day.textContent;
+        }
+        if (month < 10) {
+            month = 0 + month;
+        }
+        dayValue = year + "-" + month + "-" + newDay;
+    } else {
+        dayValue = year + "-" + month + "-" + newDay;
+    }
+
     selected[0] = dayValue;
     selected[1] = "";
     selected[2] = "";
