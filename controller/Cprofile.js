@@ -1,47 +1,43 @@
 const { user, reservation } = require("../models");
 
-// const { u_id, nk_name } = req.session;
-
 exports.main = async (req, res) => {
     try {
-        const { u_id, nk_name } = req.query;
+        const { u_id, nk_name } = req.session;
         const userInfo = await user.findOne({ where: { u_id, nk_name } });
-        console.log("profile userInfo ::", userInfo);
-        // res.send({ userInfo });
+        // console.log("profile userInfo ::", userInfo);
         res.render("profile/main", { userInfo });
     } catch (error) {
         console.log("findOneUser controller err :: ", error);
         res.status(500).send("server error!");
     }
 };
-
 exports.confirmation = async (req, res) => {
     try {
-        // 세션 사용할 경우 u_id 지우기
-        const { u_id } = req.query;
-        console.log(u_id);
+        const { u_id } = req.session;
         const reservationData = await reservation.findAll({
             where: { u_id },
+            attributes: ["r_id", "day", "st_room", "time", "count"],
+            include: [
+                {
+                    model: user,
+                    attributes: [],
+                },
+            ],
         });
-        // res.send({ reservationData });
         res.render("profile/confirmation", { reservationData });
     } catch (error) {
         console.log("findAllReservation controller err :: ", error);
         res.status(500).send("server error!");
     }
 };
-
 exports.posting = (req, res) => {
-    try {
-        res.render("profile/posting");
-    } catch (error) {
-        console.log("findAllPosting controller err :: ", error);
-        res.status(500).send("server error!");
-    }
+    res.render("profile/posting");
 };
 exports.deleteAccount = (req, res) => {
     res.render("profile/deleteAccount");
 };
+
+exports.findOneUser = async (req, res) => {};
 
 exports.updateProfile = async (req, res) => {
     try {
@@ -58,6 +54,8 @@ exports.updateProfile = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
+
+exports.findAllReservation = async (req, res) => {};
 
 exports.deleteReservation = async (req, res) => {
     try {
