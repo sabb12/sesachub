@@ -10,7 +10,7 @@ router.get("/", controller.main);
 router.get("/confirmation", controller.confirmation);
 
 // /profile/posting
-router.get("/posting", controller.posting);
+router.get("/posting", controller.findAllPosting);
 
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
