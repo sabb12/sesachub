@@ -182,16 +182,17 @@ exports.handleLike = async (req, res) => {
             await boardLike.destroy({
                 where: { bl_id: likeId.bl_id },
             });
-            res.end();
         } else {
             //해당값이 없을시 추가
             await boardLike.create({
                 b_id: b_id,
                 u_id: u_id,
             });
-
-            res.end();
         }
+        const likeCount = await boardLike.count({
+            where: { b_id: b_id },
+        });
+        res.send({ like_count: likeCount });
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
