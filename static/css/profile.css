@@ -31,7 +31,7 @@
     height: 150px;
 }
 
-img {
+.profile_image {
     border-radius: 50%;
     width: 100px;
     height: 100px;

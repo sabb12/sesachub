@@ -1,4 +1,4 @@
-.section1Container {
+.section1_container {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -7,7 +7,7 @@
     height: 200px;
 }
 
-.sidebarContainer {
+.sidebar_container {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -16,7 +16,7 @@
     height: 200px;
 }
 
-.sidebarContainer a {
+.sidebar_container a {
     text-decoration: none;
     color: black;
     font-weight: bold;
