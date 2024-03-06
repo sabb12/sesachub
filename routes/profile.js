@@ -6,6 +6,8 @@ const controller = require("../controller/Cprofile");
 // /profile
 router.get("/", controller.main);
 
+router.get("/confirmation", controller.confirmation);
+
 // /profile/confirmation
 router.get("/confirmation", controller.confirmation);
 

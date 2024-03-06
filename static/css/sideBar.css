@@ -1,0 +1,23 @@
+.section1Container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.sidebarContainer a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
