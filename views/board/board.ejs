@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<%- include('../include/include.ejs', {title:"커뮤니티"}); %>
+    <link rel="stylesheet" href="/static/css/board.css">
+
+    <body>
+        <%- include('../include/header.ejs'); %>
+            <div>
+                <h1>
+                    <%=board.title%>
+                </h1>
+            </div>
+            <div>
+                <%=board.content%>
+            </div>
+            <div>
+                <%=board.createdAt%>
+            </div>
+
+            <div>
+                <span id="like_count">
+                    <%= board.dataValues.like_count%>
+                </span>
+                <button type="button" onclick="like('<%=board.b_id%>')">좋아요</button>
+            </div>
+            <div>
+                <% if (board.bookmarks.u_id !==session.u_id) { %>
+                    <button onclick="bookmark('<%=session.u_id%>','<%=board.b_id%>')">☆</button>
+                    <%} else { %>
+                        <button onclick="bookmark('<%=session.u_id%>','<%=board.b_id%>')">★</button>
+                        <%}%>
+            </div>
+            <% if (session.u_id===board.u_id || session.permission==='admin' ) { %>
+                <button onclick="editBoard('<%=board.b_id%>')">수정</button>
+                <button onclick="deleteBoard('<%=board.b_id%>')">삭제</button>
+                <%} else { %>
+                    <button onclick="editBoard('<%=board.b_id%>')" hidden>수정</button>
+                    <button onclick="deleteBoard('<%=board.b_id%>')" hidden>삭제</button>
+                    <%}%>
+                        <div>
+                            <form name="comment">
+                                <input type="hidden" id="b_id" value="<%=board.b_id%>" />
+                                <input type="hidden" id="nk_name" value="<%=board.nk_name%>" />
+                                <input type="text" placeholder="댓글을 입력하세요" />
+                                <a href="#none" class="btn" onclick="comment()">댓글 작성</a>
+                            </form>
+                        </div>
+                        <script>
+                            const b_id = '<%= board.b_id%>';
+                            const sessionUID = "<%= session.u_id %>";
+                            const u_id = "<%= board.u_id%>";
+                            function deleteBoard(b_id) {
+                                if (u_id !== sessionUID) {
+                                    alert("권한이 없습니다.");
+                                    location.reload();
+                                } else if (confirm("글을 삭제하시겠습니까?")) {
+                                    axios({
+                                        method: "DELETE",
+                                        url: "/board",
+                                        params: { b_id: b_id }
+                                    }).then(function (res) {
+                                        location.href = "/board";
+                                    })
+                                }
+                            }
+
+                            // function editBoard(b_id) {
+                            //     if (u_id !== sessionUID) {
+                            //         alert("권한이 없습니다.");
+                            //         location.reload();
+                            //     } else if (confirm("글을 삭제하시겠습니까?")) {
+                            //         axios({
+                            //             method: "DELETE",
+                            //             url: "/board",
+                            //             params: { b_id: b_id }
+                            //         }).then(function (res) {
+                            //             location.href = "/board";
+                            //         })
+                            //     }
+                            // }
+
+                            async function like(b_id) {
+                                const response = await axios({
+                                    method: "POST",
+                                    url: "/board/like",
+                                    data: { b_id: b_id, u_id: u_id }
+                                });
+                                document.getElementById('like_count').innerText = response.data.like_count;
+                            }
+                        </script>
+    </body>
+
+</html>
