@@ -13,16 +13,11 @@ exports.main = async (req, res) => {
 };
 exports.confirmation = async (req, res) => {
     try {
-        const { u_id } = req.session;
+        // const { u_id } = req.session;
+        const { u_id } = req.query;
         const reservationData = await reservation.findAll({
             where: { u_id },
-            attributes: ["r_id", "day", "st_room", "time", "count"],
-            include: [
-                {
-                    model: user,
-                    attributes: [],
-                },
-            ],
+            // attributes: ["r_id", "day", "st_room", "time", "count"],
         });
         res.render("profile/confirmation", { reservationData });
     } catch (error) {
