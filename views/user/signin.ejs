@@ -14,10 +14,12 @@
             회원가입
           </button>
         </div>
+
+        <!-- login -->
         <div class="loginContainer tabPanel">
           <div class="title">
             <imgs
-              src="/static/images/logo.png"
+              src="/static/images/logo&title.png"
               style="width: 100px; height: 94px"
             />
           </div>
@@ -41,7 +43,7 @@
                   <input type="password" class="input" name="pw" placeholder="Password" required />
                 </div>
               </div>
-              <button type="button" onclick="login()" class="button">로그인</button>
+              <button type="button" onclick="signin()" class="button">로그인</button>
             </form>
           </div>
           <div class="options">
@@ -73,6 +75,8 @@
             </div>
           </div>
         </div>
+
+        <!-- register -->
         <div class="registerContainer tabPanel">
           <div class="title">
             <img
@@ -80,6 +84,7 @@
               style="width: 50px; height: 50px"
             />
           </div>
+
           <div class="inputandButton">
             <form name="sign_up_form">
               <div class="inputWrapper">
@@ -88,8 +93,9 @@
                     <div class="circle"></div>
                     <div class="halfCircle"></div>
                   </div>
-                  <input type="text" class="input" placeholder="아이디" />
+                  <input type="text" class="input" name="u_id" placeholder="ID" required/>
                 </div>
+
                 <div class="registerInputContainer registerIdPassword">
                   <div class="circleContainer">
                     <div class="halfUCircle"></div>
@@ -97,23 +103,34 @@
                     <div class="dot"></div>
                     <div class="verticalLine"></div>
                   </div>
-                  <input type="text" class="input" placeholder="비밀번호" />
+                  <input type="password" class="input" name="pw" placeholder="Password" required/>
                 </div>
+
+                <div class="registerInputContainer registerName">
+                  <div class="circleContainer">
+                    <div class="circle"></div>
+                    <div class="halfCircle"></div>
+                  </div>
+                  <input type="text" class="input" name="name" placeholder="이름" required/>
+                </div>
+
                 <div class="registerInputContainer registerIdNickName">
                   <div class="circleContainer">
                     <div class="circle"></div>
                     <div class="halfCircle"></div>
                   </div>
-                  <input type="text" class="input" placeholder="닉네임 입력" />
+                  <input type="text" class="input" name="nk_name" placeholder="닉네임" required/>
                 </div>
+
                 <div class="registerInputContainer registerNumber">
                   <div class="phoneSquareContainer">
                     <div class="phoneSquareShape"></div>
                     <div class="phoneTopLine"></div>
                     <div class="phoneBottomLine"></div>
                   </div>
-                  <input type="text" class="input" placeholder="전화번호" />
+                  <input type="text" class="input" name="phone" placeholder="연락처" required/>
                 </div>
+
                 <div class="registerInputContainer registerEmail">
                   <div class="squareContainer">
                     <div class="squareShape"></div>
@@ -123,41 +140,38 @@
                   <input
                     type="text"
                     class="input"
-                    placeholder="[선택] 이메일주소 (비밀번호 찾기 등 본인 확인용)"
+                    name="email"
+                    placeholder="Email"
+                    required
                   />
                 </div>
+
                 <div class="registerInputContainer registerCourse">
-                  <label for="fullStack">
-                    <input
-                      type="radio"
-                      name="course"
-                      id="fullStack"
-                      value="fullStack"
-                    />풀스텍
-                  </label>
-                  <label for="webToon">
-                    <input
-                      type="radio"
-                      name="course"
-                      id="webToon"
-                      value="webToon"
-                    />웹툰
-                  </label>
+                  <select name="course" id="course" required>
+                    <option value="" selected disabled hidden>수강중인 과정을 선택해주세요.</option>
+                    <option value="1">python 데이터분석 및 ai/딥러닝 full PKG 개발과정</option>
+                    <option value="2">오픈소스 AI 플랫폼을 활용한 인공지능서비스 개발자 양성과정</option>
+                    <option value="3">LLM 활용 인공지능(NLP) 서비스 개발자 양성과정</option>
+                    <option value="4">기획부터 배포까지 협업 프로젝트로 완성하는 풀스택 웹 개발자 취업 부트캠프</option>
+                    <option value="5">디지털 전환을 주도하는 SW AI 교육전문가 취업스쿨 1기</option>
+                    <option value="6">[AWS 부트캠프] 클라우드 아키텍트 플러스</option>
+                    <option value="7">웹툰 제작사 취업 (연출/작가) 과정</option>
+                    <option value="8">iOS 앱 개발자 데뷔과정 PLUS</option>
+                    <option value="9">언리얼 엔진과 생성형 AI를 활용한 콘텐츠 개발자 양성 과정</option>
+                    <option value="10">기타 및 SeSAC 관계자</option>
+                  </select>
                 </div>
+                
                 <div class="registerInputContainer registerImage">
+                  <!-- name="profile_img" -->
                   <img
                     src="https://picsum.photos/200/300/?blur"
                     alt=""
                     style="width: 70px; height: 65px"
                   />
                 </div>
-                <div class="registerInputContainer registerTextArea">
-                  <textarea
-                    style="width: 305px; height: 68px; border: 1px solid #dcdcdc"
-                  ></textarea>
-                </div>
               </div>
-              <button type="submit" class="button">가입하기</button>
+              <button type="button" class="button" onclick="signup()">가입하기</button>
             </form>
           </div>
         </div>

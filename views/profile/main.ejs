@@ -5,67 +5,86 @@
     <link rel="stylesheet" href="/static/css/profile.css">
 <body>
     <%-include("../include/header")%>
+
         <div class="bodyContainer">
+
+            <!-- 사이드바 -->
             <div class="section1Container">
                 <div class="sidebarContainer">
-                    <a href="">내 정보 확인</a>
-                    <a href="">예약 관리</a>
-                    <a href="">게시글 관리</a>
-                    <a href="">회원 탈회</a>
+                    <a href="/profile">내 정보 확인</a>
+                    <a href="/profile/confirmation">예약 관리</a>
+                    <a href="#">게시글 관리</a>
+                    <a href="#">회원 탈회</a>
                 </div>
             </div>
+
             <div class="section2Container">
                 <div class="title">내 정보 확인/수정</div>
-                <div class="usermyPageWrapper">
-                    <div class="wrapper imageWrapper">
-                        <div class="subTitle imageTitle">프로필 이미지</div>
-                        <div class="outerImageContainer">
-                            <div class="imageContainer">
-                                <img src="https://picsum.photos/200/300" alt="randomImage" />
+                <form name="my_page">               
+                    <div class="usermyPageWrapper">
+                        <div class="wrapper imageWrapper">
+                            <div class="subTitle imageTitle">프로필 이미지</div>
+                            <div class="outerImageContainer">
+                                <div class="imageContainer">
+                                    <img src="https://picsum.photos/200/300" alt="randomImage" />
+                                </div>
+                                <div class="imageButtonContainer">
+                                    <button>수정</button>
+                                    <button>삭제</button>
+                                </div>
                             </div>
-                            <div class="imageButtonContainer">
-                                <button>수정</button>
-                                <button>삭제</button>
+                        </div>
+
+                        <div class="wrapper nameWrapper">
+                            <div class="subTitle nameTitle">이름</div>
+                            <div class="inputContainer">
+                                <input type="text" name="name" placeholder="이름" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="wrapper idWrapper">
+                            <div class="subTitle idTitle">아이디</div>
+                            <div class="inputContainer">
+                                <input type="text" name="u_id" placeholder="아이디" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="wrapper idWrapper">
+                            <div class="subTitle idTitle">비밀번호</div>
+                            <div class="inputContainer">
+                                <input type="password" name="pw" placeholder="비밀번호" />
+                            </div>
+                        </div>
+
+                        <div class="wrapper nickNameWrapper">
+                            <div class="subTitle nickNameTitle">닉네임</div>
+                            <div class="inputContainer">
+                                <input type="text" name="nk_name" placeholder="닉네임" />
+                            </div>
+                        </div>
+
+                        <div class="wrapper contactWrapper">
+                            <div class="subTitle contactTitle">연락처</div>
+                            <div class="inputContainer">
+                                <input type="text" name="phone" placeholder="연락처" />
+                            </div>
+                        </div>
+
+                        <div class="wrapper emailWrapper">
+                            <div class="subTitle emailTitle">이메일</div>
+                            <div class="inputContainer">
+                                <input type="text" name="email" placeholder="이메일" />
+                            </div>
+                        </div>
+
+                        <div class="wrapper nameWrapper">
+                            <div class="subTitle courseTitle">수강중인과정</div>
+                            <div class="inputContainer">
+                                <input type="text" name="course" placeholder="수강중인과정" readonly/>
                             </div>
                         </div>
                     </div>
-                    <div class="wrapper nameWrapper">
-                        <div class="subTitle nameTitle">이름</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="이름" />
-                        </div>
-                    </div>
-                    <div class="wrapper idWrapper">
-                        <div class="subTitle idTitle">아이디</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="아이디" />
-                        </div>
-                    </div>
-                    <div class="wrapper nickNameWrapper">
-                        <div class="subTitle nickNameTitle">닉네임</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="닉네임" />
-                        </div>
-                    </div>
-                    <div class="wrapper contactWrapper">
-                        <div class="subTitle contactTitle">연락처</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="연락처" />
-                        </div>
-                    </div>
-                    <div class="wrapper emailWrapper">
-                        <div class="subTitle emailTitle">이메일</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="이메일" />
-                        </div>
-                    </div>
-                    <div class="wrapper nameWrapper">
-                        <div class="subTitle courseTitle">수강중인과정</div>
-                        <div class="inputContainer">
-                            <input type="text" placeholder="수강중인과정" />
-                        </div>
-                    </div>
-                </div>
+               </form>
             </div>
         </div>
     </body>

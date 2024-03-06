@@ -17,7 +17,7 @@ exports.main = (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        const { u_id, pw, name, nk_name, email, phone, study_class, permission } = req.body;
+        const { u_id, pw, name, nk_name, email, phone, course } = req.body;
         const duplicateCheck = await user.findOne({
             where: { u_id },
         });
@@ -30,8 +30,7 @@ exports.signup = async (req, res) => {
                     nk_name,
                     email,
                     phone,
-                    study_class,
-                    permission,
+                    course,
                 })
                 .then(() => {
                     res.send("회원가입 성공");

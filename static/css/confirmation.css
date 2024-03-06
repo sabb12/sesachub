@@ -1,0 +1,80 @@
+.bodyContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 100px 0 100px;
+    gap: 10px;
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.sidebarContainer a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.section1Container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    width: 100px;
+    height: 200px;
+}
+
+.section2Container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.reservationContainer {
+    display: flex;
+    width: 1000px;
+    height: 500px;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.reservationHeader {
+    display: flex;
+    border: 1px solid #dcdcdc;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid black;
+}
+
+.reservationHeader {
+    background-color: lightgray;
+    border: 1px solid black;
+}
+
+.reservationBody {
+    height: 581px;
+    border: 1px solid black;
+}
+
+.reservationPagination {
+    display: flex;
+    border: 1px solid #dcdcdc;
+    justify-content: center;
+    align-items: center;
+}
+
+.reserCancelContainer {
+    display: flex;
+    justify-content: end;
+    padding-top: 20px;
+}

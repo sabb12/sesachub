@@ -13,13 +13,13 @@
         <div class="header">
             <div class="month"></div>
             <div class="btns">
-                <button class="btn today-btn" onclick="goToday()">
+                <button class="btn today_btn" onclick="goToday()">
                     <i class="fas fa-calendar-day" ></i>
                 </button>
-                <button class="btn prev-btn" onclick="prevMonth()">
+                <button class="btn prev_btn" onclick="prevMonth()">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="btn next-btn" onclick="nextMonth()">
+                <button class="btn next_btn" onclick="nextMonth()">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
@@ -39,29 +39,29 @@
     </div>
 
     <p class="title">공간 선택</p>
-    <div class="st-room">
+    <div class="st_room">
         <div>
-            <input type="radio" name="st-room" id="room1" value="소회의실">
+            <input type="radio" name="st_room" id="room1" value="소회의실">
             <label for="room1">소회의실</label>
         </div>
         <div>
-            <input type="radio" name="st-room" id="room2" value="대회의실">
+            <input type="radio" name="st_room" id="room2" value="대회의실">
             <label for="room2">대회의실</label>
         </div>
         <div>
-            <input type="radio" name="st-room" id="room3" value="잡코디룸1">
+            <input type="radio" name="st_room" id="room3" value="잡코디룸1">
             <label for="room3">잡코디룸1</label>
         </div>
         <div>
-            <input type="radio" name="st-room" id="room4" value="잡코디룸2">
+            <input type="radio" name="st_room" id="room4" value="잡코디룸2">
             <label for="room4">잡코디룸2</label>
         </div>
         <div>
-            <input type="radio" name="st-room" id="room5" value="상담부스1">
+            <input type="radio" name="st_room" id="room5" value="상담부스1">
             <label for="room5">상담부스1</label>
         </div>
         <div>
-            <input type="radio" name="st-room" id="room6" value="상담부스2">
+            <input type="radio" name="st_room" id="room6" value="상담부스2">
             <label for="room6">상담부스2</label>
         </div>
     </div>
@@ -70,7 +70,7 @@
 
     <p class="title">시간 선택</p>
 
-    <div class="time-wrapper">
+    <div class="time_wrapper">
         <div class="time9">09:00 ~ 10:00</div>
         <div class="time10">10:00 ~ 11:00</div>
         <div class="time11">11:00 ~ 12:00</div>
@@ -85,11 +85,11 @@
         <div class="time20">20:00 ~ 21:00</div>
         <div class="time21">21:00 ~ 22:00</div>
     </div>
-    <div class="no-session"></div>
+    <div class="no_session"></div>
 
     <p class="title">인원</p>
-    <div class="count-select">
-        <select name="count-person" id="count-person" required>
+    <div class="count_select">
+        <select name="count_person" id="count_person" required>
         </select>
     </div>
     
@@ -97,9 +97,9 @@
     <span>예약 취소는 "마이페이지 - 예약 관리"에서 가능합니다.</span>
     <br>
 
-    <div class="reservation-result"></div>
+    <div class="reservation_result"></div>
 
-    <div class="reservation-btn">
+    <div class="reservation_btn">
         <button type="button" onclick="reservation()">예약 하기</button>
     </div>
 

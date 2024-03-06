@@ -105,13 +105,13 @@ function selectDay(selectYear, selectMonth) {
 /* --------------------------------------- 이벤트 --------------------------------------- */
 
 function dayReset() {
-    let selectElement = document.getElementById("count-person");
+    let selectElement = document.getElementById("count_person");
     let option = document.createElement("option");
     document.querySelectorAll("input[type=radio]").forEach((radio) => {
         radio.checked = false;
     });
-    document.querySelectorAll(".time-wrapper div").forEach((div) => {
-        div.classList.remove("selected-time");
+    document.querySelectorAll(".time_wrapper div").forEach((div) => {
+        div.classList.remove("selected_time");
         div.classList.remove("disabled");
     });
 
@@ -139,7 +139,7 @@ function getCalendarValue(yearMonth, day) {
 // 공간 선택 이벤트
 function getRoomValue() {
     const roomInputs = document.querySelectorAll("input[type=radio]");
-    const timeDivs = document.querySelectorAll(".time-wrapper div");
+    const timeDivs = document.querySelectorAll(".time_wrapper div");
 
     roomInputs.forEach((input) => {
         input.addEventListener("change", function () {
@@ -148,7 +148,7 @@ function getRoomValue() {
             }
             // 공간 선택 시 시간 div의 스타일 초기화
             timeDivs.forEach((div) => {
-                div.classList.remove("selected-time");
+                div.classList.remove("selected_time");
                 selected[2] = "";
                 dayRoomChoice(selected[0], selected[1]);
             });
@@ -161,22 +161,20 @@ getRoomValue();
 
 // 시간 선택 이벤트
 function getTimeValue() {
-    const timeDivs = document.querySelectorAll(".time-wrapper div");
+    const timeDivs = document.querySelectorAll(".time_wrapper div");
 
     timeDivs.forEach((div) => {
         div.addEventListener("click", function () {
             // 모든 div의 선택 스타일을 초기화
             timeDivs.forEach((div) => {
-                div.classList.remove("selected-time");
+                div.classList.remove("selected_time");
             });
             // 클릭된 div에 선택 스타일 적용
-            this.classList.add("selected-time");
+            this.classList.add("selected_time");
 
             const startTime = String(parseInt(this.textContent)); // 클릭한 div의 텍스트에서 시작 시간을 추출
             selected[2] = startTime;
             selected[3] = "";
-            // let select = document.getElementById("count-person");
-            // select.value = "";
             reservationResult();
         });
     });
@@ -186,8 +184,8 @@ getTimeValue();
 // 인원 선택 이벤트
 window.onload = function () {
     let roomInputs = document.querySelectorAll("input[type=radio]");
-    let selectElement = document.getElementById("count-person");
-    let timeElements = document.querySelectorAll(".time-wrapper div");
+    let selectElement = document.getElementById("count_person");
+    let timeElements = document.querySelectorAll(".time_wrapper div");
 
     // 처음 로드될 때 선택 옵션이 없다면 '공간 선택을 해주세요.' 옵션 추가
     if (!selectElement.options.length) {
@@ -261,7 +259,7 @@ window.onload = function () {
 
 // TODO: 예약 확인 <div>에 selected 배열의 값 넣기
 function reservationResult() {
-    const reservationResult = document.querySelector(".reservation-result");
+    const reservationResult = document.querySelector(".reservation_result");
 
     const date = selected[0] ? `날짜: ${selected[0]}<br>` : "";
     const room = selected[1] ? `공간: ${selected[1]}<br>` : "";
@@ -276,16 +274,16 @@ function reservationResult() {
 function dayRoomChoice(day, st_room) {
     axios({
         method: "get",
-        url: `/reservation/data?day=${day}&st_room=${st_room}`,
+        url: "/reservation/data",
     }).then((res) => {
         const { msg, reservationData } = res.data;
-        const timeElements = document.querySelectorAll(".time-wrapper div");
+        const timeElements = document.querySelectorAll(".time_wrapper div");
 
         if (msg) {
             timeElements.forEach((el) => {
                 el.classList.add("disabled");
             });
-            document.querySelector(".no-session").innerHTML = `${msg}`;
+            document.querySelector(".no_session").innerHTML = `${msg}`;
             return;
         }
 
