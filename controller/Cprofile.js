@@ -1,4 +1,5 @@
-const { user, reservation, board } = require("../models");
+const { Op } = require("sequelize");
+const { user, reservation, board, bookMark } = require("../models");
 
 exports.main = async (req, res) => {
     try {
@@ -7,7 +8,7 @@ exports.main = async (req, res) => {
         // console.log("profile userInfo ::", userInfo);
         res.render("profile/main", { userInfo });
     } catch (error) {
-        console.log("findOneUser controller err :: ", error);
+        console.log("Cprofile main err :: ", error);
         res.status(500).send("server error!");
     }
 };
@@ -20,7 +21,7 @@ exports.confirmation = async (req, res) => {
         });
         res.render("profile/confirmation", { reservationData });
     } catch (error) {
-        console.log("findAllReservation controller err :: ", error);
+        console.log("Cprofile confirmation err :: ", error);
         res.status(500).send("server error!");
     }
 };
@@ -28,9 +29,21 @@ exports.findAllPosting = async (req, res) => {
     try {
         const { u_id } = req.session;
         const postings = await board.findAll({ where: { u_id } });
-        res.render("profile/posting", { postings });
-    } catch (error) {}
+
+        // 유저의 전체 북마크 중 b_id만 추출한 배열
+        const bookmarks = await bookMark.findAll({ where: { u_id } });
+        const b_ids = bookmarks.map((bookmark) => bookmark.dataValues.b_id);
+
+        // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
+        const bookmarkPostings = await board.findAll({ where: { b_id: { [Op.in]: b_ids } } });
+
+        res.render("profile/posting", { postings, bookmarkPostings });
+    } catch (error) {
+        console.log("Cprofile findAllPosting err :: ", error);
+        res.status(500).send("server error!");
+    }
 };
+
 exports.deleteAccount = (req, res) => {
     res.render("profile/deleteAccount");
 };
