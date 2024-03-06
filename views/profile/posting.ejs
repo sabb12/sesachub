@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../include/include", {title: "로그인 및 회원가입"})%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/posting.css">
+<body>
+    <%-include("../include/header")%>
+        <div class="body_container">
+            <%-include("../include/sideBar")%>
+            <div class="section2_container">
+                <div class="title">내가 쓴 글 목록</div>
+                <div class="reservation_container">
+                    <div class="reservation_header">
+                        <div class="checkbox_all">
+                            <input type="checkbox" />
+                            <div>전체삭제</div>
+                        </div>
+                        <div>No.</div>
+                        <div>글제목</div>
+                        <div>작성일시</div>
+                    </div>
+                    <div class="reservation_body"></div>
+                    <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

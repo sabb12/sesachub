@@ -8,6 +8,9 @@ exports.main = (req, res) => {
 exports.confirmation = (req, res) => {
     res.render("profile/confirmation");
 };
+exports.posting = (req, res) => {
+    res.render("profile/posting");
+};
 
 exports.findOneUser = async (req, res) => {
     try {
