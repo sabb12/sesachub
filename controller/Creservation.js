@@ -30,7 +30,7 @@ exports.createReservation = async (req, res) => {
 
         // TODO: 시간 여러개 선택 시 처리
 
-        // TODO: 세션이 만료된 회원은 예약 불가능
+        // 세션이 만료된 회원은 예약 불가능
         if (!req.session || req.session.u_id === undefined) {
             return res.send({
                 status: "expired",
@@ -40,14 +40,16 @@ exports.createReservation = async (req, res) => {
 
         // 회원 id, 권한 있는지 확인 (권한은 join)
         const isUser = await user.findOne({ where: { u_id } });
+        // console.log("isUser ::", isUser);
 
-        console.log("isUser ::", isUser);
         if (!isUser || !["user", "student", "admin"].includes(isUser.permission)) {
             return res.send({
                 status: "noPermission",
                 msg: "예약할 수 없는 회원입니다. 관리자에게 권한을 요청하세요.",
             });
         }
+        // req.body의 값 중 ""이 있는 경우 예약 불가
+        if (day === "" || st_room === "" || time === "" || count === "") return res.end();
 
         // 선택한 공간에 해당 날짜와 시간에 예약 있는지 확인
         const existReservation = await reservation.findAll({ where: { st_room, day } });
