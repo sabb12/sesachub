@@ -25,4 +25,8 @@ router.get("/reservation", controller.findAllReservation);
 // /profile
 router.patch("/", controller.updateProfile);
 
+/* ----------------- DELETE ----------------- */
+// /profile/reservation
+router.delete("/reservation", controller.deleteReservation);
+
 module.exports = router;

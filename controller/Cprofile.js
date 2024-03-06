@@ -63,3 +63,16 @@ exports.findAllReservation = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
+
+exports.deleteReservation = async (req, res) => {
+    try {
+        // 세션 사용할 경우 u_id 지우기
+        const { r_id, u_id } = req.body;
+        const deletedReservation = await reservation.destroy({ where: { r_id, u_id } }).then(() => {
+            res.send("예약이 취소되었습니다.");
+        });
+    } catch (error) {
+        console.log("deleteReservation controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
