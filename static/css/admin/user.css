@@ -12,6 +12,7 @@ h2 {
     background: #6fc274;
     margin-bottom: 10px;
     font-size: 15px;
+    margin: 10px;
 }
 .permissionBtn:hover {
     cursor: pointer;

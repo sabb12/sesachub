@@ -159,15 +159,33 @@
 /* 공간 선택 */
 .st_room {
     display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px;
 }
 
 .st_room label {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
+
+.st_room label:hover {
+    background-color: #e0e0e0;
+}
+
+.st_room input[type="radio"] {
+    display: none;
+}
+
+.st_room input[type="radio"]:checked + label {
+    background-color: #6fc274;
+    color: #fff;
+}
+
 
 input[type="radio"] {
     cursor: pointer;
@@ -175,4 +193,13 @@ input[type="radio"] {
 }
 h2{
     font-size: 50px;
+}
+.reserve_body button{
+    color: white;
+border: none;
+border-radius: 15px;
+background: #6fc274;
+margin-bottom: 10px;
+font-size: 15px;
+margin: 10px;
 }

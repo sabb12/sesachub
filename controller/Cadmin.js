@@ -6,9 +6,6 @@ const saltRounds = 10;
 function hashPw(pw) {
     return bcrypt.hashSync(pw, saltRounds);
 }
-exports.main = (req, res) => {
-    res.render("admin/main");
-};
 //전체회원조희
 exports.userList = async (req, res) => {
     const { category, search } = req.query;
@@ -163,13 +160,15 @@ exports.reserveList = async (req, res) => {
 // 예약 취소
 exports.reserveDelete = async (req, res) => {
     try {
+        console.log(req.query.r_id);
         const result = await reservation.destroy({
             where: { r_id: req.query.r_id },
         });
         if (result) {
-            res.send(true);
+            console.log("성공");
+            res.send({ result: true });
         } else {
-            res.send(false);
+            res.send({ result: false });
         }
     } catch (error) {
         console.error(error);
