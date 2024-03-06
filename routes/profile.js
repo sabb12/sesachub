@@ -15,12 +15,6 @@ router.get("/posting", controller.posting);
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
 
-// /profile/user
-router.get("/user", controller.findOneUser);
-
-// /profile/reservation
-router.get("/reservation", controller.findAllReservation);
-
 /* ----------------- PATCH ----------------- */
 // /profile
 router.patch("/", controller.updateProfile);
