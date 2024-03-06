@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <%- include('../include/include.ejs',{title:"관리자페이지"}) %>
-<link rel="stylesheet" href="/static/css/adminUser.css">
+<link rel="stylesheet" href="/static/css/admin/user.css">
 
 <body>
     <%- include('../include/header.ejs') %>
     <div id="member-content" >
         <h2>회원 관리 페이지</h2>
-        <button class="permissionBtn" onclick="userPermission()">권한대기 유저</button>
+        <button class="permissionBtn"><a href="/admin/user?permission=null">권한대기 유저</a></button>
+        <button class="permissionBtn"><a href="/admin/user">회원전체 조회</a></button>
         <table id="member-table">
             <tr>
                 <th>아이디</th>
@@ -19,6 +20,7 @@
                 <th>권한</th>
                 <th>클래스</th>
                 <th>휴대폰 번호</th>
+                <th>pw초기화</th>
             </tr>
             <% userList.forEach(user => { %>
                 <tr>
@@ -26,14 +28,21 @@
                     <td><%= user.name %></td>
                     <td><%= user.nk_name %></td>
                     <td><%= user.email %></td>
-                    <td><%= user.createdAt %></td>
-                    <td><%= user.updatedAt %></td>
-                    <td><%= user.permission %></td>
-                    <td><%= user.study_class %></td>
+                    <td><%= user.createdAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
+                    <td><%= user.updatedAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
+                    <% if(user.permission===null) {%>
+                        <td>권한없음<button class="permissionBtn"><a onclick="permissionInsert('<%=user.u_id%>')">부여</a></button></td>
+                        <% }else{ %>
+                            <td><%= user.permission %></td>
+                        <% } %>
+                    <td><%= user.course %></td>
                     <td><%= user.phone %></td>
+                    <td><button class="permissionBtn"><a onclick="pwReset('<%=user.u_id%>')">초기화</a></button></td>
                 </tr>
             <% }); %>
         </table>
     </div>
+    <script src="/static/js/admin/user.js"></script>
+
 </body>
 </html>
