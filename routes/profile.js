@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controller/Cprofile");
 
-/* ----------------- GET ----------------- */
+/* ----------------- GET ------------------ */
 // /profile
 router.get("/", controller.main);
 
@@ -15,11 +15,11 @@ router.get("/posting", controller.findAllPosting);
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
 
-/* ----------------- PATCH ----------------- */
+/* ----------------- PATCH ------------------ */
 // /profile
 router.patch("/", controller.updateProfile);
 
-/* ----------------- DELETE ----------------- */
+/* ----------------- DELETE ------------------ */
 // /profile/reservation
 router.delete("/reservation", controller.deleteReservation);
 
