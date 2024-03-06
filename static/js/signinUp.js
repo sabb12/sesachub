@@ -36,7 +36,7 @@ function signup() {
             nk_name: form.nk_name.value,
             email: form.email.value,
             phone: form.phone.value,
-            study_class: form.study_class.value,
+            course: form.course.value,
         },
     }).then((res) => {
         alert(res.data);
