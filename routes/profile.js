@@ -12,9 +12,6 @@ router.get("/confirmation", controller.confirmation);
 // /profile/posting
 router.get("/posting", controller.findAllPosting);
 
-// /profile/bookmark
-router.get("/bookmark", controller.findAllBookmark);
-
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
 

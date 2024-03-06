@@ -27,30 +27,21 @@ exports.confirmation = async (req, res) => {
 };
 exports.findAllPosting = async (req, res) => {
     try {
-        const { u_id } = req.session;
+        // const { u_id } = req.session;
+        const { u_id } = req.query;
         const postings = await board.findAll({ where: { u_id } });
-        res.render("profile/posting", { postings });
+
+        // 유저의 전체 북마크 중 b_id만 추출한 배열
+        const bookmarks = await bookMark.findAll({ where: { u_id } });
+        const b_ids = bookmarks.map((bookmark) => bookmark.dataValues.b_id);
+
+        // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
+        const bookmarkPostings = await board.findAll({ where: { b_id: { [Op.in]: b_ids } } });
+
+        res.send({ postings, bookmarkPostings });
+        // res.render("profile/posting", { postings, bookmarkPostings });
     } catch (error) {
         console.log("Cprofile findAllPosting err :: ", error);
-        res.status(500).send("server error!");
-    }
-};
-
-exports.findAllBookmark = async (req, res) => {
-    try {
-        // const {u_id} = req.session;
-        const { u_id } = req.query;
-        // 유저의 전체 북마크
-        const bookmarks = await bookMark.findAll({ where: { u_id } });
-        // bookmarks에서 b_id만 추출한 배열
-        const b_ids = bookmarks.map((bookmark) => bookmark.dataValues.b_id);
-        // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
-        console.log("b_ids ::", b_ids);
-        const bookmarkPostings = await board.findAll({ where: { b_id: { [Op.in]: b_ids } } });
-        res.send({ bookmarkPostings });
-        res.end();
-    } catch (error) {
-        console.log("Cprofile findAllBookmark err :: ", error);
         res.status(500).send("server error!");
     }
 };
