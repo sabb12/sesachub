@@ -23,9 +23,7 @@
                 </div>
                 <div class="logout">
                      <%if(session && session.u_id) {%>
-                        <!-- <% if(session.permission==='admin'){ %>
-                            <button type="button" class="admin-btn">관리자페이지</button>
-                            <% } %> -->
+                         <% if(session.permission==='admin'){ %>
                             <div class="dropdown">
                                 <button onclick="toggleDropdown()" class="dropbtn">관리자페이지</button>
                                 <div id="myDropdown" class="dropdown-content">
@@ -33,7 +31,9 @@
                                     <button id="drop-item" type="button" class="reserve-btn">예약 관리</button><br>
                                   
                                 </div>
-                              </div>                        <button type="button" class="mypage-btn">마이페이지</button>
+                              </div>   
+                            <% } %> 
+                                                <button type="button" class="mypage-btn">마이페이지</button>
                         <button type="button" class="logout-btn">로그아웃</button>
                      <%} else {%>
                         <button type="button" class="login-btn">로그인 &nbsp; | &nbsp; 회원가입</button>
