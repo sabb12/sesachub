@@ -12,7 +12,7 @@ exports.main = (req, res) => {
 exports.userList = async (req, res) => {
     try {
         const userList = await user.findAll();
-        res.json(userList);
+        res.render('admin/user',{userList:userList});
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
@@ -26,7 +26,7 @@ exports.reserveList = async (req, res) => {
             day: day,
             st_room: st_room,
         });
-        res.json(reserveList);
+        res.render('admin/reservation',reserveList);
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
