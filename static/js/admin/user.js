@@ -10,8 +10,8 @@ async function permissionInsert(u_id) {
             },
         });
         if (res.data === true) {
-            alert("권한부여 성공하였습니다.");
-            location.reload();
+            alert("권한부여 성공하였습니다.\n회원관리 페이지로 이동합니다.");
+            location.href = "/admin/user";
         } else {
             alert("권한부여 실패하였습니다.");
         }

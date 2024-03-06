@@ -40,7 +40,7 @@
 }
 
 .reserve_container {
-    padding: 50px;
+    margin: 50px;
 }
 :root {
     --primary-color: #6fc274;
@@ -172,4 +172,7 @@
 input[type="radio"] {
     cursor: pointer;
     accent-color: var(--primary-color);
+}
+h2{
+    font-size: 50px;
 }

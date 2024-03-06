@@ -1,5 +1,6 @@
 const { user, reservation } = require("../models");
 const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 const saltRounds = 10;
 // 초기화시 사용
 function hashPw(pw) {
@@ -10,15 +11,125 @@ exports.main = (req, res) => {
 };
 //전체회원조희
 exports.userList = async (req, res) => {
+    const { category, search } = req.query;
+    console.log(category, search);
+    const page = req.query.page || 1;
+    const pageSize = 10;
+    let userList;
     try {
+        let totalCount; //전체 유저 데이터의 숫자
+        let totalPages; //전체유저 /10 해서 소수점 올림
+        let offset; //오프셋 계산
         if (req.query.permission === "null") {
-            const userList = await user.findAll({
-                where: { permission: null },
+            console.log("진입");
+            totalCount = await user.count({ where: { permission: null } });
+            totalPages = Math.ceil(totalCount / pageSize);
+            offset = (page - 1) * pageSize;
+            if (category && search) {
+                totalCount = await user.count({
+                    where: {
+                        [category]: {
+                            [Op.like]: `%${search}%`,
+                        },
+                        permission: null,
+                    },
+                });
+                totalPages = Math.ceil(totalCount / pageSize);
+                if (totalPages === 1) {
+                    totalPages = 0;
+                }
+                userList = await user.findAll({
+                    where: {
+                        [category]: {
+                            [Op.like]: `%${search}%`,
+                        },
+                        permission: null,
+                    },
+                    limit: pageSize,
+                    offset: offset,
+                });
+            } else if (!search && category) {
+                res.render("admin/user", {
+                    userList: [],
+                    page: "",
+                    totalPages: "",
+                    permission: false,
+                    category: category,
+                    search: search,
+                });
+            } else {
+                userList = await user.findAll({
+                    where: { permission: null },
+                    limit: pageSize,
+                    offset: offset,
+                });
+            }
+            res.render("admin/user", {
+                userList: userList,
+                page: page,
+                totalPages: totalPages,
+                permission: false,
+                category: category,
+                search: search,
             });
-            res.render("admin/user", { userList: userList });
         } else {
-            const userList = await user.findAll();
-            res.render("admin/user", { userList: userList });
+            totalCount = await user.count();
+            totalPages = Math.ceil(totalCount / pageSize);
+            offset = (page - 1) * pageSize;
+            if (category && search) {
+                totalCount = await user.count({
+                    where: {
+                        [category]: {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                });
+                totalPages = Math.ceil(totalCount / pageSize);
+                if (totalPages === 1) {
+                    totalPages = 0;
+                }
+                totalCount = await user.count({
+                    where: {
+                        [category]: {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                });
+                totalPages = Math.ceil(totalCount / pageSize);
+                offset = (page - 1) * pageSize;
+                userList = await user.findAll({
+                    where: {
+                        [category]: {
+                            [Op.like]: `%${search}%`,
+                        },
+                    },
+                    limit: pageSize,
+                    offset: offset,
+                });
+            } else if (!search && category) {
+                res.render("admin/user", {
+                    userList: [],
+                    page: "",
+                    totalPages: "",
+                    permission: false,
+                    category: category,
+                    search: search,
+                });
+            } else {
+                userList = await user.findAll({
+                    limit: pageSize,
+                    offset: offset,
+                });
+            }
+            console.log("전체회원", category, search);
+            res.render("admin/user", {
+                userList: userList,
+                page: page,
+                totalPages: totalPages,
+                permission: true,
+                category: category,
+                search: search,
+            });
         }
     } catch (error) {
         console.error(error);

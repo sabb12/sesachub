@@ -2,12 +2,38 @@
 <html lang="ko">
 <%- include('../include/include.ejs',{title:"관리자페이지"}) %>
 <link rel="stylesheet" href="/static/css/admin/user.css">
-
 <body>
     <%- include('../include/header.ejs') %>
     <div id="member-content" >
         <h2>회원 관리 페이지</h2>
-        <button class="permissionBtn"><a href="/admin/user?permission=null">권한대기 유저</a></button>
+        <div class="search-bar">
+            <select name="category" id="category">
+                <option value="u_id">아이디</option>
+                <option value="name">이름</option>
+                <!-- 다른 카테고리도 필요에 따라 추가하세요 -->
+            </select>
+            <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+            <button onclick="search()">검색</button>
+        </div>
+        <div class="pagination">
+            <% if(permission){ %>
+                <% for (i=1; i <=totalPages; i++) { %>
+                    <a href="/admin/user?page=<%= i %>&category=<%= category %>&search=<%= search%>">
+                        <%= i %>
+                    </a>
+                <% } %>
+                <% }else{ %>
+                    <% for (i=1; i <=totalPages; i++) { %>
+                        <a href="/admin/user?page=<%= i %>&category=<%=category %>&&search=<%= search%>&permission=null">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                <% } %>
+            
+        </div>
+        
+        
+        <button class="permissionBtn" onclick="gi(this.value)" value="permission"><a href="/admin/user?permission=null">권한대기 유저</a></button>
         <button class="permissionBtn"><a href="/admin/user">회원전체 조회</a></button>
         <table id="member-table">
             <tr>
@@ -40,9 +66,49 @@
                     <td><button class="permissionBtn"><a onclick="pwReset('<%=user.u_id%>')">초기화</a></button></td>
                 </tr>
             <% }); %>
+            
         </table>
-    </div>
-    <script src="/static/js/admin/user.js"></script>
+        <% if(userList.length === 0) { %>
+            <div class="noData"><h1>😫자료가 없습니다.</h1></div>
+            <% }%>  
 
+        
+    </div>
+    <script>
+
+        function search() {
+    let category = document.getElementById("category").value;
+    let searchValue = document.getElementById("search").value;
+            console.log(category,searchValue)
+            let permission='<%=permission%>'
+            if(permission==='true'){
+                location.href=`/admin/user?category=${category}&search=${searchValue}`
+            }else{
+                location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
+
+            }
+           
+    // 이후에 검색된 결과에 대한 처리를 진행합니다.
+}
+        (()=> {
+    let totalPages = '<%= page %>'-1 // totalPages 값은 서버에서 렌더링할 때 클라이언트로 전달되어야 합니다.
+    let paginationDiv = document.querySelector('.pagination');
+    let btns = document.querySelectorAll('.pagination a');
+
+    for (let i = 0; i < btns.length; i++) {
+        if (i === totalPages) {
+            btns[i].classList.add('active');
+        } else {
+            btns[i].classList.remove('active');
+        }
+    }
+})();
+        
+        
+    
+    </script>
+    
+    <script src="/static/js/admin/user.js"></script>
+    
 </body>
 </html>
