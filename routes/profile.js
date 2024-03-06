@@ -12,6 +12,9 @@ router.get("/confirmation", controller.confirmation);
 // /profile/posting
 router.get("/posting", controller.posting);
 
+// /profile/deleteAccount
+router.get("/deleteAccount", controller.deleteAccount);
+
 // /profile/user
 router.get("/user", controller.findOneUser);
 
