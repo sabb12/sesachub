@@ -1,3 +1,4 @@
+.permissionBtn a{color: white;}
 #member-content {
     margin: 50px;
 }
@@ -31,4 +32,30 @@ h2 {
 
 #member-table tr:hover {
     background-color: #ddd;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+.pagination a.active {
+    background-color: #6fc274;;
+    color: white;
+}
+.noData{
+    text-align: center;
 }
