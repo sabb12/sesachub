@@ -27,8 +27,7 @@ exports.confirmation = async (req, res) => {
 };
 exports.findAllPosting = async (req, res) => {
     try {
-        // const { u_id } = req.session;
-        const { u_id } = req.query;
+        const { u_id } = req.session;
         const postings = await board.findAll({ where: { u_id } });
 
         // 유저의 전체 북마크 중 b_id만 추출한 배열
@@ -38,8 +37,7 @@ exports.findAllPosting = async (req, res) => {
         // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
         const bookmarkPostings = await board.findAll({ where: { b_id: { [Op.in]: b_ids } } });
 
-        res.send({ postings, bookmarkPostings });
-        // res.render("profile/posting", { postings, bookmarkPostings });
+        res.render("profile/posting", { postings, bookmarkPostings });
     } catch (error) {
         console.log("Cprofile findAllPosting err :: ", error);
         res.status(500).send("server error!");
