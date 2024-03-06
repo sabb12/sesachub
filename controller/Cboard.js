@@ -211,6 +211,10 @@ exports.boardDelete = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+// 게시글 등록 페이지 이동
+exports.boardWritePage = function (req, res) {
+    res.render("board/write");
+};
 // 게시글등록
 exports.boardInsert = async (req, res) => {
     try {
@@ -230,6 +234,17 @@ exports.boardInsert = async (req, res) => {
         console.error(error);
         res.status(500).send("Server Error");
     }
+};
+// 게시글 수정 페이지 이동
+exports.boardUpdatePage = function (req, res) {
+    const { b_id } = req.query;
+    const boardInfo = board.findOne({
+        attributes: ["b_id", "title", "content"],
+        where: {
+            b_id: b_id,
+        },
+    });
+    res.render("board/update", { board: boardInfo });
 };
 // 게시글 수정
 exports.boardPatch = async (req, res) => {
@@ -299,12 +314,11 @@ exports.bookmarkInsert = async (req, res) => {
                 u_id: u_id,
             },
         });
-        res.end();
     } else {
         const insert = await bookMark.create({
             b_id: b_id,
             u_id: u_id,
         });
-        res.end();
     }
+    res.send({ result: result });
 };
