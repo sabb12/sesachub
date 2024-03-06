@@ -13,8 +13,7 @@ exports.main = async (req, res) => {
 };
 exports.confirmation = async (req, res) => {
     try {
-        // const { u_id } = req.session;
-        const { u_id } = req.query;
+        const { u_id } = req.session;
         const reservationData = await reservation.findAll({
             where: { u_id },
             // attributes: ["r_id", "day", "st_room", "time", "count"],
