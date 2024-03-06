@@ -11,6 +11,9 @@ exports.confirmation = (req, res) => {
 exports.posting = (req, res) => {
     res.render("profile/posting");
 };
+exports.deleteAccount = (req, res) => {
+    res.render("profile/deleteAccount");
+};
 
 exports.findOneUser = async (req, res) => {
     try {
