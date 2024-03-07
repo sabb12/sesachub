@@ -2,6 +2,7 @@
     width: 100%;
     height: 100%;
     border-collapse: collapse;
+    text-align: center;
 }
 
 .reserve_list th,
@@ -12,7 +13,6 @@
 
 .reserve_list th {
     background-color: #f2f2f2;
-    text-align: left;
 }
 
 .reserve_list tr:nth-child(even) {

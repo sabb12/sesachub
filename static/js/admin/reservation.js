@@ -167,10 +167,12 @@ async function reserveList(day, st_room) {
     let html = "";
 
     // 받아온 JSON 데이터를 반복하여 HTML 생성
+    if(res.data.length===0){
+        html +=` <div class="noData"><h1>😫해당 날짜에는 예약이 없습니다.</h1></div>`
+    }
     res.data.forEach((item) => {
         html += `
-<tr class="reserve_item">
-                    <td class="reserve_id"> ${item.r_id}</td>
+                <tr class="reserve_item">
                     <td class="user_id">${item.u_id}</td>
                     <td class="reserve_date"> ${item.day}</td>
                     <td class="room">${item.st_room}</td>
@@ -184,22 +186,22 @@ async function reserveList(day, st_room) {
     // 생성된 HTML을 reserveListDiv에 추가
     reserveListDiv.innerHTML = html;
 }
-async function reserve(r_id){
-    const deleteConfirm=confirm('정말삭제하시겠습니까?');
-    if(deleteConfirm){
-        const res=await axios({
-            method:'delete',
-            url:'/admin/reserve',
-            params:{r_id:r_id}
-        })
-        console.log(res.data.result)
+async function reserve(r_id) {
+    const deleteConfirm = confirm("정말삭제하시겠습니까?");
+    if (deleteConfirm) {
+        const res = await axios({
+            method: "delete",
+            url: "/admin/reserve",
+            params: { r_id: r_id },
+        });
+        console.log(res.data.result);
         if (res.data.result === true) {
-            alert('삭제 되었습니다.');
+            alert("삭제 되었습니다.");
             location.reload();
         } else {
-            alert('삭제하는 과정에서 문제가 발생하였습니다.');
+            alert("삭제하는 과정에서 문제가 발생하였습니다.");
         }
-    }else{
-        alert('예약취소를 실패 하였습니다.')
+    } else {
+        alert("예약취소를 실패 하였습니다.");
     }
 }

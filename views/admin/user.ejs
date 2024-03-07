@@ -90,11 +90,20 @@
                     <td><%= user.u_id %></td>
                     <td><%= user.name %></td>
                     <td><%= user.nk_name %></td>
-                    <td><%= user.email %></td>
+                    <td><%= user.email %></td><!--데이타를 substring(0,조건)+ (데이터.length >조건 ? 값1:값2)-->
                     <td><%= user.createdAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
                     <td><%= user.updatedAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
                     <% if(user.permission===null) {%>
-                        <td>권한없음<button class="permissionBtn"><a onclick="permissionInsert('<%=user.u_id%>')">권한부여</a></button></td>
+                        <td>권한없음
+                            <select id="permissionSelect">
+                            <option value="admin">관리자</option>
+                            <option value="student">수강생</option>
+                            <option value="graduate_student">수료생</option>
+                            <option value="user">관계자</option>
+                            <!-- 다른 권한 옵션을 추가할 수 있습니다. -->
+                        </select>
+                        <button class="permissionBtn" onclick="permissionAdd('<%= user.u_id %>')">권한부여</button>
+                    </td>
                         <% }else{ %>
                             <td><%= user.permission %></td>
                         <% } %>
@@ -112,39 +121,33 @@
         
     </div>
     <script>
-
-        function search() {
-    let category = document.getElementById("category").value;
-    let searchValue = document.getElementById("search").value;
-            console.log(category,searchValue)
-            let permission='<%=permission%>'
-            if(permission==='true'){
-                location.href=`/admin/user?category=${category}&search=${searchValue}`
-            }else{
-                location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
-
-            }
-           
-    // 이후에 검색된 결과에 대한 처리를 진행합니다.
-}
         (()=> {
-    let totalPages = '<%= page %>'-1 // totalPages 값은 서버에서 렌더링할 때 클라이언트로 전달되어야 합니다.
-    let paginationDiv = document.querySelector('.pagination');
-    let btns = document.querySelectorAll('.pagination a');
+        let totalPages = '<%= page %>'-1 // totalPages 값은 서버에서 렌더링할 때 클라이언트로 전달되어야 합니다.
+        let paginationDiv = document.querySelector('.pagination');
+        let btns = document.querySelectorAll('.pagination a');
 
-    for (let i = 0; i < btns.length; i++) {
+        for (let i = 0; i < btns.length; i++) {
         if (i === totalPages) {
             btns[i].classList.add('active');
         } else {
             btns[i].classList.remove('active');
         }
-    }
-})();
+        }
+        })();
+        function search() {
+            let category = document.getElementById("category").value;
+            let searchValue = document.getElementById("search").value;
+                console.log(category,searchValue)
+                let permission='<%=permission%>'
+                if(permission==='true'){
+                    location.href=`/admin/user?category=${category}&search=${searchValue}`
+                }else{
+                    location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
+
+                }
         
-        
-    
+        }
     </script>
-    
     <script src="/static/js/admin/user.js"></script>
     
 </body>
