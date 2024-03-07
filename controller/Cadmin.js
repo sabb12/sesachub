@@ -80,6 +80,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
+                    order: [['course', 'ASC']]
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 if (totalPages === 1) {
@@ -91,6 +92,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
+                    order: [['course', 'ASC']]
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 offset = (page - 1) * pageSize;
@@ -100,6 +102,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
+                    order: [['course', 'ASC']],
                     limit: pageSize,
                     offset: offset,
                 });
@@ -116,6 +119,7 @@ exports.userList = async (req, res) => {
                 userList = await user.findAll({
                     limit: pageSize,
                     offset: offset,
+                    order: [['course', 'ASC']]
                 });
             }
             console.log("전체회원", category, search);
@@ -145,6 +149,7 @@ exports.reserveList = async (req, res) => {
                     day: day,
                     st_room: st_room,
                 },
+                order: [['time', 'ASC']]
             });
             console.log("진입");
 
@@ -177,17 +182,30 @@ exports.reserveDelete = async (req, res) => {
 };
 // 권한 부여
 exports.permissionAprove = async (req, res) => {
-    console.log("진입");
-    console.log(req.body);
     try {
-        const result = await user.update(
-            {
-                permission: "student",
-            },
-            {
-                where: { u_id: req.body.u_id },
-            },
-        );
+        const{u_id,selectValue}=req.body
+        let result;
+        if(selectValue==="user"||selectValue==="graduate_student"||selectValue==="admin"){
+            result = await user.update(
+                {
+                    permission: selectValue,
+                    course:'10'
+                },
+                {
+                    where: { u_id: req.body.u_id },
+                },
+            );
+        }else{
+            
+            result = await user.update(
+                {
+                    permission: "student",
+                },
+                {
+                    where: { u_id: req.body.u_id },
+                },
+            );
+        }
 
         if (result) {
             res.send(true);
@@ -203,7 +221,7 @@ exports.permissionAprove = async (req, res) => {
 exports.userPwReset = async (req, res) => {
     const pwReset = await user.update(
         {
-            pw: hashPw("sessac123"),
+            pw: hashPw("sesac123"),
         },
         {
             where: { u_id: req.body.u_id },

@@ -36,7 +36,7 @@ const UserModel = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             permission: {
-                type: DataTypes.ENUM("user", "student", "admin"),
+                type: DataTypes.ENUM("user", "student", "admin", "graduate_student"),
                 allowNull: true,
             },
         },

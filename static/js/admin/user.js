@@ -1,4 +1,9 @@
-async function permissionInsert(u_id) {
+function permissionAdd(u_id){
+    var selectValue = document.getElementById('permissionSelect').value;
+    permissionInsert(u_id,selectValue)
+}
+
+async function permissionInsert(u_id,selectValue) {
     let confirmResult = confirm("권한을 부여 하시겠습니까?");
 
     if (confirmResult) {
@@ -7,6 +12,7 @@ async function permissionInsert(u_id) {
             url: "/admin/permission",
             data: {
                 u_id: u_id,
+                selectValue:selectValue
             },
         });
         if (res.data === true) {
@@ -20,7 +26,7 @@ async function permissionInsert(u_id) {
     }
 }
 async function pwReset(u_id) {
-    let confirmResult = confirm("초기화 하시겠습니까?\n초기화시 패스트워드는 sessac123 입니다.");
+    let confirmResult = confirm("초기화 하시겠습니까?\n초기화시 비밀번호는 sesac123 입니다.");
     if (confirmResult) {
         const res = await axios({
             method: "patch",
