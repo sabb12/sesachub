@@ -2,7 +2,7 @@
 <html lang="en">
 <link rel="stylesheet" href="/static/css/header.css">
     <body>
-        <div class=".wrapper">
+        <header>
             <div class="headerContainer">
                 <div class="menuList">
                     <%if(session && session.u_id){%>
@@ -39,7 +39,7 @@
                         <button type="button" class="login-btn">로그인 &nbsp; | &nbsp; 회원가입</button>
                      <%}%>
                 </div>
-            </div>
+            </header>
             <% if (typeof message !== 'undefined') { %>
                 <!-- message가 정의되어 있다면 -->
                 <input type="hidden" id="message" value="<%= message %>">

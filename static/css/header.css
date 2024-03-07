@@ -2,9 +2,11 @@ body {
     margin: 0;
 }
 
-.wrapper {
+header {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0;
 }
 
 .headerContainer {
@@ -51,26 +53,23 @@ a {
     cursor: pointer;
 }
 
-
-
-
 /* 드롭다운 컨텐츠(링크) 스타일링 */
 .dropdown-content {
     display: none;
     position: absolute;
     /* z-index: 1; */
-  }
-  
-  /* 드롭다운 내용(링크) 호버 시 스타일링 */
-  .dropdown-content a:hover {
+}
+
+/* 드롭다운 내용(링크) 호버 시 스타일링 */
+.dropdown-content a:hover {
     background-color: #ddd;
-  }
-  
-  /* 드롭다운 버튼 클릭 시 드롭다운 내용 보이게 함 */
-  .show {
+}
+
+/* 드롭다운 버튼 클릭 시 드롭다운 내용 보이게 함 */
+.show {
     display: block;
-  }
-  .dropdown-content #drop-item{
-      margin-top: 10px;
-      width: 94px;
-  }
+}
+.dropdown-content #drop-item {
+    margin-top: 10px;
+    width: 94px;
+}
