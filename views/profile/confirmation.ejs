@@ -11,18 +11,37 @@
         <div class="title">예약 관리</div>
         <div class="reservationContainer">
           <div class="reservationHeader">
+            <div class="check_all">
+              <input type="checkbox" name="checkbox" id="checkAll"/>
+              <label for="checkAll"> 전체 선택 </label>
+            </div>
             <div>No.</div>
             <div>예약 장소</div>
             <div>예약 시간</div>
             <div>예약 인원</div>
           </div>
-          <div class="reservationBody"></div>
+          <div class="reservation_body">
+            <% reservationData.forEach(reservation => { %>
+              <div class="reservation_list_container">
+                <div class="check_all">
+                  <input type="checkbox" name="checkbox" class="check-option" />
+                </div>
+                <div><%= reservation.r_id %></div>
+                <div><%= reservation.st_room %></div>
+                <div><%= reservation.day %></div>
+                <div><%= reservation.time %></div>
+                <div><%= reservation.count %></div>
+                <button class="deleteButton" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">예약 취소</button>
+              </div>
+             <% }); %>
+            </div>
           <div class="reservationPagination">< 1,2,3,4,5 ></div>
         </div>
         <div class="reserCancelContainer">
-          <button>예약 취소</button>
+          <button class="delete-all-btn">예약 취소</button>
         </div>
       </div>
     </div>
+    <script src="/static/js/confirmation.js"></script>
   </body>
 </html>
