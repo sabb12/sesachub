@@ -9,7 +9,6 @@ function hashPw(pw) {
 //전체회원조희
 exports.userList = async (req, res) => {
     const { category, search } = req.query;
-    console.log(category, search);
     const page = req.query.page || 1;
     const pageSize = 10;
     let userList;
@@ -18,7 +17,6 @@ exports.userList = async (req, res) => {
         let totalPages; //전체유저 /10 해서 소수점 올림
         let offset; //오프셋 계산
         if (req.query.permission === "null") {
-            console.log("진입");
             totalCount = await user.count({ where: { permission: null } });
             totalPages = Math.ceil(totalCount / pageSize);
             offset = (page - 1) * pageSize;
@@ -80,7 +78,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [['course', 'ASC']]
+                    order: [["course", "ASC"]],
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 if (totalPages === 1) {
@@ -92,7 +90,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [['course', 'ASC']]
+                    order: [["course", "ASC"]],
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 offset = (page - 1) * pageSize;
@@ -102,7 +100,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [['course', 'ASC']],
+                    order: [["course", "ASC"]],
                     limit: pageSize,
                     offset: offset,
                 });
@@ -119,10 +117,9 @@ exports.userList = async (req, res) => {
                 userList = await user.findAll({
                     limit: pageSize,
                     offset: offset,
-                    order: [['course', 'ASC']]
+                    order: [["course", "ASC"]],
                 });
             }
-            console.log("전체회원", category, search);
             res.render("admin/user", {
                 userList: userList,
                 page: page,
@@ -141,7 +138,6 @@ exports.userList = async (req, res) => {
 exports.reserveList = async (req, res) => {
     try {
         const { day, st_room } = req.query;
-        console.log(day, st_room);
 
         if ((day, st_room)) {
             const reserveList = await reservation.findAll({
@@ -149,9 +145,14 @@ exports.reserveList = async (req, res) => {
                     day: day,
                     st_room: st_room,
                 },
-                order: [['time', 'ASC']]
+                include: [
+                    {
+                        model: user,
+                        attributes: undefined, // 가져오고 싶은 유저 정보의 열을 선택합니다.
+                    },
+                ],
+                order: [["time", "ASC"]],
             });
-            console.log("진입");
 
             res.send(reserveList);
         } else {
@@ -165,12 +166,10 @@ exports.reserveList = async (req, res) => {
 // 예약 취소
 exports.reserveDelete = async (req, res) => {
     try {
-        console.log(req.query.r_id);
         const result = await reservation.destroy({
             where: { r_id: req.query.r_id },
         });
         if (result) {
-            console.log("성공");
             res.send({ result: true });
         } else {
             res.send({ result: false });
@@ -183,20 +182,23 @@ exports.reserveDelete = async (req, res) => {
 // 권한 부여
 exports.permissionAprove = async (req, res) => {
     try {
-        const{u_id,selectValue}=req.body
+        const { u_id, selectValue } = req.body;
         let result;
-        if(selectValue==="user"||selectValue==="graduate_student"||selectValue==="admin"){
+        if (
+            selectValue === "user" ||
+            selectValue === "graduate_student" ||
+            selectValue === "admin"
+        ) {
             result = await user.update(
                 {
                     permission: selectValue,
-                    course:'10'
+                    course: "10",
                 },
                 {
                     where: { u_id: req.body.u_id },
                 },
             );
-        }else{
-            
+        } else {
             result = await user.update(
                 {
                     permission: "student",

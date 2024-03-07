@@ -2,43 +2,6 @@
 <html lang="ko">
 <%- include('../include/include.ejs',{title:"관리자페이지"}) %>
 <link rel="stylesheet" href="/static/css/admin/user.css">
-<style>
-    .search-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.search-bar select,
-.search-bar input[type="text"],
-.search-bar button {
-    margin-right: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.search-bar select {
-    flex: 1;
-    max-width: 150px; /* 원하는 너비로 조정 */
-}
-
-.search-bar input[type="text"] {
-    flex: 2;
-    max-width: 300px; /* 원하는 너비로 조정 */
-}
-
-.search-bar button {
-    background-color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.search-bar button:hover {
-    background-color: #6fc274;
-    color: white;
-}
-</style>
 <body>
     <%- include('../include/header.ejs') %>
     <div id="member-content" >
@@ -69,56 +32,70 @@
             
         </div>
         
-        
-        <button class="permissionBtn" onclick="gi(this.value)" value="permission"><a href="/admin/user?permission=null">권한대기 유저</a></button>
-        <button class="permissionBtn"><a href="/admin/user">회원전체 조회</a></button>
-        <table id="member-table">
-            <tr>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>닉네임</th>
-                <th>이메일</th>
-                <th>가입일</th>
-                <th>수정일</th>
-                <th>권한</th>
-                <th>클래스</th>
-                <th>휴대폰 번호</th>
-                <th>pw초기화</th>
-            </tr>
-            <% userList.forEach(user => { %>
+        <% if(permission===true){%>
+            <button class="permissionBtn" onclick="gi(this.value)" value="permission"><a href="/admin/user?permission=null">권한대기 유저</a></button>
+            <button class="permissionBtn active"><a href="/admin/user">회원전체 조회</a></button>
+            <% }else if(permission ===false){ %>
+                <button class="permissionBtn active" onclick="gi(this.value)" value="permission"><a href="/admin/user?permission=null">권한대기 유저</a></button>
+                <button class="permissionBtn"><a href="/admin/user">회원전체 조회</a></button>
+            <% } %>
+
+        <table id="member-table" class="reserve_list">
+            <thead>
+
                 <tr>
-                    <td><%= user.u_id %></td>
-                    <td><%= user.name %></td>
-                    <td><%= user.nk_name %></td>
-                    <td><%= user.email %></td><!--데이타를 substring(0,조건)+ (데이터.length >조건 ? 값1:값2)-->
-                    <td><%= user.createdAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
-                    <td><%= user.updatedAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
-                    <% if(user.permission===null) {%>
-                        <td>권한없음
-                            <select id="permissionSelect">
-                            <option value="admin">관리자</option>
-                            <option value="student">수강생</option>
-                            <option value="graduate_student">수료생</option>
-                            <option value="user">관계자</option>
-                            <!-- 다른 권한 옵션을 추가할 수 있습니다. -->
-                        </select>
-                        <button class="permissionBtn" onclick="permissionAdd('<%= user.u_id %>')">권한부여</button>
-                    </td>
-                        <% }else{ %>
-                            <td><%= user.permission %></td>
-                        <% } %>
-                    <td><%= user.course %></td>
-                    <td><%= user.phone %></td>
-                    <td><button class="permissionBtn"><a onclick="pwReset('<%=user.u_id%>')">초기화</a></button></td>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>닉네임</th>
+                    <th>이메일</th>
+                    <th>가입일</th>
+                    <th>수정일</th>
+                    <th>권한</th>
+                    <th>클래스</th>
+                    <th>휴대폰 번호</th>
                 </tr>
-            <% }); %>
-            
+            </thead>
+            <tbody>
+                <% userList.forEach(user => { %>
+                    <tr  onclick="openModal('<%= user.u_id %>','<%= user.name %>','<%= user.course %>','<%= user.permission %>')">
+                        <td><%= user.u_id %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.nk_name %></td>
+                        <td><%= user.email %></td><!--데이타를 substring(0,조건)+ (데이터.length >조건 ? 값1:값2)-->
+                        <td><%= user.createdAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
+                        <td><%= user.updatedAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
+                        <% if(user.permission === null) {%>
+                            <td><strong style="color: red;">권한없음</strong></td>
+                            <% }else{ %>
+                                <td><%= user.permission %></td>
+                            <% } %>
+                        <td><%= user.course %></td>
+                        <td><%= user.phone %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
         </table>
         <% if(userList.length === 0) { %>
             <div class="noData"><h1>😫자료가 없습니다.</h1></div>
             <% }%>  
 
         
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <table id="member-table" class="member_table">
+                <tr >
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>클레스</th>
+                    <th>권한</th>
+                </tr>
+            </table>
+            <div class="deleteBtn">
+                <button class="permissionBtn"><a onclick="pwReset()">초기화</a></button>
+                <button class="user_deleteBtn" onclick="permission_delete()">삭제</button>
+            </div>
+        </div>
     </div>
     <script>
         (()=> {
@@ -143,9 +120,7 @@
                     location.href=`/admin/user?category=${category}&search=${searchValue}`
                 }else{
                     location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
-
                 }
-        
         }
     </script>
     <script src="/static/js/admin/user.js"></script>

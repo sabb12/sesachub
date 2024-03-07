@@ -173,7 +173,8 @@ async function reserveList(day, st_room) {
     res.data.forEach((item) => {
         html += `
                 <tr class="reserve_item">
-                    <td class="user_id">${item.u_id}</td>
+                <td class="user_id">${item.u_id}</td>
+                    <td class="user_id">${item.user.name}</td>
                     <td class="reserve_date"> ${item.day}</td>
                     <td class="room">${item.st_room}</td>
                     <td class="time">${item.time}</td>
