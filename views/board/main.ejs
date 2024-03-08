@@ -67,7 +67,7 @@
                                 <input type="text" class="searchKeyword" placeholder="검색어를 입력해주세요" />
                                 <button type="button" class="btn searchBtn" onclick="search()">검색</button>
                             </form>
-                            <button class="btn writePost" onclick="location.href='/board/post'">글 작성</button>
+                            <button class="btn writePost" onclick="insertBoard()">글 작성</button>
                             <div class="boardPage">
                                 <% for (i=1; i <=totalPages; i++) { %>
                                     <div class="pageNumber"><a href="/board?page=<%= i %>&category=<%= category%>">
@@ -91,6 +91,10 @@
                     } else if (selectedValue === "like") {
                         location.href = `/board?category=<%= category%>&sort=like`
                     }
+                }
+
+                function insertBoard() {
+                    location.href = '/board/insert';
                 }
 
                 function search() {
