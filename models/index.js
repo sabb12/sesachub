@@ -1,5 +1,6 @@
 "use strict";
 
+const { request } = require("express");
 const Sequelize = require("sequelize");
 // console.log("corssenv: ", process.env.NODE_ENV); // prod or development
 // const config = require(__dirname + "/../config/config.js")["prod"];
@@ -23,7 +24,16 @@ const boardLikeModel = require("../models/BoardLike")(sequelize, Sequelize);
 const boardImgModel = require("../models/BoardImg")(sequelize, Sequelize);
 const bookMarkModel = require("../models/Bookmark")(sequelize, Sequelize);
 const commentModel = require("../models/Comment")(sequelize, Sequelize);
+const courseModel = require("../models/Course")(sequelize, Sequelize);
 // 외래키 설정
+
+//course
+courseModel.hasMany(userModel, {
+    foreignKey: "cs_id",
+});
+userModel.belongsTo(courseModel, {
+    foreignKey: "cs_id",
+});
 //USER
 userModel.hasMany(reservationModel, {
     foreignKey: "u_id",
@@ -97,5 +107,6 @@ db.boardLike = boardLikeModel;
 db.boardImg = boardImgModel;
 db.bookMark = bookMarkModel;
 db.comment = commentModel;
+db.course = courseModel;
 
 module.exports = db;

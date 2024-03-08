@@ -116,21 +116,15 @@
                   <input type="text" class="register_email" name="email" id="email" placeholder="example@example.com" required  />
                   <small>이메일 양식에 맞게 작성해주세요.</small>
                 </div>
-
+                
                 <div class="register_input">
                   <label for="course">수강중인 강의</label>
                   <select name="course" id="course" required>
                     <option class="hidden_option" value="" selected disabled hidden>[필수] 수강중인 과정을 선택해주세요.</option>
-                    <option value="1">python 데이터분석 및 ai/딥러닝 full PKG 개발과정</option>
-                    <option value="2">오픈소스 AI 플랫폼을 활용한 인공지능서비스 개발자 양성과정</option>
-                    <option value="3">LLM 활용 인공지능(NLP) 서비스 개발자 양성과정</option>
-                    <option value="4">기획부터 배포까지 협업 프로젝트로 완성하는 풀스택 웹 개발자 취업 부트캠프</option>
-                    <option value="5">디지털 전환을 주도하는 SW AI 교육전문가 취업스쿨 1기</option>
-                    <option value="6">[AWS 부트캠프] 클라우드 아키텍트 플러스</option>
-                    <option value="7">웹툰 제작사 취업 (연출/작가) 과정</option>
-                    <option value="8">iOS 앱 개발자 데뷔과정 PLUS</option>
-                    <option value="9">언리얼 엔진과 생성형 AI를 활용한 콘텐츠 개발자 양성 과정</option>
-                    <option value="10">기타 및 SeSAC 관계자</option>
+                      <% courseList.forEach(course => { %>
+                      <option value="'<%=course.cs_id  %>"><%=course.course_name%></option>
+                      
+                      <%})%>
                   </select>
                  </div>
               </div>

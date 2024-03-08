@@ -31,14 +31,14 @@ const UserModel = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            course: {
-                type: DataTypes.ENUM("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
-                allowNull: false,
-            },
             permission: {
                 type: DataTypes.ENUM("user", "student", "admin", "graduate_student"),
                 allowNull: true,
             },
+            cs_id:{
+                type:DataTypes.INTEGER,
+                allowNull:false
+            }
         },
         {
             freezeTableName: true,
