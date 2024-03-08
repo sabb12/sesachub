@@ -238,12 +238,40 @@ exports.userPwReset = async (req, res) => {
 };
 // 유저 탈퇴
 exports.userDelete = async (req, res) => {
-    const result = await user.destroy({
-        where: { u_id: req.query.u_id },
-    });
-    if (result) {
-        res.send(true);
-    } else {
-        res.send(false);
+    try {
+        const result = await user.destroy({
+            where: { u_id: req.query.u_id },
+        });
+        if (result) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+};
+// 클레스 수정
+exports.courseUpdate = async (req, res) => {
+    try {
+        const { u_id, course } = req.body;
+        console.log(u_id, course);
+        const result = await user.update(
+            {
+                course: course,
+            },
+            {
+                where: { u_id: u_id },
+            },
+        );
+        if (result) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
     }
 };

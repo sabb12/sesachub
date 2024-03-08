@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controller/Cadmin");
 const permission = (req, res, next) => {
-    if (req.session.permission != 'admin') {
-        return res.render('user/signin', { message: '진입 불가능한 경로입니다.' }); // 세션이 없으면 로그인 페이지로 리디렉션
+    if (req.session.permission != "admin") {
+        return res.render("user/signin", { message: "진입 불가능한 경로입니다." }); // 세션이 없으면 로그인 페이지로 리디렉션
     }
     next();
 };
@@ -14,4 +14,5 @@ router.delete("/user", controller.userDelete); //유저 삭제
 router.get("/reserve", controller.reserveList); //해당 날짜/스터디룸에대한 예약현황
 router.delete("/reserve", controller.reserveDelete); //예약취소
 router.patch("/permission", controller.permissionAprove); //권한부여
+router.patch("/course", controller.courseUpdate); //클레스 수정
 module.exports = router;
