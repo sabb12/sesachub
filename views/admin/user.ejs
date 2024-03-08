@@ -65,7 +65,7 @@
                         <td><%= user.createdAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
                         <td><%= user.updatedAt.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit'}) %></td>
                         <% if(user.permission === null) {%>
-                            <td><strong style="color: red;">권한없음</strong></td>
+                            <td><strong style="color: #e74c3c;">권한없음</strong></td>
                             <% }else{ %>
                                 <td><%= user.permission %></td>
                             <% } %>

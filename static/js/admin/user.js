@@ -7,7 +7,32 @@ function permissionAdd(u_id) {
         permissionInsert(u_id, selectValue);
     }
 }
+function course_update(u_id) {
+    if (!u_id) {
+        let check = "courseAdd";
+        extractValues(check);
+    } else {
+        var selectValue = document.getElementById("classSelect").value;
+        courseAdd(u_id, selectValue);
+    }
+}
+async function courseAdd(u_id, course) {
+    let confirmResult = confirm("수업을 변경 하시겠습니까?");
 
+    if (confirmResult) {
+        const res = await axios({
+            method: "patch",
+            url: "/admin/course",
+            data: { u_id: u_id, course: course },
+        });
+        if (res.data === true) {
+            alert("수업 변경 성공하였습니다");
+            location.reload();
+        } else {
+            alert("수업 변경 실패 하였습니다.");
+        }
+    }
+}
 async function permissionInsert(u_id, selectValue) {
     let confirmResult = confirm("권한을 부여 하시겠습니까?");
 
@@ -65,8 +90,10 @@ function extractValues(check) {
             permission_delete(u_id);
         } else if (check === "pwReset") {
             pwReset(u_id);
-        } else {
+        } else if (permissionAdd === "permissionAdd") {
             permissionAdd(u_id);
+        } else {
+            course_update(u_id);
         }
     });
 }
@@ -102,8 +129,9 @@ function openModal(u_id, name, course, permission) {
     const newRow = document.createElement("tr");
     newRow.classList.add("member_data");
     let html = "";
+    let html2 = "";
     html += `
-            <span>권한없음</span>
+            <span>권한없음</span><br>
             <select id="permissionSelect">
                 <option value="admin">관리자</option>
                 <option value="student">수강생</option>
@@ -111,11 +139,26 @@ function openModal(u_id, name, course, permission) {
                 <option value="user">관계자</option>
             </select>
             <button class="permissionBtn" onclick="permissionAdd()">권한부여</button>`;
+
+    html2 += `<select id="classSelect">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+            <button class="permissionBtn" onclick="course_update()">수업 변경</button>`;
+
     // 새로운 <tr> 요소에 데이터를 포함하는 <td> 요소들을 추가합니다.
     newRow.innerHTML = `
         <td>${u_id}</td>
         <td>${name}</td>
-        <td>${course}</td>
+        <td>${course}<br>${html2}</td>
         <td>${permission ? permission : html}</td>
     `;
 
