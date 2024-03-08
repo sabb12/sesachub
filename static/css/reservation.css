@@ -208,10 +208,13 @@ input[type="radio"] {
 
 /* 예약 확인 */
 .reservation_result {
-    width: 1040px;
+    width: 1000px;
     height: 200px;
     margin-bottom: 60px;
     border: 1px solid var(--text-color);
+    padding: 30px;
+    line-height: 3;
+    /* text-align: center; */
 }
 
 /* 예약하기 버튼 */

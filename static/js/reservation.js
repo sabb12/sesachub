@@ -289,7 +289,14 @@ function reservationResult() {
 
     const date = selected[0] ? `날짜: ${selected[0]}<br>` : "";
     const room = selected[1] ? `공간: ${selected[1]}<br>` : "";
-    const time = selected[2] ? `시간: ${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>` : "";
+    let time = "";
+    if (selected[2] < 10) {
+        time = `시간: 0${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>`;
+    } else if (selected[2] >= 10) {
+        time = `시간: ${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>`;
+    } else {
+        time = "";
+    }
     const count = selected[3] ? `인원: ${selected[3]}명<br>` : "";
 
     reservationResult.innerHTML = `${date}${room}${time}${count}`;
