@@ -86,11 +86,11 @@ document.querySelector(".duplicate_check button").addEventListener("click", asyn
         return;
     }
 
-    if (u_id) {
+    if (u_id.value) {
         try {
-            let res = axios({
+            let res = await axios({
                 method: "get",
-                url: `/user/duplicate?u_id=${u_id}`,
+                url: `/user/duplicate?u_id=${u_id.value}`,
             });
 
             if (res.data.isDuplicate) {
