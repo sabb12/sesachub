@@ -1,4 +1,4 @@
-const { user, reservation } = require("../models");
+const { user, reservation, course } = require("../models");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const saltRounds = 10;
@@ -256,7 +256,7 @@ exports.userDelete = async (req, res) => {
 exports.courseUpdate = async (req, res) => {
     try {
         const { u_id, cs_id } = req.body;
-        console.log(cs_id)
+        console.log(cs_id);
         const result = await user.update(
             {
                 cs_id: cs_id,
@@ -276,6 +276,34 @@ exports.courseUpdate = async (req, res) => {
     }
 };
 //course 리스트
-exports.courseList=(req,res)=>{
-    res.render('admin/course')
-}
+exports.courseList = async (req, res) => {
+    try {
+        const courseList = await course.findAll();
+        res.render("admin/course", { courseList: courseList });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+};
+//course 업데이트
+exports.courseupdate = async (req, res) => {
+    try {
+        const { cs_id, course_name } = req.body;
+        const result = await course.update(
+            {
+                course_name: course_name,
+            },
+            {
+                where: { cs_id: cs_id },
+            },
+        );
+        if (result) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+};

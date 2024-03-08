@@ -32,7 +32,7 @@ exports.duplicateCheck = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         const { u_id, pw, name, nk_name, email, phone, cs_id } = req.body;
-
+        console.log(cs_id)
         const signup = await user
             .create({
                 u_id,

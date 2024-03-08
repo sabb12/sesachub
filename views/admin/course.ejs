@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
-<%- include('../include/include.ejs',{title:"관리자페이지"}) %>
+<%- include('../include/include.ejs',{title:"수업 관리"}) %>
 <link rel="stylesheet" href="/static/css/admin/course.css">
+<style>
+ 
+</style>
 <body>
     <%- include('../include/header.ejs') %>
-    <script src="/static/js/admin/course.js"></script>
-    
+    <h1>과정 리스트</h1>
+    <div class="course-container">
+        <% courseList.forEach(course => { %>
+            <div class="course">
+                <p>수업번호: <%= course.cs_id %></p>
+                <label for="newCourseName">수업이름:</label>
+                <input type="text" name="newCourseName" id="course_<%= course.cs_id %>" value="<%= course.course_name %>">
+                <button class="reserve_btn" onclick="course_update('<%= course.cs_id %>')">수정</button>
+  
+            </div>
+        <% }); %>
+    </div>
+        <script src="/static/js/admin/course.js"></script>
 </body>
 </html>
