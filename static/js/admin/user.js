@@ -16,14 +16,14 @@ function course_update(u_id) {
         courseAdd(u_id, selectValue);
     }
 }
-async function courseAdd(u_id, course) {
+async function courseAdd(u_id, cs_id) {
     let confirmResult = confirm("수업을 변경 하시겠습니까?");
 
     if (confirmResult) {
         const res = await axios({
             method: "patch",
             url: "/admin/course",
-            data: { u_id: u_id, cs_id: course },
+            data: { u_id: u_id, cs_id: cs_id },
         });
         if (res.data === true) {
             alert("수업 변경 성공하였습니다");
