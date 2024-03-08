@@ -1,0 +1,44 @@
+body {
+    text-align: center;
+}
+.course-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.course {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+    width: 50%;
+}
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+input[type="text"] {
+    margin-right: 10px;
+    padding: 5px;
+    width: 80%;
+}
+button[type="submit"] {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.reserve_btn{
+    color: white;
+border: none;
+border-radius: 15px;
+background: #6fc274;
+margin-bottom: 10px;
+font-size: 15px;
+margin: 10px;
+}

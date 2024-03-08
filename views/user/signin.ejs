@@ -119,10 +119,10 @@
                 
                 <div class="register_input">
                   <label for="course">수강중인 강의</label>
-                  <select name="course" id="course" required>
+                  <select name="cs_id" id="cs_id" required>
                     <option class="hidden_option" value="" selected disabled hidden>[필수] 수강중인 과정을 선택해주세요.</option>
                       <% courseList.forEach(course => { %>
-                      <option value="'<%=course.cs_id  %>"><%=course.course_name%></option>
+                      <option value="<%=course.cs_id  %>"><%=course.course_name%></option>
                       
                       <%})%>
                   </select>

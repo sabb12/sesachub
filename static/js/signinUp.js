@@ -104,7 +104,7 @@ function showSuccess(input) {
 // 가입하기
 function signup() {
     const form = document.forms["sign_up_form"];
-
+    console.log(form)
     axios({
         method: "post",
         url: "/user/signup",
@@ -115,7 +115,7 @@ function signup() {
             nk_name: form.nk_name.value,
             email: form.email.value,
             phone: form.phone.value,
-            course: form.course.value,
+            cs_id: form.cs_id.value,
         },
     }).then((res) => {
         alert(res.data);
