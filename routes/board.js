@@ -3,8 +3,8 @@ const router = express.Router();
 const controller = require("../controller/Cboard");
 
 router.get("/", controller.boardList); // 커뮤니티 진입
-router.get("/write", controller.boardWritePage); // 게시글 등록 페이지
-router.post("/", controller.boardInsert); // 게시글 등록 요청 전송
+router.get("/insert", controller.boardWritePage); // 게시글 등록 페이지
+router.post("/insert", controller.boardInsert); // 게시글 등록 요청 전송
 router.get("/board", controller.board); // 커뮤니티 해당글 진입경로
 router.get("/update", controller.boardUpdatePage); // 게시글 수정 페이지
 router.patch("/", controller.boardPatch); // 게시글 수정 요청 전송

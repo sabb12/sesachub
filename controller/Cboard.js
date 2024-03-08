@@ -213,7 +213,7 @@ exports.boardDelete = async (req, res) => {
 };
 // 게시글 등록 페이지 이동
 exports.boardWritePage = function (req, res) {
-    res.render("board/write");
+    res.render("board/insert");
 };
 // 게시글등록
 exports.boardInsert = async (req, res) => {
@@ -239,11 +239,12 @@ exports.boardInsert = async (req, res) => {
 exports.boardUpdatePage = function (req, res) {
     const { b_id } = req.query;
     const boardInfo = board.findOne({
-        attributes: ["b_id", "title", "content"],
+        attributes: ["b_id", "category", "title", "content"],
         where: {
             b_id: b_id,
         },
     });
+    console.log(boardInfo);
     res.render("board/update", { board: boardInfo });
 };
 // 게시글 수정
@@ -267,7 +268,7 @@ exports.boardPatch = async (req, res) => {
 };
 // 댓글 대댓글 등록
 exports.commentInsert = async (req, res) => {
-    const { u_id, nk_name, b_id, content, parent_id } = req.body;
+    const { u_id, nk_name, b_id, content, parent_id, status } = req.body;
 
     const result = await comment.create({
         nk_name: nk_name,
@@ -275,6 +276,7 @@ exports.commentInsert = async (req, res) => {
         b_id: b_id,
         parent_id: parent_id,
         content: content,
+        status: status,
     });
     res.end();
 };

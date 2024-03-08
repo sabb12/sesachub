@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../include/include.ejs', {title:"커뮤니티"}); %>
+    <link rel="stylesheet" href="/static/css/board.css">
+
+    <body>
+        <%- include('../include/header.ejs'); %>
+            <div class="container">
+                <div class="center">
+                    <form name="writer">
+                        <input type="hidden" name="u_id" value="<%=session.u_id%>">
+                        <div>
+                            <input type="text" name="title" value="<%=board.title%>" />
+                        </div>
+                        <div>
+                            <textarea name="content" rows="30"><%=board.content%></textarea>
+                        </div>
+                        <input type="button" onclick="boardInsert()" value="글 작성" />
+                    </form>
+                </div>
+            </div>
+    </body>
+
+</html>

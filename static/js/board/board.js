@@ -1,7 +1,7 @@
 /* 게시글 관련 */
 // 게시글 수정 페이지로 이동
-function editBoard(b_id) {
-    axios({
+async function editBoard(b_id) {
+    await axios({
         method: "GET",
         url: "/board/update",
         params: { b_id: b_id },
@@ -59,14 +59,39 @@ async function comment_insert() {
             u_id: form.u_id.value,
             nk_name: form.nk_name.value,
             content: form.comment_content.value,
+            status: form.status.value,
         },
     });
     location.reload();
 }
+// 댓글, 답글 수정 폼 호출
+function change_comment(c_id) {
+    const content = document.getElementById(`c_content${c_id}`).innerText;
+    console.log(content);
+    document.getElementById(`comment_${c_id}_content`).innerHTML =
+        `<textarea id="update${c_id}">${content}</textarea>`;
+    document.getElementById(`c_delete_btn${c_id}`).setAttribute("type", "hidden");
+    document.getElementById(`reply_btn${c_id}`).setAttribute("type", "hidden");
+    document.getElementById(`comment${c_id}_status`).style.display = "block";
+    document
+        .getElementById(`c_update_btn${c_id}`)
+        .setAttribute("onclick", `update_comment("${c_id}")`);
+}
 // 댓글, 답글 수정
-// async function comment_update() {
-
-// }
+async function update_comment(c_id) {
+    const content = document.getElementById(`update${c_id}`).value;
+    const status = document.getElementById(`comment${c_id}_status`).value;
+    await axios({
+        method: "PATCH",
+        url: "/board/comment",
+        data: {
+            c_id: c_id,
+            content: content,
+            status: status,
+        },
+    });
+    location.reload();
+}
 // 댓글, 답글 삭제
 async function comment_delete(c_id) {
     if (confirm("댓글을 삭제하시겠습니까?")) {
@@ -80,7 +105,7 @@ async function comment_delete(c_id) {
     }
     location.reload();
 }
-// 답글 폼 호출
+// 답글 등록 폼 호출
 function call_reply_form(c_id) {
     const form = document.forms[`reply_form${c_id}`];
     form.style.display = "block";
