@@ -78,7 +78,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [["course", "ASC"]],
+                    order: [["cs_id", "ASC"]],
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 if (totalPages === 1) {
@@ -90,7 +90,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [["course", "ASC"]],
+                    order: [["cs_id", "ASC"]],
                 });
                 totalPages = Math.ceil(totalCount / pageSize);
                 offset = (page - 1) * pageSize;
@@ -100,7 +100,7 @@ exports.userList = async (req, res) => {
                             [Op.like]: `%${search}%`,
                         },
                     },
-                    order: [["course", "ASC"]],
+                    order: [["cs_id", "ASC"]],
                     limit: pageSize,
                     offset: offset,
                 });
@@ -117,7 +117,7 @@ exports.userList = async (req, res) => {
                 userList = await user.findAll({
                     limit: pageSize,
                     offset: offset,
-                    order: [["course", "ASC"]],
+                    order: [["cs_id", "ASC"]],
                 });
             }
             res.render("admin/user", {
@@ -192,7 +192,7 @@ exports.permissionAprove = async (req, res) => {
             result = await user.update(
                 {
                     permission: selectValue,
-                    course: "10",
+                    cs_id: "10",
                 },
                 {
                     where: { u_id: req.body.u_id },
@@ -254,24 +254,24 @@ exports.userDelete = async (req, res) => {
 };
 // 클레스 수정
 exports.courseUpdate = async (req, res) => {
-    try {
-        const { u_id, course } = req.body;
-        console.log(u_id, course);
-        const result = await user.update(
-            {
-                course: course,
-            },
-            {
-                where: { u_id: u_id },
-            },
-        );
-        if (result) {
-            res.send(true);
-        } else {
-            res.send(false);
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server Error");
-    }
+    // try {
+    //     const { u_id, course } = req.body;
+    //     console.log(u_id, course);
+    //     const result = await user.update(
+    //         {
+    //             course: course,
+    //         },
+    //         {
+    //             where: { u_id: u_id },
+    //         },
+    //     );
+    //     if (result) {
+    //         res.send(true);
+    //     } else {
+    //         res.send(false);
+    //     }
+    // } catch (error) {
+    //     console.error(error);
+    //     res.status(500).send("Server Error");
+    // }
 };

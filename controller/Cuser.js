@@ -1,4 +1,4 @@
-const { user } = require("../models");
+const { user, course } = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -11,8 +11,9 @@ function comparePw(inputPw, hashedPw) {
     return bcrypt.compareSync(inputPw, hashedPw);
 }
 
-exports.main = (req, res) => {
-    res.render("user/signin");
+exports.main = async (req, res) => {
+    let courseList = await course.findAll();
+    res.render("user/signin", { courseList: courseList });
 };
 
 exports.duplicateCheck = async (req, res) => {
@@ -30,7 +31,7 @@ exports.duplicateCheck = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        const { u_id, pw, name, nk_name, email, phone, course } = req.body;
+        const { u_id, pw, name, nk_name, email, phone, cs_id } = req.body;
 
         const signup = await user
             .create({
@@ -40,7 +41,7 @@ exports.signup = async (req, res) => {
                 nk_name,
                 email,
                 phone,
-                course,
+                cs_id,
             })
             .then(() => {
                 res.send("회원가입 성공");

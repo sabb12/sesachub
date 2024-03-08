@@ -57,7 +57,7 @@
             </thead>
             <tbody>
                 <% userList.forEach(user => { %>
-                    <tr  onclick="openModal('<%= user.u_id %>','<%= user.name %>','<%= user.course %>','<%= user.permission %>')">
+                    <tr  onclick="openModal('<%= user.u_id %>','<%= user.name %>','<%= user.cs_id %>','<%= user.permission %>')">
                         <td><%= user.u_id %></td>
                         <td><%= user.name %></td>
                         <td><%= user.nk_name %></td>
@@ -69,7 +69,7 @@
                             <% }else{ %>
                                 <td><%= user.permission %></td>
                             <% } %>
-                        <td><%= user.course %></td>
+                        <td><%= user.cs_id %></td>
                         <td><%= user.phone %></td>
                     </tr>
                 <% }); %>
