@@ -29,7 +29,11 @@
                 <div><%= reservation.r_id %></div>
                 <div><%= reservation.st_room %></div>
                 <div><%= reservation.day %></div>
-                <div><%= reservation.time %></div>
+                <%if(reservation.time < 10){%>
+                <div><%= `0${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
+                <%} else {%>
+                <div><%= `${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
+                <%}%>
                 <div><%= reservation.count %></div>
                 <button class="deleteButton" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
               </div>
