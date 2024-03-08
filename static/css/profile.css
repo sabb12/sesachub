@@ -31,25 +31,28 @@
     height: 150px;
 }
 
-.profile_image {
+.image_container {
+    position: relative;
+    display: inline-block;
+}
+
+.image {
     border-radius: 50%;
     width: 100px;
     height: 100px;
+    position: relative;
+    z-index: 1;
 }
 
-.outerImageContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-left: 10px;
-    gap: 5px;
-}
-
-.imageButtonContainer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.image_input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
 }
 
 .subTitle {
