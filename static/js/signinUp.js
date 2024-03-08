@@ -27,38 +27,13 @@ showPanel(0, "white");
     - 이메일: 영문 대소문자, 숫자로 한글x @포함 .포함
 */
 const patterns = {
-    u_id: /^[a-z0-9]{6,16}$/,
+    u_id: /^(?=.*[A-Za-z])(?=.*\d)[a-z0-9_]{6,16}$/,
     pw: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
     name: /^[가-힣]{2,5}$/,
     nk_name: /^[가-힣a-zA-Z0-9]{2,16}$/,
     phone: /^(\d{9,11})$/,
-    email: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+    email: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 };
-
-// 중복 확인
-document.querySelector(".duplicate_check button").addEventListener("click", function () {
-    let u_id = document.querySelector("#u_id").value;
-
-    console.log("u_id ::", u_id);
-    if (u_id) {
-        axios({
-            method: "get",
-            url: `/user/duplicate?u_id=${u_id}`,
-        })
-            .then((res) => {
-                if (res.data.isDuplicate) {
-                    alert("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
-                } else {
-                    alert("사용 가능한 아이디입니다.");
-                    let btn = document.querySelector(".duplicate_check button");
-                    btn.classList.add("checked");
-                }
-            })
-            .catch((error) => console.error("Error:", error));
-    } else {
-        alert("아이디를 입력해주세요.");
-    }
-});
 
 // 입력값 검증
 const inputs = document.querySelectorAll(".register_input input");
@@ -101,10 +76,42 @@ function showSuccess(input) {
     formControl.querySelector("small").style.visibility = "hidden";
 }
 
+// 중복 확인
+document.querySelector(".duplicate_check button").addEventListener("click", async function () {
+    let u_id = document.querySelector("#u_id");
+
+    if (!patterns.u_id.test(u_id.value)) {
+        alert("아이디 양식에 맞게 작성해주세요.");
+        u_id.value = "";
+        return;
+    }
+
+    if (u_id) {
+        try {
+            let res = axios({
+                method: "get",
+                url: `/user/duplicate?u_id=${u_id}`,
+            });
+
+            if (res.data.isDuplicate) {
+                alert("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
+            } else {
+                alert("사용 가능한 아이디입니다.");
+                let btn = document.querySelector(".duplicate_check button");
+                btn.classList.add("checked");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    } else {
+        alert("아이디를 입력해주세요.");
+    }
+});
+
 // 가입하기
 function signup() {
     const form = document.forms["sign_up_form"];
-    console.log(form)
+    console.log(form);
     axios({
         method: "post",
         url: "/user/signup",
