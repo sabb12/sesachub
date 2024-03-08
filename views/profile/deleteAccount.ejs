@@ -14,20 +14,23 @@
             <p>본인 확인을 위해 아이디와 비밀번호를 한 번 더 입력해주세요.</p>
           </div>
           <div class="deleteAccountBody">
-            <div class="delete_account_input">
-              <div>ID</div>
-              <input type="text" />
+            <form name="delete_form">
+              <div class="delete_account_input">
+                <div>ID</div>
+                <input type="text" name="u_id" />
+              </div>
+              <div class="delete_account_input">
+                <div>PW</div>
+                <input type="password" name="pw"/>
+              </div>
+            </form>
             </div>
-            <div class="delete_account_input">
-              <div>PW</div>
-              <input type="text" />
-            </div>
-          </div>
           <div class="button_container">
-            <button>회원 탈퇴</button>
+            <button onclick="deleteAccount()">회원 탈퇴</button>
           </div>
         </div>
       </div>
     </div>
+    <script src="/static/js/delete.js"></script>
   </body>
 </html>

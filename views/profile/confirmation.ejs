@@ -21,7 +21,7 @@
             <div>예약 인원</div>
           </div>
           <div class="reservation_body">
-            <% const hi = reservationData.forEach(reservation => { %>
+            <% reservationData.forEach(reservation => { %>
               <div class="reservation_list_container">
                 <div class="check_all">
                   <input type="checkbox" name="checkbox" class="check-option" data-r-id="<%= reservation.r_id %>" data-u-id="<%= reservation.u_id %>" />

@@ -13,20 +13,15 @@
                     <div class="usermyPageWrapper">
                         <div class="wrapper imageWrapper">
                             <div class="subTitle imageTitle">프로필 이미지</div>
-                            <div class="outerImageContainer">
-                                <div class="imageContainer">
-                                    <img src="https://picsum.photos/200/300" alt="randomImage" class="profile_image"/>
+                                <div class="image_container">
+                                    <img src="https://picsum.photos/200/300" alt="randomImage" class="image profile_image"/>
+                                    <input type="file" class="image image_input">
                                 </div>
-                                <div class="imageButtonContainer">
-                                    <button onclick="update()">수정</button>
-                                    <button>삭제</button>
-                                </div>
-                            </div>
                         </div>
                         <div class="wrapper nameWrapper">
                             <div class="subTitle nameTitle">이름</div>
                             <div class="inputContainer">
-                                <input type="text" name="name" class="namename" placeholder="이름" value="<%=userInfo.name%>" readonly/>
+                                <input type="text" name="name" class="name" placeholder="이름" value="<%=userInfo.name%>" readonly/>
                             </div>
                         </div>
 
