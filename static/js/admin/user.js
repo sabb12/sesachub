@@ -90,7 +90,7 @@ function extractValues(check) {
             permission_delete(u_id);
         } else if (check === "pwReset") {
             pwReset(u_id);
-        } else if (permissionAdd === "permissionAdd") {
+        } else if (check === "permissionAdd") {
             permissionAdd(u_id);
         } else {
             course_update(u_id);
