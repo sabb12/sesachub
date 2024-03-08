@@ -6,6 +6,9 @@ const controller = require("../controller/Cuser");
 // /user
 router.get("/", controller.main);
 
+// /user/duplicate/:userId
+router.get("/duplicate", controller.duplicateCheck);
+
 /* POST */
 // /user/signup
 router.post("/signup", controller.signup);

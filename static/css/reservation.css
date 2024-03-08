@@ -20,15 +20,24 @@ body {
     min-height: 80vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
+}
+
+.wrapper {
+    margin-left: 25%;
 }
 
 .title {
     display: flex;
-    font-size: 30px;
+    justify-content: start;
+    font-size: 25px;
     font-weight: 700;
-    margin: 20px 0;
+}
+
+.choice_day {
+    margin-top: 80px;
+    margin-bottom: 5px;
 }
 
 /* 달력 */
@@ -36,6 +45,7 @@ body {
     width: 100%;
     max-width: 600px;
     padding: 30px 20px;
+    margin-top: 30px;
     margin-bottom: 60px;
     border-radius: 10px;
     background-color: var(--bg-color);
@@ -211,6 +221,8 @@ input[type="radio"] {
 
 /* 예약하기 버튼 */
 .reservation_btn {
+    display: flex;
+    justify-content: center;
     margin-bottom: 100px;
 }
 
@@ -218,6 +230,8 @@ input[type="radio"] {
     padding: 15px 25px;
     border: none;
     border-radius: 5px;
+    font-size: 15px;
+    font-weight: 700;
     color: #fff;
     background-color: var(--primary-color);
     cursor: pointer;

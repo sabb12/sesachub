@@ -40,19 +40,22 @@ function renderCalendar() {
 
     // 현재 달의 날짜 추가
     for (let i = 1; i <= lastDayDate; i++) {
-        const comparingDate = new Date(currentYear, currentMonth, i);
-        comparingDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정
-
+        // 현재 날짜에는 "today" 클래스 추가된 날짜 추가
         if (
-            comparingDate.getTime() < kstToday.setHours(0, 0, 0, 0) // 오늘 이전 날짜 확인
+            currentYear === new Date().getFullYear() &&
+            currentMonth === new Date().getMonth() &&
+            i === new Date().getDate()
         ) {
-            // 오늘 이전 날짜에는 "prev" 클래스 추가
-            days += `<div class="day prev">${i}</div>`;
-        } else if (
-            comparingDate.getTime() === kstToday.getTime() // 오늘 날짜 확인
-        ) {
-            // 현재 날짜에는 "today" 클래스 추가된 날짜 추가
             days += `<div class="day cur today">${i}</div>`;
+        } else if (
+            // 현재 달에서 오늘 이전 날짜에 "prev"클래스 추가
+            currentYear === new Date().getFullYear() &&
+            currentMonth === new Date().getMonth() &&
+            i < new Date().getDate()
+        ) {
+            days += `<div class="day prev">${i}</div>`;
+        } else if (currentYear < new Date().getFullYear() || currentMonth < new Date().getMonth()) {
+            days += `<div class="day prev">${i}</div>`;
         } else {
             // else "today" 클래스 추가 안함
             days += `<div class="day cur">${i}</div>`;
@@ -138,12 +141,12 @@ function getCalendarValue(yearMonth, day) {
     let newDay;
     if (day.textContent < 10 || month < 10) {
         if (day.textContent < 10) {
-            newDay = 0 + day.textContent;
+            newDay = "0" + day.textContent;
         } else {
             newDay = day.textContent;
         }
         if (month < 10) {
-            month = 0 + month;
+            month = "0" + month;
         }
         dayValue = year + "-" + month + "-" + newDay;
     } else {

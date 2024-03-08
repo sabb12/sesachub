@@ -2,6 +2,7 @@
     --primary-color: #6fc274;
     --text-color: #1d1d1d;
     --bg-color: #f1f1fb;
+    --error-color: #e74c3c;
 }
 
 html {
@@ -14,19 +15,22 @@ body {
     height: 100%;
 }
 
-.loginInnerWrapper {
+.login_inner_wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 41px;
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 41px;
 }
-.tabContainer .tabPanel {
+
+.tab_container .tab_panel {
     display: none;
 }
 
-.logReBtnContainer {
-    width: 391px;
+.log_re_btn_container {
+    width: 552px;
     display: flex;
     justify-content: center;
     box-shadow:
@@ -34,32 +38,31 @@ body {
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.logReButton {
+.log_re_button {
     border: 0.1px solid #dcdcdc;
     border-bottom: none;
     background: none;
     outline: none;
     width: 50%;
-    height: 40px;
+    height: 50px;
     cursor: pointer;
 }
 
-.buttonLog {
+.button_log {
     border-right: none;
 }
 
-.loginInnerWrapper .logReBtnContainer button:hover {
+.login_inner_wrapper .log_re_btn_container button:hover {
     background-color: #dcdcdc;
 }
 
-.loginContainer,
-.registerContainer {
+.login_container {
     border: 1px solid #dcdcdc;
     display: grid;
     grid-auto-flow: row;
     align-items: center;
-    width: 389px;
-    height: 480px;
+    width: 550px;
+    height: 650px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
@@ -71,58 +74,61 @@ body {
     padding-bottom: 10px;
     font-size: 33px;
     font-weight: bold;
+    margin-top: 80px;
+    margin-bottom: 50px;
 }
 
-.inputandButton {
+.input_button {
     display: grid;
     grid-auto-flow: row;
     justify-content: center;
     gap: 25px;
 }
 
-.inputWrapper {
+.input_wrapper {
     justify-content: center;
     align-items: center;
     border-radius: 7px;
     /* height: 99px; */
+    margin-bottom: 35px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.inputContainer {
+.input_container {
     border: 1px solid #dcdcdc;
     display: grid;
     grid-auto-flow: column;
     justify-content: center;
     align-items: center;
     gap: 7px;
-    width: 312px;
-    height: 48px;
+    width: 350px;
+    height: 55px;
 }
 
-.registerInputContainer {
+.register_input_container {
     border: 1px solid #dcdcdc;
     display: grid;
     grid-auto-flow: column;
     justify-content: center;
     align-items: center;
     gap: 7px;
-    width: 312px;
+    width: 350px;
     height: 35px;
 }
 
-.emailInput {
+.id_input {
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
 }
 
-.passwordInput {
+.pw_input {
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
 }
 
-.registerImage {
+.register_image {
     height: 70px;
 }
 
@@ -131,8 +137,9 @@ body {
     width: 237px;
     height: 20px;
 }
-.input::placeholder {
+input::placeholder {
     color: #c0c0c0;
+    font-size: 14px;
 }
 
 .input:focus {
@@ -140,10 +147,10 @@ body {
     box-shadow: none;
 }
 
-.button {
-    width: 313px;
+.login_re_button {
+    width: 351px;
     height: 48px;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: bold;
     color: white;
     background-color: var(--primary-color);
@@ -154,58 +161,159 @@ body {
     cursor: pointer;
 }
 
+.login_re_buttons:hover {
+    transition: all 0.15s;
+    transform: scale(1.02);
+}
+
 .options {
     display: grid;
     grid-auto-flow: column;
     justify-content: center;
-    padding-top: 10px;
     gap: 10px;
-    color: #c0c0c0;
-    padding-top: 13px;
+    color: #b1afaf;
+    padding-top: 20px;
     padding-bottom: 30px;
-}
-
-.options,
-.option {
-    font-size: 12px;
+    font-size: 14px;
     text-decoration: underline;
 }
 
-.registerOption {
+/*          */
+/* register */
+/*          */
+
+.register_container {
+    border: 1px solid #dcdcdc;
     display: grid;
-    grid-auto-flow: column;
-    justify-content: center;
-    gap: 20px;
-    padding-top: 26px;
+    grid-auto-flow: row;
+    align-items: center;
+    width: 550px;
+    height: 110%;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.loginOptions {
+.sign_up_form {
+    padding: 30px 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+.register_input {
+    display: flex;
+    flex-direction: column;
+    /* margin-bottom: 0; */
+    padding-bottom: 20px;
+}
+
+.register_input label {
+    /* color: #777; */
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+}
+
+.register_input input {
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    width: 460px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.id_area {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.duplicate_check {
+    display: flex;
     align-items: center;
 }
 
-.hr {
-    border: 1px solid #f1f3f5;
-    width: 100px;
-    height: 0px;
+.duplicate_check button {
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.loginTitle {
-    background-color: white;
+.duplicate_check button.checked {
+    pointer-events: none;
+    background-color: #ccc;
+}
+
+.register_input input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.register_input.success input {
+    border-color: var(--primary-color);
+}
+
+.register_input.error input {
+    border-color: var(--error-color);
+}
+
+.register_input small {
+    color: var(--error-color);
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.register_input.error small {
+    visibility: visible;
+}
+
+.register_input #course {
+    padding: 11px 0;
+    margin: 5px 0;
+    border: 2px solid #f0f0f0;
+    border-radius: 3px;
+    color: #505050;
+}
+
+.login_re_buttons {
     display: flex;
     justify-content: center;
-    color: #c0c0c0;
-    font-size: 11px;
-    width: 70px;
+    padding-top: 20px;
+    padding-bottom: 50px;
 }
 
-/**/
+/*       */
+/* icons */
+/*       */
 .circleContainer {
     position: relative;
     height: 23px;
     width: 23px;
+}
+
+.circleContainer label {
+    color: #777;
+    display: block;
+    margin-bottom: 5px;
 }
 
 /*passwork icon*/
@@ -321,13 +429,4 @@ body {
     background-color: #c0c0c0;
     border-radius: 1px;
     transform: translate(7.5px, -5px) rotate(90deg);
-}
-
-.sigintype {
-    cursor: pointer;
-}
-
-img {
-    width: 40px;
-    height: 40px;
 }
