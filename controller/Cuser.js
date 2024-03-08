@@ -15,29 +15,36 @@ exports.main = (req, res) => {
     res.render("user/signin");
 };
 
+exports.duplicateCheck = async (req, res) => {
+    try {
+        const isDuplicate = await user.findOne({
+            where: { u_id: req.query.u_id },
+        });
+
+        res.send({ isDuplicate });
+    } catch (error) {
+        console.log("Cuser duplicateCheck err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
 exports.signup = async (req, res) => {
     try {
         const { u_id, pw, name, nk_name, email, phone, course } = req.body;
-        const duplicateCheck = await user.findOne({
-            where: { u_id },
-        });
-        if (!duplicateCheck) {
-            const signup = await user
-                .create({
-                    u_id,
-                    pw: hashPw(pw),
-                    name,
-                    nk_name,
-                    email,
-                    phone,
-                    course,
-                })
-                .then(() => {
-                    res.send("회원가입 성공");
-                });
-        } else {
-            res.send("중복 id");
-        }
+
+        const signup = await user
+            .create({
+                u_id,
+                pw: hashPw(pw),
+                name,
+                nk_name,
+                email,
+                phone,
+                course,
+            })
+            .then(() => {
+                res.send("회원가입 성공");
+            });
     } catch (error) {
         console.log("signup controller err :: ", error);
         res.status(500).send("server error!");
@@ -48,12 +55,15 @@ exports.signin = async (req, res) => {
     try {
         const { u_id, pw } = req.body;
         const isUser = await user.findOne({ where: { u_id } });
+
+        // 회원 정보 없는 경우
+        if (!isUser) return res.send({ success: false });
+
         const { nk_name, permission } = isUser;
         // console.log("isUser ::", isUser);
-        // 회원 정보 없는 경우
-        if (!isUser) res.send({ success: false });
+
         // 회원이면 비밀번호 일치 여부 확인
-        else if (isUser && comparePw(pw, isUser.pw)) {
+        if (isUser && comparePw(pw, isUser.pw)) {
             // 세션 생성
             req.session.u_id = u_id;
             req.session.nk_name = nk_name;
