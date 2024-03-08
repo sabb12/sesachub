@@ -8,7 +8,6 @@
     <%-include("../include/header")%>
 
 <div class="container">
-    <div class="wrapper">
         <div class="title">
             <p class=" choice_day">날짜 선택</p>
         </div>
@@ -38,9 +37,7 @@
         </div>
         <div class="days"> </div>
       </div>
-    </div>
     
-<div class="wrapper">
     <div class="title">
         <p>공간 선택</p>
     </div>
@@ -70,11 +67,9 @@
             <label for="room6">상담부스2</label>
         </div>
       </div>
-</div>
     
     <!-- TODO: 맵 이미지 추가하기 -->
 
-    <div class="wrapper">
         <div class="title">
             <p >시간 선택</p>
         </div>
@@ -95,9 +90,7 @@
         <div class="time21">21:00 ~ 22:00</div>
     </div>
     <div class="no_session"></div>
-</div>
     
-<div class="wrapper">
     <div class="title">
         <p>인원</p>
     </div>
@@ -105,13 +98,13 @@
         <select name="count_person" id="count_person" required>
         </select>
     </div>
-</div>
     
-<div class="wrapper">
     <div class="title">
         <p>선택한 예약 확인</p>
     </div>
-    <span>예약 취소는 "마이페이지 - 예약 관리"에서 가능합니다.</span>
+    <div class="check_info">
+        <span>예약 취소는 "마이페이지 - 예약 관리"에서 가능합니다.</span>
+    </div>
     <br>
 
     <div class="reservation_result"></div>
@@ -120,7 +113,6 @@
         <button type="button" onclick="reservation()">예약 하기</button>
     </div>
 
-</div>
     <script src="/static/js/reservation.js"></script>
 </body>
 </html>
