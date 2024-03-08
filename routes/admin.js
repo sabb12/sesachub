@@ -15,4 +15,5 @@ router.get("/reserve", controller.reserveList); //해당 날짜/스터디룸에�
 router.delete("/reserve", controller.reserveDelete); //예약취소
 router.patch("/permission", controller.permissionAprove); //권한부여
 router.patch("/course", controller.courseUpdate); //클레스 수정
+router.get("/course",controller.courseList)
 module.exports = router;

@@ -23,7 +23,7 @@ async function courseAdd(u_id, course) {
         const res = await axios({
             method: "patch",
             url: "/admin/course",
-            data: { u_id: u_id, course: course },
+            data: { u_id: u_id, cs_id: course },
         });
         if (res.data === true) {
             alert("수업 변경 성공하였습니다");

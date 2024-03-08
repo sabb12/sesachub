@@ -24,6 +24,10 @@ document.addEventListener("click", (e) => {
     document.location.href = "/admin/reserve";
 });
 document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("course-btn")) return;
+    document.location.href = "/admin/course";
+});
+document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("logout-btn")) return;
     axios({
         method: "post",
