@@ -17,7 +17,7 @@ router.get("/deleteAccount", controller.deleteAccount);
 
 /* ----------------- PATCH ------------------ */
 // /profile
-router.patch("/", controller.updateProfile);
+router.post("/", controller.updateProfile);
 
 /* ----------------- DELETE ------------------ */
 // /profile/reservation
