@@ -8,19 +8,39 @@
         <div class="body_container">
             <%-include("../include/sideBar")%>
             <div class="section2_container">
-                <div class="title">내가 쓴 글 목록</div>
-                <div class="reservation_container">
-                    <div class="reservation_header">
-                        <div class="checkbox_all">
-                            <input type="checkbox" />
-                            <div>전체삭제</div>
+                <!--내가 쓴 글 목록-->
+                <div class="free_board posting_container">
+                    <div class="title">내가 쓴 글 목록</div>
+                    <div class="reservation_container">
+                        <div class="reservation_header">
+                            <div class="checkbox_all">
+                                <input type="checkbox" />
+                                <div>전체삭제</div>
+                            </div>
+                            <div>No.</div>
+                            <div>글제목</div>
+                            <div>작성일시</div>
                         </div>
-                        <div>No.</div>
-                        <div>글제목</div>
-                        <div>작성일시</div>
+                        <div class="reservation_body"></div>
+                        <div class="reservation_pagination">< 1,2,3,4,5 ></div>
                     </div>
-                    <div class="reservation_body"></div>
-                    <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                </div>
+                 <!--복마크 목록-->
+                <div class="free_board book_mark_container">
+                    <div class="title">복마크 목록</div>
+                    <div class="reservation_container">
+                        <div class="reservation_header">
+                            <div class="checkbox_all">
+                                <input type="checkbox" />
+                                <div>전체삭제</div>
+                            </div>
+                            <div>No.</div>
+                            <div>글제목</div>
+                            <div>작성일시</div>
+                        </div>
+                        <div class="reservation_body"></div>
+                        <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                    </div>
                 </div>
             </div>
         </div>
