@@ -254,24 +254,28 @@ exports.userDelete = async (req, res) => {
 };
 // 클레스 수정
 exports.courseUpdate = async (req, res) => {
-    // try {
-    //     const { u_id, course } = req.body;
-    //     console.log(u_id, course);
-    //     const result = await user.update(
-    //         {
-    //             course: course,
-    //         },
-    //         {
-    //             where: { u_id: u_id },
-    //         },
-    //     );
-    //     if (result) {
-    //         res.send(true);
-    //     } else {
-    //         res.send(false);
-    //     }
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).send("Server Error");
-    // }
+    try {
+        const { u_id, cs_id } = req.body;
+        console.log(cs_id)
+        const result = await user.update(
+            {
+                cs_id: cs_id,
+            },
+            {
+                where: { u_id: u_id },
+            },
+        );
+        if (result) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 };
+//course 리스트
+exports.courseList=(req,res)=>{
+    res.render('admin/course')
+}
