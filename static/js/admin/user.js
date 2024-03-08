@@ -95,7 +95,6 @@ function extractValues(check) {
         } else {
             course_update(u_id);
         }
-        
     });
 }
 
