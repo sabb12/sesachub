@@ -16,7 +16,7 @@ function showPanel(panelIndex, colorCode) {
     tabPanels[panelIndex].style.backgroundColor = colorCode;
 }
 
-showPanel(1, "white");
+showPanel(0, "white");
 
 /* 정규표현식
     - 아이디: 영어 소문자, 숫자 1글자 이상이고 특수문자 x, 영어 대문자x, 한글x인 6~16글자 사이
