@@ -2,108 +2,129 @@
 <html lang="ko">
 <%- include('../include/include.ejs',{title:"커뮤니티"}) %>
     <link rel="stylesheet" href="/static/css/board.css">
+    <script src="/static/js/board/main.js"></script>
 
     <body>
         <%- include('../include/header.ejs') %>
             <div class="container">
-                <div class="sideLeft">ㅇㅇ</div>
                 <div class="center">
-                    <header>
-                        <div class="title">커뮤니티</div>
-
-                        <div class="sortPost">
-                            <div class="sortCategory">
-                                <div class="showAllCategory"><a href="/board">전체글</a></div>
-                                <div class="showFreeCategory"><a href="/board?category=free">자유</a></div>
-                                <div class="showStudyCategory"><a href="/board?category=study">공부</a></div>
-                                <div class="showEmployCategory"><a href="/board?category=employ">취업정보</a></div>
-                                <div class="showQualificationCategory"><a href="/board?category=qualification">자격증 &
-                                        어학</a></div>
-                            </div>
-                            <select class="sortList" onchange="sort()">
-                                <option value="latestDate">최근 등록 순</option>
+                    <div class="top_area">
+                        <h2>커뮤니티</h2>
+                        <div class="sort_cntr flex_row">
+                            <ul>
+                                <li><a href="/board">전체글</a></li>
+                                <li><a href="/board?category=free">자유</a></li>
+                                <li><a href="/board?category=study">공부</a></li>
+                                <li><a href="/board?category=employ">취업정보</a></li>
+                                <li><a href="/board?category=qualification">자격증 & 어학</a></li>
+                            </ul>
+                            <select id="sort_by" onchange="sort()">
+                                <option value="">정렬</option>
+                                <option value="latest">최근 등록 순</option>
                                 <option value="like">좋아요 순</option>
                             </select>
-
                         </div>
-
-                    </header>
-                    <article>
-                        <div class="boardHeader">
-                            <div class="postNum">번호</div>
-                            <div class="postTitle">제목</div>
-                            <div class="postWriter">작성자</div>
-                            <div class="postCreatedAt">작성일</div>
-                            <div class="postLike">좋아요</div>
-                        </div>
-                        <div class="boardList">
-                            <% for (let board of boardList) {%>
-                                <div class="postInfo">
-                                    <div class="postNum">
-                                        <%= board.b_id%>
+                        <input type="button" class="btn" onclick="page_insert()" value="글 작성">
+                    </div>
+                    <main role="main">
+                        <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
+                            <!-- 검색조건 박스 -->
+                            <div class="search_filter_box">
+                                <form name="search_form" class="search_form" action="">
+                                    <div class="table_box">
+                                        <table>
+                                            <caption>검색 조건 목록</caption>
+                                            <colgroup>
+                                                <col style="width:170px;">
+                                                <col>
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">검색내용</th>
+                                                    <td>
+                                                        <div class="flex_box">
+                                                            <div class="select_box">
+                                                                <div class="s_txt">
+                                                                    <select name="search_opt" class="select_list">
+                                                                        <option value="제목" selected="selected">제목
+                                                                        </option>
+                                                                        <option value="검토요청">검토요청</option>
+                                                                        <option value="검토중">검토중</option>
+                                                                        <option value="검토완료">검토완료</option>
+                                                                    </select>
+                                                                    <span class="arrow"><i
+                                                                            class="xi-angle-down"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <input type="text" name="search_keyword"
+                                                                placeholder="검색어를 입력해주세요" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <a href="/board/board?b_id=<%=board.b_id%>" class="postTitle">
-                                        <%= board.title%>
-                                    </a>
-                                    <div class="postWriter">
-                                        <%= board.u_id%>
-                                    </div>
-                                    <div class="postCreatedAt">
-                                        <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' , month: '2-digit'
-                                            , day: '2-digit' }) %>
-                                    </div>
-                                    <div class="postLike">
-                                        <%= board.dataValues.like_count%>
-                                    </div>
+                                </form>
+                                <div class="btn_wrap">
+                                    <a href="javascript:search();" class="btn basic">검색</a>
                                 </div>
-                                <%}%>
-                        </div>
-                        <div class="boardFooter">
-                            <form action="search" method="get">
-                                <select class="searchCategory">
-                                    <option value="title">제목</option>
-                                    <!-- <option value="writer">작성자</option> --> <!-- 검색 카테고리 추가되면 활성화 -->
-                                </select>
-                                <input type="text" class="searchKeyword" placeholder="검색어를 입력해주세요" />
-                                <button type="button" class="btn searchBtn" onclick="search()">검색</button>
-                            </form>
-                            <button class="btn writePost" onclick="insertBoard()">글 작성</button>
-                            <div class="boardPage">
-                                <% for (i=1; i <=totalPages; i++) { %>
-                                    <div class="pageNumber"><a href="/board?page=<%= i %>&category=<%= category%>">
-                                            <%= i %>
-                                        </a></div>
-                                    <% } %>
+                            </div>
+                            <!-- ///검색조건 박스 -->
+                            <div class="table_box">
+                                <table>
+                                    <caption>커뮤니티 리스트</caption>
+                                    <colgroup>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>작성일</th>
+                                            <th>좋아요</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let board of boardList) {%>
+                                            <tr>
+                                                <td>
+                                                    <%= board.b_id%>
+                                                </td>
+                                                <td>
+                                                    <a href="/board/board?b_id=<%=board.b_id%>">
+                                                        <%= board.title%>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <%= board.nk_name%>
+                                                </td>
+                                                <td>
+                                                    <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
+                                                        month: '2-digit' , day: '2-digit' }) %>
+                                                </td>
+                                                <td>
+                                                    <%= board.dataValues.like_count%>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bottom_area">
+                                <!-- 페이지네이션 -->
+                                <div class="board_page">
+                                    <% for (i=1; i <=totalPages; i++) { %>
+                                        <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                                <%= i %>
+                                            </a></div>
+                                        <% } %>
+                                </div>
+                                <!-- ///페이지네이션 -->
                             </div>
                         </div>
-                    </article>
+                    </main>
                 </div>
-                <div class="sideRight">ㅇㅇ</div>
             </div>
-            <script>
-                // const { u_id, title } = res.query;
-                const sortList = document.querySelector('.sortList');
-
-                function sort() {
-                    let selectedValue = sortList.value;
-                    if (selectedValue === "latestDate") {
-                        location.href = `/board?category=<%= category%>&sort=`
-                    } else if (selectedValue === "like") {
-                        location.href = `/board?category=<%= category%>&sort=like`
-                    }
-                }
-
-                function insertBoard() {
-                    location.href = '/board/insert';
-                }
-
-                function search() {
-                    const keyword = document.querySelector('.searchKeyword').value;
-                    location.href = `/board?category=<%= category%>&search=${keyword}`;
-                    // const category = document.querySelector('.searchCategory').value; // 검색 카테고리도 같이 추가되면 활성화
-                    // location.href = `/board?category=${category}&search=${keyword}`; // 검색 카테고리도 같이 추가 되면 활성화
-                }
-            </script>
     </body>
 
 </html>
