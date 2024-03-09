@@ -35,10 +35,10 @@
                 <div><%= `${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
                 <%}%>
                 <div><%= reservation.count %></div>
-                <button class="deleteButton" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
+                 <button class="deleteButton" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
+                </div>
+                <% }); %>
               </div>
-              <% }); %>
-            </div>
             <div class="reservationPagination">< 1,2,3,4,5 ></div>
           </div>
           <div class="reserCancelContainer">

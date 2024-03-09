@@ -21,11 +21,23 @@
                             <div>글제목</div>
                             <div>작성일시</div>
                         </div>
-                        <div class="reservation_body"></div>
+                        <div class="reservation_body">
+                            <% postings.forEach(post => { %>
+                                <div class="posting_list_container">
+                                  <div class="check_all">
+                                    <input type="checkbox" name="checkbox" class="check-option"  />
+                                  </div>
+                                  <div><%= post.b_id %></div>
+                                  <div><%= post.title %></div>
+                                  <div><%= post.post_time %></div>
+                                   <button class="deleteButton" onclick="deleteButton(this, '<%= post.u_id%>')">삭제</button>
+                                  </div>
+                                  <% }); %>
+                                </div>
+                        </div>
                         <div class="reservation_pagination">< 1,2,3,4,5 ></div>
                     </div>
-                </div>
-                 <!--복마크 목록-->
+                         <!--복마크 목록-->
                 <div class="free_board book_mark_container">
                     <div class="title">복마크 목록</div>
                     <div class="reservation_container">
@@ -38,9 +50,24 @@
                             <div>글제목</div>
                             <div>작성일시</div>
                         </div>
-                        <div class="reservation_body"></div>
+                        <div class="reservation_body">
+                            <% bookmarkPostings.forEach(bookmarkPost => { %>
+                                <div class="bookmarkPost_list_container">
+                                  <div class="check_all">
+                                    <input type="checkbox" name="checkbox" class="check-option"  />
+                                  </div>
+                                  <div><%= bookmarkPost.b_id %></div>
+                                  <div><%= bookmarkPost.title %></div>
+                                  <div><%= bookmarkPost.post_time %></div>
+                                   <button class="deleteButton" onclick="deleteButton(this, '<%= bookmarkPost.u_id%>')">삭제</button>
+                                  </div>
+                                  <% }); %>
+                                </div>
+                        </div>
+                        </div>
                         <div class="reservation_pagination">< 1,2,3,4,5 ></div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

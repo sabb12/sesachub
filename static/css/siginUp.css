@@ -212,8 +212,7 @@ input::placeholder {
 .register_input {
     display: flex;
     flex-direction: column;
-    /* margin-bottom: 0; */
-    padding-bottom: 20px;
+    height: 108px;
 }
 
 .register_input label {
@@ -231,7 +230,21 @@ input::placeholder {
     width: 460px;
     padding: 10px;
     font-size: 14px;
-    margin: 5px 0;
+    /* margin: 5px 0; */
+}
+
+.register_id {
+    position: relative;
+    top: 12px;
+}
+
+.small_position {
+    position: relative;
+    top: 18px;
+}
+
+.id_area_input {
+    height: 107px;
 }
 
 .id_area {
@@ -244,7 +257,13 @@ input::placeholder {
 
 .duplicate_check {
     display: flex;
-    align-items: center;
+    height: 108px;
+}
+
+.pre_check {
+    position: relative;
+    top: 35px;
+    height: 39px;
 }
 
 .duplicate_check button {
