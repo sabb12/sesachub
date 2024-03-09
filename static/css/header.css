@@ -19,6 +19,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;
 }
 .headerContainer .logout button:hover {
     background-color: rgba(255, 255, 255, 0);
