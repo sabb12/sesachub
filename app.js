@@ -36,7 +36,9 @@ app.use((req, res, next) => {
     res.locals.session = req.session;
     next();
 });
-
+app.get("/", (req, res) => {
+    res.render("index");
+});
 app.use("/user", userRouter);
 app.use("/profile", profileRouter);
 app.use("/reservation", reservationRouter);

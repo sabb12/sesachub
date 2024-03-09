@@ -11,11 +11,13 @@
     <div class="course-container">
         <% courseList.forEach(course => { %>
             <div class="course">
-                <p>수업번호: <%= course.cs_id %></p>
-                <label for="newCourseName">수업이름:</label>
-                <input type="text" name="newCourseName" id="course_<%= course.cs_id %>" value="<%= course.course_name %>">
-                <button class="reserve_btn" onclick="course_update('<%= course.cs_id %>')">수정</button>
-  
+                <p>class 룸 : <%= course.cs_id %></p>
+                <label for="newCourseName">교육 과정</label>
+                <div>
+
+                    <input type="text" name="newCourseName" id="course_<%= course.cs_id %>" value="<%= course.course_name %>">
+                    <button class="reserve_btn" onclick="course_update('<%= course.cs_id %>')">수정</button>
+                </div>
             </div>
         <% }); %>
     </div>
