@@ -2,54 +2,7 @@
 <html lang="en">
 <head>
     <%- include("include/include", {title: "메인페이지"})%>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* styles.css */
-
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 자동으로 반복되는 그리드 설정 */
-    gap: 10px; /* 그리드 아이템 사이의 간격 설정 */
-    overflow: hidden; /* 그리드 컨테이너를 벗어나는 내용을 숨김 */
-    height: 500px;
-}
-
-.grid-item {
-    position: relative;
-    overflow: hidden; /* 이미지가 그리드 아이템을 벗어나는 부분을 숨김 */
-}
-
-.grid-item img {
-    width: 100%;
-    height: 100%; /* 이미지가 그리드 아이템에 가득 차도록 설정 */
-    object-fit: cover; /* 이미지를 비율유지하면서 그리드 아이템에 가득 채움 */
-    transition: filter 0.5s ease-in-out; /* 마우스 호버 효과를 부드럽게 만들기 위한 transition 효과 */
-}
-
-.grid-item:hover img {
-    cursor: pointer;
-    filter: brightness(60%); /* 마우스 호버시 이미지의 밝기를 줄여 어둡게 만듦 */
-}
-
-/* 이미지를 랜덤하게 배치 */
-.grid-item:nth-child(odd) {
-    grid-row: span 2; /* 홀수 번째 이미지는 2개의 그리드 로우에 걸쳐 배치 */
-}
-
-.grid-item:nth-child(2n+1) {
-    grid-column: span 2; /* 홀수 번째 이미지는 2개의 그리드 컬럼에 걸쳐 배치 */
-}
-.main-content{
-    padding: 50px;
-    
-}
-footer{
-    height: 200px;
-    text-align: center;
-}
-    </style>
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
     <!-- Header Include -->
@@ -61,40 +14,49 @@ footer{
         <div class="image-grid">
             <% for (let i = 1; i <= 8; i++) { %>
                 <div class="grid-item">
-                    <img src="/static//images/<%= i %>.jpg" alt="Slide <%= i %>">
+                    <img src="/static/images/main/<%= i %>.jpg" alt="Slide <%= i %>">
                 </div>
             <% } %>
         </div>
 
         <!-- Footer -->
     </div>
-    <hr>
     <footer>
-        <p>Footer content goes here</p>
+        <div class="footer_container">
+            <h1>The developers of sesachub!</h1>
+            <!-- 이미지 4개를 포함하는 div -->
+            <div class="image-container">
+                <div>
+                    <a href="https://github.com/sabb12">
+                        <img src="/static/images/main/leem.png" alt="Image 1">
+                        <p>Lim Hak-min</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/purple11-11">
+                        <img src="/static/images/main/yoon.png" alt="Image 2">
+                        <p>Yoon Young-in</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/rasarar">
+                        <img src="/static/images/main/lee.png" alt="Image 3">
+                        <p>Lee Daewon</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/gusnl88">
+                        <img src="/static/images/main/kim.png" alt="Image 4">
+                        <p>Kim Bong-Hyun</p>
+                    </a>
+                </div>
+            </div>
+            <!-- 저작권 정보 -->
+            <div class="copyright">
+                <p>ⓒ 2024.the first exit. All rights reserved.</p>
+            </div>
+            
+        </div>
     </footer>
-
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script>
-        // Initialize Swiper
-        var swiper = new Swiper('.swiper-container', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
-            },
-
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-
-    </script>
 </body>
 </html>
