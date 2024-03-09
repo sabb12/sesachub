@@ -1,7 +1,7 @@
 /* 게시글 관련 */
 // 게시글 수정 페이지로 이동
-async function editBoard(b_id) {
-    await axios({
+function page_update(b_id) {
+    axios({
         method: "GET",
         url: "/board/update",
         params: { b_id: b_id },
@@ -9,8 +9,23 @@ async function editBoard(b_id) {
         location.href = `/board/update?b_id=${b_id}`;
     });
 }
-// 글 삭제
-function deleteBoard(b_id) {
+// 게시글 수정
+async function update_board(b_id) {
+    const form = document.forms["update_form"];
+    await axios({
+        method: "PATCH",
+        url: "/board",
+        data: {
+            b_id: form.b_id.value,
+            category: form.category.value,
+            title: form.title.value,
+            content: form.content.value,
+        },
+    });
+    location.href = `/board?b_id=${b_id}`;
+}
+// 게시글 삭제
+function delete_board(b_id) {
     if (confirm("글을 삭제하시겠습니까?")) {
         axios({
             method: "DELETE",
@@ -66,13 +81,12 @@ async function comment_insert() {
 }
 // 댓글, 답글 수정 폼 호출
 function change_comment(c_id) {
-    const content = document.getElementById(`c_content${c_id}`).innerText;
-    console.log(content);
-    document.getElementById(`comment_${c_id}_content`).innerHTML =
+    const content = document.getElementById(`cmt${c_id}_content`).innerText;
+    document.getElementById(`cmt${c_id}_wrap`).innerHTML =
         `<textarea id="update${c_id}">${content}</textarea>`;
     document.getElementById(`c_delete_btn${c_id}`).setAttribute("type", "hidden");
     document.getElementById(`reply_btn${c_id}`).setAttribute("type", "hidden");
-    document.getElementById(`comment${c_id}_status`).style.display = "block";
+    document.getElementById(`cmt${c_id}_status`).style.display = "block";
     document
         .getElementById(`c_update_btn${c_id}`)
         .setAttribute("onclick", `update_comment("${c_id}")`);
@@ -80,7 +94,7 @@ function change_comment(c_id) {
 // 댓글, 답글 수정
 async function update_comment(c_id) {
     const content = document.getElementById(`update${c_id}`).value;
-    const status = document.getElementById(`comment${c_id}_status`).value;
+    const status = document.getElementById(`cmt${c_id}_status`).value;
     await axios({
         method: "PATCH",
         url: "/board/comment",

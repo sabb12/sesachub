@@ -236,9 +236,9 @@ exports.boardInsert = async (req, res) => {
     }
 };
 // 게시글 수정 페이지 이동
-exports.boardUpdatePage = function (req, res) {
+exports.boardUpdatePage = async function (req, res) {
     const { b_id } = req.query;
-    const boardInfo = board.findOne({
+    const boardInfo = await board.findOne({
         attributes: ["b_id", "category", "title", "content"],
         where: {
             b_id: b_id,

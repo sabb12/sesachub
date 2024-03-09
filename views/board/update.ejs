@@ -2,20 +2,33 @@
 <html lang="en">
 <%- include('../include/include.ejs', {title:"커뮤니티"}); %>
     <link rel="stylesheet" href="/static/css/board.css">
+    <script src="/static/js/board/board.js"></script>
 
     <body>
         <%- include('../include/header.ejs'); %>
             <div class="container">
                 <div class="center">
-                    <form name="writer">
-                        <input type="hidden" name="u_id" value="<%=session.u_id%>">
+                    <form name="update_form">
+                        <input type="hidden" name="b_id" value="<%=board.b_id%>">
                         <div>
-                            <input type="text" name="title" value="<%=board.title%>" />
+                            <div>
+                                <select name="category">
+                                    <option value="free" <%=board.category==='free' ? 'selected' : '' %>>자유</option>
+                                    <option value="study" <%=board.category==='study' ? 'selected' : '' %>>공부</option>
+                                    <option value="employ" <%=board.category==='employ' ? 'selected' : '' %>>취업정보
+                                    </option>
+                                    <option value="qualification" <%=board.category==='qualification' ? 'selected' : ''
+                                        %>>자격증 & 어학</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="text" name="title" value="<%=board.title%>" />
+                            </div>
                         </div>
                         <div>
-                            <textarea name="content" rows="30"><%=board.content%></textarea>
+                            <textarea rows="30" name="content"><%=board.content%></textarea>
                         </div>
-                        <input type="button" onclick="boardInsert()" value="글 작성" />
+                        <input type="button" onclick="board_update('<%=board.b_id%>')" value="글 작성" />
                     </form>
                 </div>
             </div>
