@@ -49,7 +49,7 @@
               </div>
 
               <div class="login_re_buttons">
-                <button type="button" onclick="signin()" class="login_re_button">로그인</button>
+                <button type="button" id="loginBtn" onclick="signin()" class="login_re_button">로그인</button>
               </div>
             </form>
           </div>
@@ -70,21 +70,21 @@
           <div class="container">
             <form name="sign_up_form">
               <div class="wrapper">
-                <div class="register_input id_area">
-                  <div class="id_area_input">
+                <div class="register_input dup_area">
+                  <div class="dup_area_input" >
                     <label for="u_id">아이디</label>
-                    <input type="text" class="register_id" name="u_id" id="u_id" style="width: 370px;" placeholder="영어 소문자, 숫자 각 1글자 이상 (6 ~ 16자)" minlength="6" maxlength="16" autocomplete="off" required  />
-                    <small class="small_position">영어 소문자, 숫자 각 1글자 이상 (6 ~ 16자)</small>
+                    <input type="text" class="register_id" name="u_id" id="u_id" style="width: 370px;" placeholder="영어 소문자, 숫자 각 1글자 이상 ( _ 가능, 6 ~ 16자)" minlength="6" maxlength="16" autocomplete="off" required  />
+                    <small >영어 소문자, 숫자 각 1글자 이상 ( _ 가능, 6 ~ 16자)</small>
                   </div>
-                  <div class="duplicate_check">
-                    <button type="button" class="pre_check">중복 확인</button>
+                  <div class="duplicate_check" >
+                    <button type="button" class="pre_check" id="id_check_btn">중복 확인</button>
                   </div>
                 </div>
 
                 <div class="register_input">
                   <label for="pw">비밀번호</label>
-                  <input type="password" class="register_pw" name="pw" id="pw" placeholder="영어 대소문자, 숫자, 특수문자 각 1글자 이상 (8자 이상)" minlength="8" autocomplete="off" required  />
-                  <small>영어 대소문자, 숫자, 특수문자 각 1글자 이상 (8자 이상)</small>
+                  <input type="password" class="register_pw" name="pw" id="pw" placeholder="영어, 숫자, 특수문자 각 1글자 이상 (8자 이상)" minlength="8" autocomplete="off" required  />
+                  <small>영어, 숫자, 특수문자 각 1글자 이상 (8자 이상)</small>
                 </div>
 
                 <div class="register_input">
@@ -99,10 +99,15 @@
                   <small>한글 2 ~ 5자</small>
                 </div>
 
-                <div class="register_input">
+                <div class="register_input dup_area">
+                  <div class="dup_area_input" >
                   <label for="nk_name">닉네임</label>
-                  <input type="text" class="register_nk_name" name="nk_name" id="nk_name" placeholder="한글, 영어 대소문자, 숫자 (2 ~ 15자)" minlength="2" maxlength="16" autocomplete="off"  required  />
-                  <small>한글, 영어 대소문자, 숫자 (2 ~ 16자)</small>
+                  <input type="text" class="register_nk_name" name="nk_name" id="nk_name" style="width: 370px;" placeholder="한글, 영어 대소문자, 숫자 (2 ~ 15자)" minlength="2" maxlength="16" autocomplete="off"  required  />
+                  <small >한글, 영어 대소문자, 숫자 (2 ~ 16자)</small>
+                  </div>
+                  <div class="duplicate_check" >
+                    <button type="button" class="pre_check" id="nk_name_check_btn">중복 확인</button>
+                  </div>
                 </div>
 
                 <div class="register_input">

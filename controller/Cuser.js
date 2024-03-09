@@ -17,12 +17,21 @@ exports.main = async (req, res) => {
 };
 
 exports.duplicateCheck = async (req, res) => {
+    console.log("req.query.u_id ::", req.query.u_id);
+    const { u_id, nk_name } = req;
+    let idCheck, nkNameCheck;
     try {
-        const isDuplicate = await user.findOne({
-            where: { u_id: req.query.u_id },
-        });
-
-        res.send({ isDuplicate });
+        if (u_id) {
+            idCheck = await user.findOne({
+                where: { u_id: u_id },
+            });
+        } else if (nk_name) {
+            nkNameCheck = await user.findOne({
+                where: { nk_name: nk_name },
+            });
+        }
+        console.log("idCheck ::", idCheck, "nkNameCheck ::", nkNameCheck);
+        idCheck || nkNameCheck ? res.send({ isDuplicate: true }) : res.send({ isDuplicate: false });
     } catch (error) {
         console.log("Cuser duplicateCheck err :: ", error);
         res.status(500).send("server error!");
@@ -32,7 +41,7 @@ exports.duplicateCheck = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         const { u_id, pw, name, nk_name, email, phone, cs_id } = req.body;
-        console.log(cs_id)
+        console.log(cs_id);
         const signup = await user
             .create({
                 u_id,
@@ -96,7 +105,9 @@ exports.logout = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
+        if (!req.session.u_id) return res.send("탈퇴 권한이 없습니다. 로그인 후 이용해주세요.");
         const { u_id, pw } = req.body;
+
         const isUser = await user.findOne({ where: { u_id } });
         if (isUser && comparePw(pw, isUser.pw)) {
             const isDelete = await user.destroy({ where: { u_id } }).then(() => {
