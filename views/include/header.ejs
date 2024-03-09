@@ -4,47 +4,49 @@
     <body>
         <header>
             <div class="headerContainer">
+         
+                <!-- 예약하기, 커뮤니티 좌측 정렬 -->
                 <div class="menuList">
-                    <%if(session && session.u_id){%>
-                        <a href="/reservation">
-                    <%} else {%>
-                        <a href="/user">
-                    <%}%>
+                    <div class="aTag">
+                        <a href="/reservation">예약하기</a>
+                        <a href="/board">커뮤니티</a>
+                    </div>
+                </div>
+                       <!-- 로고 중앙 정렬 -->
+                       <div class="logo">
+                            <a href="/">
                             <img
                             src="/static/images/logo&title.png"
                             alt="sesachub image"
                             style="width: 80px; height: 80px"
                             />
                         </a>
-                        <div class="aTag">
-                            <a href="/reservation">예약하기</a>
-                            <a href="/board">커뮤니티</a>
-                        </div>
-                </div>
+                    </div>
+                <!-- 로그인, 관리자 페이지, 로그아웃 우측 정렬 -->
                 <div class="logout">
-                     <%if(session && session.u_id) {%>
-                         <% if(session.permission==='admin'){ %>
+                    <% if(session && session.u_id) { %>
+                        <% if(session.permission==='admin'){ %>
                             <div class="dropdown">
                                 <button onclick="toggleDropdown()" class="dropbtn">관리자페이지</button>
                                 <div id="myDropdown" class="dropdown-content">
                                     <button id="drop-item" type="button" class="user-btn">회원 관리</button><br>
                                     <button id="drop-item" type="button" class="reserve-btn">예약 관리</button><br>
                                     <button id="drop-item" type="button" class="course-btn">수업 관리</button><br>
-                                  
                                 </div>
-                              </div>   
-                            <% } %> 
-                                                <button type="button" class="mypage-btn">마이페이지</button>
+                            </div>   
+                        <% } %>
+                        <button type="button" class="mypage-btn">마이페이지</button>
                         <button type="button" class="logout-btn">로그아웃</button>
-                     <%} else {%>
+                    <% } else { %>
                         <button type="button" class="login-btn">로그인 &nbsp; | &nbsp; 회원가입</button>
-                     <%}%>
+                    <% } %>
                 </div>
-            </header>
-            <% if (typeof message !== 'undefined') { %>
-                <!-- message가 정의되어 있다면 -->
-                <input type="hidden" id="message" value="<%= message %>">
-            <% } %>
+            </div>
+        </header>
+        <% if (typeof message !== 'undefined') { %>
+            <!-- message가 정의되어 있다면 -->
+            <input type="hidden" id="message" value="<%= message %>">
+        <% } %>
             <script src="/static/js/header.js"></script>
     </body>
 </html>
