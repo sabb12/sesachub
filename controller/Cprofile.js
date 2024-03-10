@@ -50,29 +50,49 @@ exports.deleteAccount = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        // 세션 사용할 경우 u_id 지우기
-        const { u_id, pw, name, nk_name, phone, email } = req.body;
-        const updateInfo = await user
-            // 세션 사용할 경우 where: nk_name 추가
-            .update({ pw, nk_name, phone, email }, { where: { u_id, name } })
-            .then(() => {
-                res.end();
-            });
+        const { u_id } = req.session;
+        const { pw, name, nk_name, phone, email } = req.body;
+        await user.update({ pw, nk_name, phone, email }, { where: { u_id, name } });
+        res.send("프로필 수정 완료");
     } catch (error) {
         console.log("updateProfile controller err :: ", error);
         res.status(500).send("server error!");
     }
 };
 
+exports.deleteProfileImg = async (req, res) => {
+    try {
+        const { u_id } = req.session;
+
+        // TODO: 기본 프로필 이미지로 변경
+        await user.update({ profile_img: "profile_img" }, { where: { u_id } });
+        res.send("프로필 이미지가 삭제되었습니다.");
+    } catch (error) {
+        console.log("Cprofile deleteProfile err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
 exports.deleteReservation = async (req, res) => {
     try {
-        // 세션 사용할 경우 u_id 지우기
-        const { r_id, u_id } = req.body;
-        const deletedReservation = await reservation.destroy({ where: { r_id, u_id } }).then(() => {
-            res.send("예약이 취소되었습니다.");
-        });
+        const { u_id } = req.session;
+        const { r_id } = req.body;
+        await reservation.destroy({ where: { r_id, u_id } });
+        res.send("예약이 취소되었습니다.");
     } catch (error) {
         console.log("deleteReservation controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
+exports.deleteBookmark = async (req, res) => {
+    try {
+        const { u_id } = req.session;
+        const {} = req.body;
+        const deletedBookmark = await bookMark.destroy({ where: { u_id } });
+        res.send("북마크가 삭제되었습니다.");
+    } catch (error) {
+        console.log("Cprofile deleteBookmark err :: ", error);
         res.status(500).send("server error!");
     }
 };
