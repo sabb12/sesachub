@@ -19,3 +19,24 @@ function updateProfile() {
         })
         .catch((err) => console.error("update error", err));
 }
+
+const updatebtn = document.querySelector(".show_modal");
+const closeBtn = document.querySelector(".close_btn");
+
+const popupContainer = document.querySelector(".modal_container");
+
+// updatebtn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     popupContainer.style.visibility = "visible";
+// });
+// closeBtn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     popupContainer.style.visibility = "hidden";
+// });
+updatebtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    popupContainer.classList.add("active");
+});
+closeBtn.addEventListener("click", (e) => {
+    popupContainer.classList.remove("active");
+});
