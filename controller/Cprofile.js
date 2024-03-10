@@ -1,5 +1,10 @@
 const { Op } = require("sequelize");
 const { user, reservation, board, bookMark } = require("../models");
+const bcrypt = require("bcrypt");
+
+function comparePw(inputPw, hashedPw) {
+    return bcrypt.compareSync(inputPw, hashedPw);
+}
 
 exports.main = async (req, res) => {
     try {
@@ -52,8 +57,15 @@ exports.updateProfile = async (req, res) => {
     try {
         const { u_id } = req.session;
         const { pw, name, nk_name, phone, email } = req.body;
-        await user.update({ pw, nk_name, phone, email }, { where: { u_id, name } });
-        res.send("프로필 수정 완료");
+
+        const userInfo = await user.findOne({ where: { u_id } });
+        if (!pw) return res.send("비밀번호를 입력해주세요.");
+
+        if (!comparePw(pw, userInfo.pw))
+            return res.send("비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
+
+        await user.update({ nk_name, phone, email }, { where: { u_id, name } });
+        res.send("프로필 수정이 완료되었습니다.");
     } catch (error) {
         console.log("updateProfile controller err :: ", error);
         res.status(500).send("server error!");
@@ -88,8 +100,8 @@ exports.deleteReservation = async (req, res) => {
 exports.deleteBookmark = async (req, res) => {
     try {
         const { u_id } = req.session;
-        const {} = req.body;
-        const deletedBookmark = await bookMark.destroy({ where: { u_id } });
+        const { bm_id, b_id } = req.body;
+        await bookMark.destroy({ where: { bm_id, b_id, u_id } });
         res.send("북마크가 삭제되었습니다.");
     } catch (error) {
         console.log("Cprofile deleteBookmark err :: ", error);
