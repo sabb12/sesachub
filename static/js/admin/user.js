@@ -31,6 +31,9 @@ async function courseAdd(u_id, cs_id) {
         } else {
             alert("수업 변경 실패 하였습니다.");
         }
+    }else{
+        alert("수업 변경 취소 하였습니다.");
+
     }
 }
 async function permissionInsert(u_id, selectValue) {
@@ -52,7 +55,7 @@ async function permissionInsert(u_id, selectValue) {
             alert("권한부여 실패하였습니다.");
         }
     } else {
-        alert("부여 실패하였습니다");
+        alert("권한부여 취소 하였습니다");
     }
 }
 async function pwReset(u_id) {
@@ -131,7 +134,7 @@ function openModal(u_id, name, course, permission) {
     let html = "";
     let html2 = "";
     html += `
-            <span>권한없음</span><br>
+            
             <select id="permissionSelect">
                 <option value="admin">관리자</option>
                 <option value="student">수강생</option>
@@ -159,7 +162,7 @@ function openModal(u_id, name, course, permission) {
         <td>${u_id}</td>
         <td>${name}</td>
         <td>${course}<br>${html2}</td>
-        <td>${permission ? permission : html}</td>
+        <td>${permission ? permission+'<br>'+html : '<span>권한없음</span><br>'+html}</td>
     `;
 
     // 기존 테이블 요소에 새로운 <tr> 요소를 추가합니다.
