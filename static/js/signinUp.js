@@ -133,11 +133,25 @@ duplicateCheck(idBtn, idInput, patterns.u_id, setIdFlag);
 duplicateCheck(nkNameBtn, nkNameInput, patterns.nk_name, setNkNameFlag);
 
 // 가입하기
-function signup() {
+async function signup() {
     if (!idFlag || !nkNameFlag) alert("아이디 또는 닉네임 중복 확인을 해주세요.");
     const form = document.forms["sign_up_form"];
-    console.log(form);
-    axios({
+
+    // 연락처 데이터
+    let phone = form.phone.value; // 숫자 9 ~ 11 자리 중 하나
+    switch (phone.length) {
+        case 9:
+            phone = phone.slice(0, 2) + "-" + phone.slice(2, 5) + "-" + phone.slice(5);
+            break;
+        case 10:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6);
+            break;
+        case 11:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
+            break;
+    }
+
+    await axios({
         method: "post",
         url: "/user/signup",
         data: {
@@ -146,7 +160,7 @@ function signup() {
             name: form.name.value,
             nk_name: form.nk_name.value,
             email: form.email.value,
-            phone: form.phone.value,
+            phone: phone,
             cs_id: form.cs_id.value,
         },
     }).then((res) => {
