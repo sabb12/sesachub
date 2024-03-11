@@ -122,13 +122,10 @@ function deleteBookmarkAll() {
                 const u_id = bookmark
                     .querySelector(".bookMark_check-option")
                     .getAttribute("data-u-id");
-                const title = bookmark
-                    .querySelector(".bookMark_check-option")
-                    .getAttribute("data-title");
                 axios({
-                    method: "DELETE",
-                    url: "/board",
-                    params: {
+                    method: "POST",
+                    url: "/board/bookmark",
+                    data: {
                         b_id: b_id,
                         u_id: u_id,
                     },
@@ -138,7 +135,7 @@ function deleteBookmarkAll() {
                         bookmark.checked = false;
                     })
                     .catch((error) => {
-                        console.error("Error deleting bookMark:", error);
+                        console.error("Error deleting all bookMark:", error);
                     });
             }
         }
