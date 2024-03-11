@@ -1,5 +1,9 @@
 const tabButtons = document.querySelectorAll(".tab_container .log_re_btn_container button");
 const tabPanels = document.querySelectorAll(".tab_container .tab_panel");
+const idBtn = document.querySelector("#id_check_btn");
+const idInput = document.querySelector("#u_id");
+const nkNameBtn = document.querySelector("#nk_name_check_btn");
+const nkNameInput = document.querySelector("#nk_name");
 
 function showPanel(panelIndex, colorCode) {
     tabButtons.forEach(function (node) {
@@ -19,7 +23,7 @@ function showPanel(panelIndex, colorCode) {
 showPanel(0, "white");
 
 /* 정규표현식
-    - 아이디: 영어 소문자, 숫자 1글자 이상이고 특수문자 x, 영어 대문자x, 한글x인 6~16글자 사이
+- 아이디: 영어 소문자, 숫자 1글자 이상이고 특수문자 x, 영어 대문자x, 한글x인 6~16글자 사이
     - 비밀번호: 영어 대소문자, 숫자, 특수문자 각 1글자이상 한글x인 총 8글자이상
     - 이름: 한글 2 ~ 5 글자
     - 닉네임: 한글, 영어 대소문자, 숫자로 2 ~ 16글자
@@ -76,43 +80,78 @@ function showSuccess(input) {
     formControl.querySelector("small").style.visibility = "hidden";
 }
 
+let idFlag = false;
+let nkNameFlag = false;
+
 // 중복 확인
-document.querySelector(".duplicate_check button").addEventListener("click", async function () {
-    let u_id = document.querySelector("#u_id");
+function duplicateCheck(btnEl, input, pattern, flagSetter) {
+    btnEl.addEventListener("click", async function () {
+        if (!pattern.test(input.value)) {
+            alert(
+                input.name === "u_id"
+                    ? "아이디 양식에 맞게 작성해주세요."
+                    : "닉네임 양식에 맞게 작성해주세요.",
+            );
+            input.value = "";
+            return;
+        }
 
-    if (!patterns.u_id.test(u_id.value)) {
-        alert("아이디 양식에 맞게 작성해주세요.");
-        u_id.value = "";
-        return;
-    }
-
-    if (u_id.value) {
         try {
             let res = await axios({
                 method: "get",
-                url: `/user/duplicate?u_id=${u_id.value}`,
+                url: `/user/duplicate?${input.name}=${input.value}`,
             });
 
             if (res.data.isDuplicate) {
-                alert("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
+                input.name === "u_id"
+                    ? alert("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.")
+                    : alert("이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.");
             } else {
-                alert("사용 가능한 아이디입니다.");
-                let btn = document.querySelector(".duplicate_check button");
-                btn.classList.add("checked");
+                input.name === "u_id"
+                    ? alert("사용 가능한 아이디입니다.")
+                    : alert("사용 가능한 닉네임 입니다.");
+                flagSetter(true); // 중복이 아니면 플래그를 true로 설정
             }
         } catch (error) {
             console.error("Error:", error);
         }
-    } else {
-        alert("아이디를 입력해주세요.");
-    }
-});
+    });
+}
+
+// 플래그 설정 함수
+function setIdFlag(value) {
+    idFlag = value;
+    console.log("idFlag ::", idFlag);
+}
+
+function setNkNameFlag(value) {
+    nkNameFlag = value;
+    console.log("nkNameFlag ::", nkNameFlag);
+}
+
+duplicateCheck(idBtn, idInput, patterns.u_id, setIdFlag);
+duplicateCheck(nkNameBtn, nkNameInput, patterns.nk_name, setNkNameFlag);
 
 // 가입하기
-function signup() {
+async function signup() {
+    if (!idFlag || !nkNameFlag) alert("아이디 또는 닉네임 중복 확인을 해주세요.");
     const form = document.forms["sign_up_form"];
-    console.log(form);
-    axios({
+
+    // 연락처 데이터
+    let phone = form.phone.value; // 숫자 9 ~ 11 자리 중 하나
+    switch (phone.length) {
+        case 9:
+            phone = phone.slice(0, 2) + "-" + phone.slice(2, 5) + "-" + phone.slice(5);
+            break;
+        case 10:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6);
+            break;
+        case 11:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
+            break;
+    }
+
+    await axios({
         method: "post",
         url: "/user/signup",
         data: {
@@ -121,7 +160,7 @@ function signup() {
             name: form.name.value,
             nk_name: form.nk_name.value,
             email: form.email.value,
-            phone: form.phone.value,
+            phone: phone,
             cs_id: form.cs_id.value,
         },
     }).then((res) => {
@@ -130,6 +169,7 @@ function signup() {
     });
 }
 
+// 로그인
 function signin() {
     const form = document.forms["sign_in_form"];
 
@@ -152,7 +192,7 @@ function signin() {
         const { success } = res.data;
         if (success) {
             alert("로그인 성공!😎");
-            document.location.href = "/reservation";
+            document.location.href = "/";
         } else {
             alert("로그인 실패!😥 아이디와 비밀번호를 확인해주세요.");
             form.reset();

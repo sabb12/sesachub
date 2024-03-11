@@ -36,9 +36,9 @@
                             <div class="subTitle idTitle">비밀번호</div>
                             <div class="inputContainer">
                                 <input type="password" name="pw" placeholder="비밀번호" value=""/>
+                                <button class="show_modal">수정</button>
                             </div>
                         </div>
-
                         <div class="wrapper nickNameWrapper">
                             <div class="subTitle nickNameTitle">닉네임</div>
                             <div class="inputContainer">
@@ -73,6 +73,33 @@
                </div>
             </div>
         </div>
+        <!--Modal-->
+        <div class="modal_container">
+            <div class="modal_box">
+              <h1>비밀번호 수정</h1>
+              <div class="form_container">
+                <form name="modal_form">
+                  <div class="modal_input_container">
+                    <div class="modal current_pw">
+                      <div class="title">현재 비밀번호</div>
+                      <input type="text" placeholder="현재 비밀번호" />
+                    </div>
+                    <div class="modal new_pw">
+                      <div class="title">새로운 비밀번호</div>
+                      <input type="text" placeholder="새로운 비밀번호" />
+                    </div>
+                    <div class="modal confirm_new_pw">
+                      <div class="title">새로운 비밀번호 확인</div>
+                      <input type="text" placeholder="새로운 비밀번호 확인" />
+                    </div>
+                  </div>
+                  <div class="modal_buttons">
+                    <button class="close_btn">비밀번호 수정</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         <script src="/static/js/profile.js"></script>
     </body>
 </html>

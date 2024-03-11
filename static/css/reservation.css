@@ -173,7 +173,7 @@ input[type="radio"] {
     border-collapse: collapse;
     border-top: 2px solid var(--text-color);
     border-bottom: 2px solid var(--text-color);
-    border-left: 1px solid var(--text-color);
+    border-left: 2px solid var(--text-color);
     cursor: pointer;
 }
 

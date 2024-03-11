@@ -212,8 +212,7 @@ input::placeholder {
 .register_input {
     display: flex;
     flex-direction: column;
-    /* margin-bottom: 0; */
-    padding-bottom: 20px;
+    height: 108px;
 }
 
 .register_input label {
@@ -231,10 +230,24 @@ input::placeholder {
     width: 460px;
     padding: 10px;
     font-size: 14px;
-    margin: 5px 0;
+    /* margin: 5px 0; */
 }
 
-.id_area {
+.register_input input {
+    position: relative;
+    top: 11px;
+}
+
+.register_input small {
+    position: relative;
+    top: 18px;
+}
+
+.dup_area_input {
+    height: 107px;
+}
+
+.dup_area {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -244,7 +257,13 @@ input::placeholder {
 
 .duplicate_check {
     display: flex;
-    align-items: center;
+    height: 108px;
+}
+
+.pre_check {
+    position: relative;
+    top: 35px;
+    height: 39px;
 }
 
 .duplicate_check button {
@@ -255,6 +274,7 @@ input::placeholder {
     border-radius: 5px;
     font-weight: 700;
     cursor: pointer;
+    height: 40px;
 }
 
 .duplicate_check button.checked {
@@ -286,7 +306,7 @@ input::placeholder {
     visibility: visible;
 }
 
-.register_input #course {
+.register_input #cs_id {
     padding: 11px 0;
     margin: 5px 0;
     border: 2px solid #f0f0f0;
@@ -308,12 +328,6 @@ input::placeholder {
     position: relative;
     height: 23px;
     width: 23px;
-}
-
-.circleContainer label {
-    color: #777;
-    display: block;
-    margin-bottom: 5px;
 }
 
 /*passwork icon*/
@@ -371,62 +385,4 @@ input::placeholder {
     /* position: absolute; */
     background-color: #c0c0c0;
     transform: translate(10.4px, -8px);
-}
-
-.squareContainer {
-    position: relative;
-    height: 23px;
-    width: 23px;
-    transform: translate(2px, -1px);
-}
-
-.squareShape {
-    width: 13px;
-    height: 10px;
-    border: 1.5px solid #c0c0c0;
-    transform: translate(2px, 6px);
-}
-
-.squareLeftLine {
-    width: 1.1px;
-    height: 9px;
-    background-color: #c0c0c0;
-    transform: translate(5px, -7.5px) rotate(125deg);
-}
-.squareRightLine {
-    width: 1.1px;
-    height: 8px;
-    background-color: #c0c0c0;
-    transform: translate(12px, -15.5px) rotate(55deg);
-}
-
-.phoneSquareContainer {
-    position: relative;
-    height: 23px;
-    width: 23px;
-    transform: translate(2.7px, -4px);
-}
-
-.phoneSquareShape {
-    width: 11px;
-    height: 15px;
-    border: 1.5px solid #c0c0c0;
-    border-radius: 3px;
-    transform: translate(2px, 6px);
-}
-
-.phoneTopLine {
-    width: 3px;
-    height: 6px;
-    background-color: #c0c0c0;
-    border-radius: 1px;
-    transform: translate(6.8px, -12px) rotate(90deg);
-}
-
-.phoneBottomLine {
-    width: 1px;
-    height: 5px;
-    background-color: #c0c0c0;
-    border-radius: 1px;
-    transform: translate(7.5px, -5px) rotate(90deg);
 }

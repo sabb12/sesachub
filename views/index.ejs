@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("include/include", {title: "메인페이지"})%>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+    <!-- Header Include -->
+    <%- include('include/header.ejs') %>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Image Grid -->
+        <div class="image-grid">
+            <% for (let i = 1; i <= 8; i++) { %>
+                <div class="grid-item">
+                    <img src="/static/images/main/<%= i %>.jpg" alt="Slide <%= i %>">
+                </div>
+            <% } %>
+        </div>
+
+        <!-- Footer -->
+    </div>
+    <footer>
+        <div class="footer_container">
+            <h1>The developers of sesachub!</h1>
+            <!-- 이미지 4개를 포함하는 div -->
+            <div class="image-container">
+                <div>
+                    <a href="https://github.com/sabb12">
+                        <img src="/static/images/main/leem.png" alt="Image 1">
+                        <p>Lim Hak-min</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/purple11-11">
+                        <img src="/static/images/main/yoon.png" alt="Image 2">
+                        <p>Yoon Young-in</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/rasarar">
+                        <img src="/static/images/main/lee.png" alt="Image 3">
+                        <p>Lee Daewon</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/gusnl88">
+                        <img src="/static/images/main/kim.png" alt="Image 4">
+                        <p>Kim Bong-Hyun</p>
+                    </a>
+                </div>
+            </div>
+            <!-- 저작권 정보 -->
+            <div class="copyright">
+                <p>ⓒ 2024.the first exit. All rights reserved.</p>
+            </div>
+            
+        </div>
+    </footer>
+</body>
+</html>
