@@ -1,7 +1,11 @@
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const { user, reservation, board, bookMark } = require("../models");
 const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
+function hashPw(pw) {
+    return bcrypt.hashSync(pw, saltRounds);
+}
 function comparePw(inputPw, hashedPw) {
     return bcrypt.compareSync(inputPw, hashedPw);
 }
@@ -72,6 +76,30 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
+exports.updatePassword = async (req, res) => {
+    try {
+        const { u_id } = req.session;
+        const { pw, newPw } = req.body;
+
+        const userInfo = await user.findOne({ where: { u_id } });
+
+        if (!pw || !newPw)
+            return res.send({ success: false, msg: "비밀번호를 전부 입력해주세요." });
+        if (!comparePw(pw, userInfo.pw))
+            return res.send({
+                success: false,
+                msg: "현재 비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+            });
+
+        const isUpdate = await user.update({ pw: hashPw(newPw) }, { where: { u_id } });
+
+        if (isUpdate) return res.send({ success: true, msg: "비밀번호가 수정되었습니다." });
+    } catch (error) {
+        console.log("updatePassword controller err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
 exports.deleteProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
@@ -100,9 +128,12 @@ exports.deleteReservation = async (req, res) => {
 exports.deleteBookmark = async (req, res) => {
     try {
         const { u_id } = req.session;
-        const { bm_id, b_id } = req.body;
-        await bookMark.destroy({ where: { bm_id, b_id, u_id } });
-        res.send("북마크가 삭제되었습니다.");
+        const { b_id } = req.body;
+
+        const success = await bookMark.destroy({ where: { b_id, u_id } });
+
+        if (success) return res.send("북마크가 삭제되었습니다.");
+        else return res.send("다시 로그인 후 삭제해주세요");
     } catch (error) {
         console.log("Cprofile deleteBookmark err :: ", error);
         res.status(500).send("server error!");

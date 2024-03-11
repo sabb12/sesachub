@@ -19,6 +19,8 @@ router.get("/deleteAccount", controller.deleteAccount);
 // /profile
 router.patch("/", controller.updateProfile);
 
+// /profile/password
+router.patch("/password", controller.updatePassword);
 /* ----------------- DELETE ------------------ */
 // /profile/image
 router.delete("/image", controller.deleteProfileImg);
