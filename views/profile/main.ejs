@@ -14,8 +14,10 @@
                         <div class="wrapper imageWrapper">
                             <div class="subTitle imageTitle">프로필 이미지</div>
                                 <div class="image_container">
-                                    <img src="https://picsum.photos/200/300" alt="randomImage" class="image profile_image"/>
-                                    <input type="file" class="image image_input">
+                                        <img src="/<%= userInfo.profile_img%>" alt="Profile Image" class="image profile_image"/>
+                                        <input type="file" name="profile_img" class="image image_input">
+                                        <button type="button" onclick="updateProfileImg()" >프로필 변경</button>
+                                        <button type="button" onclick="deleteProfileImg()" >기본 프로필</button>
                                 </div>
                         </div>
                         <div class="wrapper nameWrapper">
@@ -62,7 +64,7 @@
                         <div class="wrapper nameWrapper">
                             <div class="subTitle courseTitle">수강중인과정</div>
                             <div class="inputContainer">
-                                <input type="text" name="course" placeholder="수강중인과정" value="<%=userInfo.course%>" readonly/>
+                                <input type="text" name="course" placeholder="수강중인과정" value="<%=courseInfo.course_name%>" readonly/>
                             </div>
                         </div>
                     </div>

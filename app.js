@@ -14,8 +14,10 @@ require("dotenv").config();
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/static", express.static(__dirname + "/static"));
 
+// body-parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -26,7 +28,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            maxAge: 1000 * 60 * 30, // 30 min
+            // maxAge: 1000 * 60 * 30 // 30 min
             httpOnly: true,
         },
     }),
@@ -50,6 +52,7 @@ app.use((req, res, next) => {
     res.locals.session = req.session;
     next();
 });
+
 app.get("/", (req, res) => {
     res.render("index");
 });
@@ -67,7 +70,7 @@ sequelize
     .sync({ force: false })
     .then(() => {
         app.listen(PORT, () => {
-            console.log(`http://${URL}:${PORT}/user`);
+            console.log(`http://${URL}:${PORT}`);
         });
     })
     .catch((err) => {

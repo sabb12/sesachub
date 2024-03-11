@@ -1,5 +1,5 @@
-const { Op, where } = require("sequelize");
-const { user, reservation, board, bookMark } = require("../models");
+const { Op } = require("sequelize");
+const { user, reservation, board, bookMark, course } = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -14,8 +14,9 @@ exports.main = async (req, res) => {
     try {
         const { u_id, nk_name } = req.session;
         const userInfo = await user.findOne({ where: { u_id, nk_name } });
-        // console.log("profile userInfo ::", userInfo);
-        res.render("profile/main", { userInfo });
+        const courseInfo = await course.findOne({ where: userInfo.cs_id });
+        // console.log("profile_img userInfo ::", userInfo.profile_img);
+        res.render("profile/main", { userInfo, courseInfo });
     } catch (error) {
         console.log("Cprofile main err :: ", error);
         res.status(500).send("server error!");
@@ -100,13 +101,38 @@ exports.updatePassword = async (req, res) => {
     }
 };
 
+exports.updateProfileImg = async (req, res) => {
+    try {
+        const { u_id } = req.session;
+        const file = req.file; // 단일 파일 업로드인 경우
+        console.log("profile_img ::", file);
+
+        if (!file) {
+            return res.status(400).send("파일이 업로드되지 않았습니다.");
+        }
+
+        // 파일 경로를 데이터베이스에 저장하거나 다른 작업 수행
+        const filePath = file.path; // 파일 경로
+
+        console.log("filePath ::", filePath);
+
+        await user.update({ profile_img: filePath }, { where: { u_id } });
+        const userInfo = await user.findOne({ where: { u_id } });
+
+        res.send({ updatedImg: userInfo.profile_img });
+    } catch (error) {
+        console.log("Cprofile updateProfileImg err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
 exports.deleteProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
 
         // TODO: 기본 프로필 이미지로 변경
-        await user.update({ profile_img: "profile_img" }, { where: { u_id } });
-        res.send("프로필 이미지가 삭제되었습니다.");
+        await user.update({ profile_img: "uploads\\logo.png" }, { where: { u_id } });
+        res.end();
     } catch (error) {
         console.log("Cprofile deleteProfile err :: ", error);
         res.status(500).send("server error!");
