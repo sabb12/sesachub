@@ -24,7 +24,7 @@
                   <th>삭제</th>
                 </tr>
             </thead>
-             <tbody> 
+             <tbody>
                <% reservationData.forEach(reservation => { %>
                   <tr>
                     <td class="check_all">
@@ -44,7 +44,12 @@
                       <button class="delete_button" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
                     </td>
                   </tr>
-                <%})%>
+                  <%})%>
+                  <%if(reservationData.length === 0) {%>
+                  <tr>
+                    <td colspan="6" class="empty_text">예약이 없습니다.</td>
+                  </tr>
+                <%}%>
               </tbody>
             </table>
             <div class="pagination"> < 1,2,3,3,4,5> </div>

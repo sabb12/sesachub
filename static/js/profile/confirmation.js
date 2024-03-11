@@ -18,7 +18,7 @@ chkbx.forEach((checkbox) => {
 });
 
 /// 각 예약 정보 삭제
-function deleteButton(btn, r_id, u_id) {
+function deleteButton(r_id, u_id) {
     const areYouSure = confirm("삭제하시겠습니까?");
     if (areYouSure) {
         axios({
@@ -27,7 +27,7 @@ function deleteButton(btn, r_id, u_id) {
             data: { r_id: r_id, u_id: u_id },
         })
             .then(function (res) {
-                btn.parentElement.remove();
+                location.href = "/profile/confirmation";
             })
             .catch((error) => {
                 console.error("Error deleting reservation:", error);
@@ -57,7 +57,8 @@ function deleteAllCheckedBtn() {
                     },
                 })
                     .then(function (res) {
-                        checkedEl.remove();
+                        location.href = "/profile/confirmation";
+                        // checkedEl.remove();
                         checkAll.checked = false;
                     })
                     .catch((error) => {
