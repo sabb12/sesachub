@@ -88,11 +88,18 @@
                                                     <%=board.category %>
                                                 </td>
                                                 <td>
+                                                 
                                                     <a href="/board/board?b_id=<%=board.b_id%>">
+                                                        <% (board.title.length > 10) ? board.title=board.title.slice(0, 10) + '...' : board.title %>
                                                        <%= board.title%>
                                                     </a>
                                                 </td>
                                                 <td>
+                                                    <% if(board.profile_img){ %>
+                                                        <img class="profile_img" src="/static/images/profile/'<%= board.profile_img  %>'" alt="프로필">
+                                                        <% }else{ %>
+                                                            <img class="profile_img" src="/static/images/logo.png" alt="프로필">
+                                                        <% } %>
                                                     <%= board.user.nk_name%>
                                                 </td>
                                                 <td>

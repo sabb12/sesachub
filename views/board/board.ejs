@@ -33,6 +33,11 @@
                                                 <tr>
                                                     <th scope="row">작성자</th>
                                                     <td rowspan="1">
+                                                        <% if(board.profile_img){ %>
+                                                            <img class="profile_img" src="/static/images/profile/'<%= board.profile_img  %>'" alt="프로필">
+                                                            <% }else{ %>
+                                                                <img class="profile_img" src="/static/images/logo.png" alt="프로필">
+                                                            <% } %>
                                                         <%=board.user.nk_name%>
                                                     </td>
                                                     <th scope="row">작성일</th>
@@ -54,23 +59,34 @@
                                     <div class="bottom_area">
                                         <div class="icon_box">
                                             <div class="like_box">
-                                                <button type="button" class="btn_like"
-                                                    onclick="like('<%=board.b_id%>','<%=session.u_id%>')"></button>
+                                                <button type="button"
+                                                    onclick="like('<%=board.b_id%>','<%=session.u_id%>')">🤍</button>
                                                 <span id="like_count">
+                                                    
                                                     <%= board.dataValues.like_count%>
                                                 </span>
                                             </div>
                                             <div class="bookmark_box" class="btn_bookmark" id="check_bookmark">
                                                 <!-- <span>북마크</span> -->
-                                                <% if (isBookmarked) {%>
+                                                <% if (board.bookmarks && board.bookmarks.length > 0) { %>
+                                                    <% for(let bookmark of board.bookmarks) { %>
+                                                        <% if (bookmark.u_id === session.u_id) { %>
+                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                                id="bookmark">&#9733;</a>
+                                                        <% } else { %>
+                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                                id="bookmark">&#9734;</a>
+                                                        <% } %>
+                                                    <% } %>
+                                                <% } else { %>
                                                     <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                        id="bookmark">&#9733;</a>
-                                                    <%} else {%>
-                                                        <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                            class="btn_bookmark" id="bookmark">&#9734;</a>
-                                                        <%}%>
+                                                        id="bookmark">&#9734;</a>
+                                                <% } %>
+                                              
+                                             
                                             </div>
                                         </div>
+                                        
                                         <div class="btn_wrap">
                                             <a href="javascript:page_update('<%=board.b_id%>');"
                                                 class="btn basic">수정</a>
