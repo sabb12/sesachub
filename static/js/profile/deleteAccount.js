@@ -1,5 +1,5 @@
 function deleteAccount() {
-    const form = document.forms["delete_form"];
+    const form = document.forms["delete_account_form"];
     axios({
         method: "DELETE",
         url: "/user",
@@ -8,8 +8,6 @@ function deleteAccount() {
             pw: form.pw.value,
         },
     }).then((res) => {
-        console.log("res.data: ", res.data);
-        alert(res.data);
-        document.location.href = "/user";
+        document.location.href = "/profile/deleteAccount";
     });
 }
