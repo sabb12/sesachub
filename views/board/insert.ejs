@@ -10,7 +10,7 @@
                 <div class="center">
                     <main role="main">
                         <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
-                            <div id="board">
+                            <div class="board">
                                 <form name="insert_form">
                                     <input type="hidden" name="u_id" value="<%=session.u_id%>">
                                     <div class="table_box no_border">
@@ -22,8 +22,22 @@
                                             </colgroup>
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row">제목</th>
+                                                    <th scope="row">카테고리</th>
                                                     <td>
+                                                        <select name="category" class="select_list">
+                                                            <option value="free">자유
+                                                            </option>
+                                                            <option value="study">공부
+                                                            </option>
+                                                            <option value="employ">취업정보
+                                                            </option>
+                                                            <option value="qualification">자격증 & 어학</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">제목</th>
+                                                    <td class="board_title">
                                                         <input type="text" name="title" />
                                                     </td>
                                                 </tr>
@@ -36,7 +50,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <input type="button" onclick="board_insert()" value="글 작성" />
+                                    <div class="btn_wrap">
+                                        <a href="javascript:board_insert()" class="btn basic">등록</a>
+                                        <a href="/board" class="btn basic">등록 취소</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>

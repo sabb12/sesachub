@@ -8,28 +8,65 @@
         <%- include('../include/header.ejs'); %>
             <div class="container">
                 <div class="center">
-                    <form name="update_form">
-                        <input type="hidden" name="b_id" value="<%=board.b_id%>">
-                        <div>
-                            <div>
-                                <select name="category">
-                                    <option value="free" <%=board.category==='free' ? 'selected' : '' %>>자유</option>
-                                    <option value="study" <%=board.category==='study' ? 'selected' : '' %>>공부</option>
-                                    <option value="employ" <%=board.category==='employ' ? 'selected' : '' %>>취업정보
-                                    </option>
-                                    <option value="qualification" <%=board.category==='qualification' ? 'selected' : ''
-                                        %>>자격증 & 어학</option>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="text" name="title" value="<%=board.title%>" />
+                    <main role="main">
+                        <div class="content board">
+                            <div class="board">
+                                <form name="update_form">
+                                    <input type="hidden" name="b_id" value="<%=board.b_id%>">
+                                    <div class="table_box no_border">
+                                        <table>
+                                            <caption></caption>
+                                            <colgroup>
+                                                <col style="width:120px;">
+                                                <col>
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">카테고리</th>
+                                                    <td>
+                                                        <select name="category" class="select_list">
+                                                            <option value="free" <%=board.category==='free' ? 'selected'
+                                                                : '' %>
+                                                                >자유
+                                                            </option>
+                                                            <option value="study" <%=board.category==='study'
+                                                                ? 'selected' : '' %>
+                                                                >공부
+                                                            </option>
+                                                            <option value="employ" <%=board.category==='employ'
+                                                                ? 'selected' : '' %>
+                                                                >취업정보
+                                                            </option>
+                                                            <option value="qualification"
+                                                                <%=board.category==='qualification' ? 'selected' : '' %>
+                                                                >자격증
+                                                                & 어학</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">제목</th>
+                                                    <td class="board_title">
+                                                        <input type="text" name="title" value="<%=board.title%>" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">내용</th>
+                                                    <td class="board_content">
+                                                        <textarea rows="30" name="content"><%=board.content%></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="btn_wrap">
+                                        <a href="javascript:update_board('<%=board.b_id%>')" class="btn basic">수정</a>
+                                        <a href="/board/board?b_id=<%=board.b_id%>" class="btn basic">수정 취소</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <div>
-                            <textarea rows="30" name="content"><%=board.content%></textarea>
-                        </div>
-                        <input type="button" onclick="board_update('<%=board.b_id%>')" value="글 작성" />
-                    </form>
+                    </main>
                 </div>
             </div>
     </body>
