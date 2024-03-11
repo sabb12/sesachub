@@ -137,7 +137,7 @@ exports.board = async (req, res) => {
             include: [
                 {
                     model: user,
-                    attributes: ["nk_name"],
+                    attributes: ["nk_name", "profile_img"],
                 },
                 {
                     model: boardLike,
@@ -161,6 +161,10 @@ exports.board = async (req, res) => {
                     as: "comments", // 별칭 추가
                     include: [
                         {
+                            model: user,
+                            attributes: ["u_id", "profile_img"],
+                        },
+                        {
                             model: comment, // 대댓글 모델 include
                             as: "replies", // 대댓글 모델의 별칭 설정
                             attributes: [
@@ -172,6 +176,13 @@ exports.board = async (req, res) => {
                                 "content",
                                 "status",
                             ], // 대댓글의 속성 선택
+                            include:[
+                                {
+                                    model:user,
+                                    attributes: ["u_id", "profile_img"],
+
+                                }
+                            ]
                         },
                     ],
                     where: { parent_id: null }, // 부모 댓글만 가져오도록 추가된 where 조건
