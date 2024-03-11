@@ -69,9 +69,33 @@
     padding-left: 10px;
 }
 
-input {
-    width: 200px;
-    height: 20px;
+.inputContainer input {
+    width: 350px;
+    height: 30px;
+    border: 2px solid #dadada;
+    border-radius: 4px;
+    display: block;
+    padding: 0 8px;
+    font-size: 13px;
+}
+
+.inputContainer input:disabled {
+    border: 2px solid #dadada;
+    background-color: #f2f2f2;
+    color: #777;
+}
+
+.inputContainer input:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.inputContainer.success input {
+    border-color: #6fc274;
+}
+
+.inputContainer.error input {
+    border-color: #e74c3c;
 }
 
 /*top right bottom left*/
