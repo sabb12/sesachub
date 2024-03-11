@@ -19,7 +19,7 @@
                               </div>
                             <div>No.</div>
                             <div>글제목</div>
-                            <div>작성일시</div>
+                            <div>작성일자</div>
                         </div>
                         <div class="reservation_body">
                             <% postings.forEach(post => { %>
@@ -29,17 +29,20 @@
                                   </div>
                                   <div><%= post.b_id %></div>
                                   <div><a href="/board/board?b_id=<%= post.b_id %>"><%= post.title %></a></div>
-                                  <div><%= post.post_time %></div>
+                                  <div><%= post.createdAt.toLocaleString("ko-KR", {year: '2-digit', month: '2-digit', day: '2-digit'}) %></div>
                                    <button class="deleteButton" onclick="deleteButton(this, '<%= post.b_id%>', '<%= post.u_id%>')">삭제</button>
                                   </div>
                                   <% }); %>
                                 </div>
                         </div>
                         <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                        <div class="reserCancelContainer">
+                            <button class="delete-all-btn" onclick="deletePosting()">글 삭제</button>
+                          </div>
                     </div>
-                         <!--복마크 목록-->
+                         <!--북마크 목록-->
                 <div class="free_board book_mark_container">
-                    <div class="title">복마크 목록</div>
+                    <div class="title">북마크 목록</div>
                     <div class="reservation_container">
                         <div class="reservation_header">
                             <div class="check_all">
@@ -48,7 +51,6 @@
                               </div>
                             <div>No.</div>
                             <div>글제목</div>
-                            <div>작성일시</div>
                         </div>
                         <div class="reservation_body">
                             <% bookmarkPostings.forEach(bookmarkPost => { %>
@@ -64,11 +66,12 @@
                                   <% }); %>
                                 </div>
                         </div>
-                        </div>
-                        <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                    <div class="reservation_pagination">< 1,2,3,4,5 ></div>
+                    <div class="reserCancelContainer">
+                        <button class="delete-all-btn" onclick="deleteBookmark()">북마크 취소</button>
                     </div>
                 </div>
-                </div>
+            </div>
             </div>
         </div>
         <script defer src="/static/js/posting.js"></script>
