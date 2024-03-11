@@ -20,7 +20,7 @@
                                 </th>
                                 <th>No.</th>
                                 <th>글제목</th>
-                                <th>예약 시간</th>
+                                <th>작성일자</th>
                                 <th>삭제</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                         <td><a href="/board/board?b_id=<%= post.b_id %>"><%= post.title %></a></td>
                                         <td><%= post.createdAt.toLocaleString("ko-KR", {year: '2-digit', month: '2-digit', day: '2-digit'})%></td>
                                         <td>
-                                            <button class="deleteButton" onclick="deletePosting('<%= post.b_id%>')">삭제</button>
+                                            <button class="delete_button" onclick="deletePosting('<%= post.b_id%>')">삭제</button>
                                         </td>
                                     </tr>
                                 <%})%>
@@ -47,7 +47,7 @@
                         </table>
                         <div class="pagination"> < 1,2,3,3,4,5></div>
                         <div class="confirmation_btn_container">
-                            <button class="delete_all_btn" onclick="deletePostingAll()">예약 취소</button>
+                            <button class="delete_all_btn" onclick="deletePostingAll()">전체 삭제</button>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                                     </th>
                                     <th>No.</th>
                                     <th>글제목</th>
-                                    <th>작성일시</th>
+                                    <th>작성일자</th>
                                     <th>삭제</th>
                                 </tr>
                             </thead>
@@ -77,7 +77,7 @@
                                         <td><a href="/board/board?b_id=<%= bookmarkPost.b_id %>"><%= bookmarkPost.title %></a></td>
                                         <td><%= bookmarkPost.createdAt.toLocaleString("ko-KR", {year: '2-digit', month: '2-digit', day: '2-digit'})%></td>
                                         <td>
-                                            <button class="deleteButton" onclick="deletBookmark('<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
+                                            <button class="delete_button" onclick="deletBookmark('<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
                                         </td>
                                     </tr>
                                     <%})%>
@@ -91,7 +91,7 @@
                         </table>
                         <div class="pagination"> < 1,2,3,3,4,5></div>
                         <div class="confirmation_btn_container">
-                            <button class="delete_all_btn" onclick="deleteBookmarkAll()">예약 취소</button>
+                            <button class="delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
                         </div>
                 </div>
             </div>
