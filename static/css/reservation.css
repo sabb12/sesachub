@@ -141,6 +141,7 @@ body {
 .st_room {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 60px;
 }
@@ -159,6 +160,7 @@ input[type="radio"] {
 .time_wrapper {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     border-collapse: collapse;
 }
 
@@ -208,7 +210,7 @@ input[type="radio"] {
 
 /* 예약 확인 */
 .reservation_result {
-    width: 1000px;
+    width: 40%;
     height: 200px;
     margin-bottom: 60px;
     border: 1px solid var(--text-color);

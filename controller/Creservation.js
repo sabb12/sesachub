@@ -63,17 +63,14 @@ exports.createReservation = async (req, res) => {
         }
 
         // 회원이고, 예약되지 않은 룸과 시간이면 예약 가능
-        const reserve = await reservation
-            .create({
-                u_id,
-                day,
-                st_room,
-                time,
-                count,
-            })
-            .then(() => {
-                res.send({ status: "success", msg: "예약 완료" });
-            });
+        const reserve = await reservation.create({
+            u_id,
+            day,
+            st_room,
+            time,
+            count,
+        });
+        if (reservation) return res.send({ status: "success", msg: "예약 완료" });
     } catch (error) {
         console.log("createReservation controller err :: ", error);
         res.status(500).send("server error!");
