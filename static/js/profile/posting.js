@@ -2,7 +2,7 @@
 const posting_checkAll = document.querySelector("#posting_checkAll");
 const posting_chkbx = document.querySelectorAll(".posting_check-option");
 
-// 전체 선택 체크박스
+// 1. 전체 선택 체크박스
 posting_checkAll.addEventListener("change", (e) => {
     const isChecked = posting_checkAll.checked;
     posting_chkbx.forEach((checkbox) => {
@@ -18,7 +18,7 @@ posting_chkbx.forEach((checkbox) => {
     });
 });
 
-// BookMark 체크박스
+// 2. BookMark 체크박스
 const bookMark_checkAll = document.querySelector("#bookMark_checkAll");
 const bookMark_chkbx = document.querySelectorAll(".bookMark_check-option");
 
@@ -38,7 +38,8 @@ bookMark_chkbx.forEach((checkbox) => {
     });
 });
 
-function deleteButton(btn, b_id) {
+// 각 게시글 삭제
+function deletePosting(b_id) {
     const areYouSure = confirm("삭제하시겠습니까?");
     if (areYouSure) {
         axios({
@@ -47,9 +48,7 @@ function deleteButton(btn, b_id) {
             params: { b_id: b_id },
         })
             .then(function (res) {
-                // console.log("res.params.u_id", res.params.u_id);
-                btn.parentElement.remove();
-                document.location.href = "/profile/posting";
+                location.href = "/profile/posting";
             })
             .catch((error) => {
                 console.error("Error deleting reservation:", error);
@@ -57,17 +56,91 @@ function deleteButton(btn, b_id) {
     }
 }
 
-function unmark_bookmark(btn, b_id, u_id) {
-    const bookmark = document.getElementById("bookmark");
-    axios({
-        method: "POST",
-        url: "/board/bookmark",
-        data: {
-            b_id: b_id,
-            u_id: u_id,
-        },
-    }).then(function (res) {
-        btn.parentElement.remove();
-        bookmark.classList.remove("on");
+// 체크 된 게시글 전부 삭제
+function deletePostingAll() {
+    const checkedPostings = Array.from(
+        document.querySelectorAll(".posting_check-option:checked"),
+    ).map((checkbox) => {
+        return checkbox.parentElement.parentElement;
     });
+    if (checkedPostings.length > 0) {
+        const areYouSure = confirm("전체 삭제하시겠습니까?");
+        if (areYouSure) {
+            for (let posting of checkedPostings) {
+                const b_id = posting
+                    .querySelector(".posting_check-option")
+                    .getAttribute("data-b-id");
+                axios({
+                    method: "DELETE",
+                    url: "/board",
+                    params: {
+                        b_id: b_id,
+                    },
+                })
+                    .then(function (res) {
+                        location.href = "/profile/posting";
+                        posting.checked = false;
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting posting:", error);
+                    });
+            }
+        }
+    }
+}
+
+// 각 북마크 삭제
+function deletBookmark(b_id, u_id) {
+    const areYouSure = confirm("삭제하시겠습니까?");
+    if (areYouSure) {
+        axios({
+            method: "POST",
+            url: "/board/bookmark",
+            data: {
+                b_id: b_id,
+                u_id: u_id,
+            },
+        }).then(function (res) {
+            location.href = "/profile/posting";
+        });
+    }
+}
+
+function deleteBookmarkAll() {
+    const checkedBookMark = Array.from(
+        document.querySelectorAll(".bookMark_check-option:checked"),
+    ).map((checkbox) => {
+        return checkbox.parentElement.parentElement;
+    });
+    if (checkedBookMark.length > 0) {
+        const areYouSure = confirm("전체 삭제하시겠습니까?");
+        if (areYouSure) {
+            for (let bookmark of checkedBookMark) {
+                const b_id = bookmark
+                    .querySelector(".bookMark_check-option")
+                    .getAttribute("data-b-id");
+                const u_id = bookmark
+                    .querySelector(".bookMark_check-option")
+                    .getAttribute("data-u-id");
+                const title = bookmark
+                    .querySelector(".bookMark_check-option")
+                    .getAttribute("data-title");
+                axios({
+                    method: "DELETE",
+                    url: "/board",
+                    params: {
+                        b_id: b_id,
+                        u_id: u_id,
+                    },
+                })
+                    .then(function (res) {
+                        location.href = "/profile/posting";
+                        bookmark.checked = false;
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting bookMark:", error);
+                    });
+            }
+        }
+    }
 }

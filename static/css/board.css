@@ -16,7 +16,8 @@ body {
 }
 
 .container .center {
-    width: 1000px;
+    width: 1080px;
+    min-width: 900px;
 }
 
 .container .center .title {
@@ -106,12 +107,15 @@ button {
 }
 .btn {
     display: inline-block;
+    text-align: center;
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
     white-space: nowrap;
-    padding: 5px 20px;
-    font-size: 14px;
+    padding: 6px 0;
+    /* padding: 6px 20px; */
+    font-size: 15px;
+    width: 80px;
 }
 .btn.basic {
     border: none;
@@ -122,6 +126,17 @@ button {
     border: none;
     background-color: #989898;
     color: #fff;
+}
+.btn.cancle {
+    border: none;
+    background-color: #fff;
+    border: 1px solid #989898;
+    color: black;
+}
+.btn.comment {
+    border: none;
+    background-color: #cfe8cf;
+    color: black;
 }
 /* 기본 셀렉트 박스 */
 /*.select_box {
@@ -250,7 +265,7 @@ button {
 .content .search_filter_box .btn_wrap .btn {
     display: inline-block;
     padding: 6px 28px;
-    background: #5fc233;
+    background: #6fc274;
     color: #fff;
     border: none;
 }
@@ -316,22 +331,43 @@ table caption {
 .content.board .table_box:not(.search_filter_box .table_box) tbody > tr:first-child {
     border-top: 1px solid #363636;
 }
-.content.board .table_box:not(.search_filter_box .table_box) tbody > tr:last-child {
+/* .content.board .table_box:not(.search_filter_box .table_box) tbody > tr:last-child {
     border-bottom: 1px solid #363636;
-}
+} */
 .content.board .table_box.no_border.table_box table tr:nth-child(even) {
     background-color: inherit;
 }
 .content.board .table_box.no_border.table_box table td {
     text-align: left;
 }
+.content.board .table_box.no_border table td .select_list {
+    font-size: 13px;
+    padding: 4px 6px;
+}
+.content.board .table_box table .board_title input {
+    min-width: 70%;
+}
 .content.board .table_box table .board_content {
     min-height: 300px;
     display: inline-block;
     text-align: left;
     padding: 10px;
-    width: 100%;
+    width: 98%;
 }
+.content.board .table_box table .board_content textarea {
+    font-family: "xeicon";
+    width: 98%;
+    resize: none;
+    padding: 6px 8px;
+}
+.content.board .btn_wrap:not(.bottom_area .btn_wrap) {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 .table_box {
     overflow-y: auto;
     overflow-x: hidden;
@@ -478,7 +514,7 @@ table caption {
     content: "\ea1c";
     font-family: "xeicon";
     font-size: 25px;
-    color: #5fc233;
+    color: #6fc274;
     font-weight: 300;
 }
 .bottom_area .btn_wrap {
@@ -501,7 +537,7 @@ table caption {
 .comment_box {
     border-radius: 4px;
     padding: 10px;
-    border: 1px solid #c0e1d3;
+    border: 1px solid #e4e4e4;
     margin-top: 20px;
 }
 .comment_box .cmt_top {
@@ -568,6 +604,7 @@ h2 {
 .sort_cntr a.active {
     color: #5fc233;
 }
+.profile_img {
 .profile_img {
     width: 20px;
 }

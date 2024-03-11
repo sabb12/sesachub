@@ -36,9 +36,10 @@
                                                         <% if(board.user.profile_img){ %>
                                                             <img class="profile_img" src="/static/images/profile/'<%= board.user.profile_img  %>'" alt="프로필">
                                                             <% }else{ %>
-                                                                <img class="profile_img" src="/static/images/logo.png" alt="프로필">
-                                                            <% } %>
-                                                        <%=board.user.nk_name%>
+                                                                <img class="profile_img" src="/static/images/logo.png"
+                                                                    alt="프로필">
+                                                                <% } %>
+                                                                    <%=board.user.nk_name%>
                                                     </td>
                                                     <th scope="row">작성일</th>
                                                     <td rowspan="1">
@@ -62,31 +63,31 @@
                                                 <button type="button"
                                                     onclick="like('<%=board.b_id%>','<%=session.u_id%>')">🤍</button>
                                                 <span id="like_count">
-                                                    
+
                                                     <%= board.dataValues.like_count%>
                                                 </span>
                                             </div>
                                             <div class="bookmark_box" class="btn_bookmark" id="check_bookmark">
                                                 <!-- <span>북마크</span> -->
-                                                <% if (board.bookmarks && board.bookmarks.length > 0) { %>
+                                                <% if (board.bookmarks && board.bookmarks.length> 0) { %>
                                                     <% for(let bookmark of board.bookmarks) { %>
-                                                        <% if (bookmark.u_id === session.u_id) { %>
+                                                        <% if (bookmark.u_id===session.u_id) { %>
                                                             <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
                                                                 id="bookmark">&#9733;</a>
-                                                        <% } else { %>
-                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                                id="bookmark">&#9734;</a>
-                                                        <% } %>
-                                                    <% } %>
-                                                <% } else { %>
-                                                    <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                        id="bookmark">&#9734;</a>
-                                                <% } %>
-                                              
-                                             
+                                                            <% } else { %>
+                                                                <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                                    id="bookmark">&#9734;</a>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% } else { %>
+                                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                                                id="bookmark">&#9734;</a>
+                                                                            <% } %>
+
+
                                             </div>
                                         </div>
-                                        
+
                                         <div class="btn_wrap">
                                             <a href="javascript:page_update('<%=board.b_id%>');"
                                                 class="btn basic">수정</a>
@@ -154,13 +155,14 @@
                                                             onclick="comment_delete('<%=comment.c_id%>')"
                                                             value="댓글 삭제" />
                                                         <%}%>
-                                                            <input type="button" class="btn"
+                                                            <!-- 답글 시작 -->
+                                                            <!-- 답글 폼 호출 -->
+                                                            <input type="button" class="btn basic"
                                                                 id="reply_btn<%=comment.c_id%>"
                                                                 onclick="call_reply_form('<%=comment.c_id%>')"
                                                                 value="답글 쓰기" />
                                                 </div>
                                                 <!-- 원 댓글 끝 -->
-                                                <!-- 답글 시작 -->
                                                 <div class="cmt_reply">
                                                     <!-- 답글 폼 호출 -->
                                                     <form name="reply_form<%=comment.c_id%>" style="display: none" onsubmit="reply_insert('<%=comment.c_id%>')">

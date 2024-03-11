@@ -12,7 +12,7 @@
                         <div class="sort_cntr flex_row">
                             <ul>
                                 <li><a href="/board" class="all">전체글</a></li>
-                                <li><a href="/board?category=free" class="free" >자유</a></li>
+                                <li><a href="/board?category=free" class="free">자유</a></li>
                                 <li><a href="/board?category=study" class="study">공부</a></li>
                                 <li><a href="/board?category=employ" class="employ">취업정보</a></li>
                                 <li><a href="/board?category=qualification" class="qualification">자격증 & 어학</a></li>
@@ -28,35 +28,36 @@
                         <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
                             <!-- 검색조건 박스 -->
                             <div class="search_filter_box">
-                                    <div class="table_box">
-                                        <table>
-                                            <caption>검색 조건 목록</caption>
-                                            <colgroup>
-                                                <col style="width:170px;">
-                                                <col>
-                                            </colgroup>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">검색내용</th>
-                                                    <td>
-                                                        <div class="flex_box">
-                                                            <div class="select_box">
-                                                                <div class="s_txt">
-                                                                    <select name="search_opt" class="select_list">
-                                                                        <option value="제목" selected="selected"><span
-                                                                                class="arrow"><i
-                                                                                    class="xi-angle-down">제목</i></span>
-                                                                    </select>
-                                                                </div>
+                                <div class="table_box">
+                                    <table>
+                                        <caption>검색 조건 목록</caption>
+                                        <colgroup>
+                                            <col style="width:170px;">
+                                            <col>
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">검색내용</th>
+                                                <td>
+                                                    <div class="flex_box">
+                                                        <div class="select_box">
+                                                            <div class="s_txt">
+                                                                <select name="search_opt" class="select_list">
+                                                                    <option value="제목" selected="selected"><span
+                                                                            class="arrow"><i
+                                                                                class="xi-angle-down">제목</i></span>
+                                                                </select>
                                                             </div>
-                                                            <input type="text" class="search_keyword"
-                                                                placeholder="검색어를 입력해주세요" onkeypress="searchOnEnter(event,'<%=category%>')"/>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                        <input type="text" class="search_keyword"
+                                                            placeholder="검색어를 입력해주세요"
+                                                            onkeypress="searchOnEnter(event,'<%=category%>')" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="btn_wrap">
                                     <a onclick=" searchPost('<%=category%>')" class="btn basic">검색</a>
                                 </div>
@@ -66,6 +67,12 @@
                                 <table>
                                     <caption>커뮤니티 리스트</caption>
                                     <colgroup>
+                                        <col style="width:7.5%;">
+                                        <col style="width:10%;">
+                                        <col style="width:40%;">
+                                        <col>
+                                        <col>
+                                        <col style="width:6%">
                                     </colgroup>
                                     <thead>
                                         <tr>
@@ -78,7 +85,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
+
                                         <% for (let board of boardList) {%>
                                             <tr>
                                                 <td>
@@ -88,19 +95,23 @@
                                                     <%=board.category %>
                                                 </td>
                                                 <td>
-                                                 
+
                                                     <a href="/board/board?b_id=<%=board.b_id%>">
-                                                        <% (board.title.length > 10) ? board.title=board.title.slice(0, 10) + '...' : board.title %>
-                                                       <%= board.title%>
+                                                        <% (board.title.length> 10) ? board.title=board.title.slice(0,
+                                                            10) + '...' : board.title %>
+                                                            <%= board.title%>
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <% if(board.profile_img){ %>
-                                                        <img class="profile_img" src="/static/images/profile/'<%= board.profile_img  %>'" alt="프로필">
+                                                        <img class="profile_img"
+                                                            src="/static/images/profile/'<%= board.profile_img  %>'"
+                                                            alt="프로필">
                                                         <% }else{ %>
-                                                            <img class="profile_img" src="/static/images/logo.png" alt="프로필">
-                                                        <% } %>
-                                                    <%= board.user.nk_name%>
+                                                            <img class="profile_img" src="/static/images/logo.png"
+                                                                alt="프로필">
+                                                            <% } %>
+                                                                <%= board.user.nk_name%>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
@@ -114,12 +125,12 @@
                                     </tbody>
                                 </table>
                                 <% if(boardList.length===0){ %>
-                                    <h3 class="err_message">데이터가 없습니다</ㅗ>
+                                    <h3 class="err_message">데이터가 없습니다</h3>
                                     <% } %>
                             </div>
-                            
+
                         </div>
-                        
+
                     </main>
                     <div class="insert_btn">
                         <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
@@ -129,21 +140,21 @@
             <div class="bottom_area">
                 <!-- 페이지네이션 -->
                 <div class="board_page">
-                    <% if(boardList.length===0){totalPages=''} %>
-                    <% for (i=1; i <=totalPages; i++) { %>
-                        <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
-                                <%= i %>
-                            </a></div>
-                        <% } %>
+                    <% if(boardList.length===0){totalPages='' } %>
+                        <% for (i=1; i <=totalPages; i++) { %>
+                            <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                    <%= i %>
+                                </a></div>
+                            <% } %>
                 </div>
                 <!-- ///페이지네이션 -->
-                
+
 
             </div>
             <script>
-                let category='<%=category%>'
-                if(category===''){
-                    category="all"
+                let category = '<%=category%>'
+                if (category === '') {
+                    category = "all"
                 }
                 document.querySelector(`.${category}`).classList.add('active')
                 console.log(category)
