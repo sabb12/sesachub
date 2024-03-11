@@ -33,8 +33,8 @@
                                                 <tr>
                                                     <th scope="row">작성자</th>
                                                     <td rowspan="1">
-                                                        <% if(board.profile_img){ %>
-                                                            <img class="profile_img" src="/static/images/profile/'<%= board.profile_img  %>'" alt="프로필">
+                                                        <% if(board.user.profile_img){ %>
+                                                            <img class="profile_img" src="/static/images/profile/'<%= board.user.profile_img  %>'" alt="프로필">
                                                             <% }else{ %>
                                                                 <img class="profile_img" src="/static/images/logo.png" alt="프로필">
                                                             <% } %>
@@ -90,7 +90,7 @@
                                         <div class="btn_wrap">
                                             <a href="javascript:page_update('<%=board.b_id%>');"
                                                 class="btn basic">수정</a>
-                                            <a href="javascript:delete_board('<%=board.b_id%>');"
+                                            <a href="javascript:delete_board('<%=board.b_id%>');" 
                                                 class="btn delete">삭제</a>
                                             <a href="/board" class="btn basic">목록으로</a>
                                         </div>
@@ -100,45 +100,57 @@
                                 <!-- 댓글 시작 -->
                                 <div class="comment_box">
                                     <!-- 댓글폼 호출 -->
-                                    <form name="comment" class="cmt_form">
+                                    <form name="comment" class="cmt_form" onsubmit="comment_insert()">
                                         <input type="hidden" name="b_id" value="<%=board.b_id%>" />
                                         <input type="hidden" name="u_id" value="<%=session.u_id%>" />
                                         <input type="hidden" name="nk_name" value="<%=session.nk_name%>" />
-                                        <select name="status">
+                                        <select name="status" class="comment_select">
                                             <option value="public">공개</option>
                                             <option value="private">비공개</option>
                                         </select>
-                                        <textarea name="comment_content" rows="3" placeholder="댓글을 입력하세요"></textarea>
+                                        <input type="text" name="comment_content" class="comment_content" placeholder="댓글을 입력하세요">
                                         <input type="button" class="btn" onclick="comment_insert()" value="댓글 작성">
                                     </form>
                                     <!-- 댓글 목록 -->
                                     <ul class="cmt_list">
                                         <!-- 원 댓글 시작 -->
                                         <% for(comment of board.comments) {%>
-                                            <li id="cmt<%=comment.c_id%>_wrap">
+                                            <li id="cmt<%=comment.c_id%>_wrap" class="first_comment">
                                                 <div class="cmt_top">
                                                     <div class="cmt_nm">
                                                         <span>
+                                                            <% if(comment.user.profile_img){ %>
+                                                                <img class="profile_img" src="/static/images/profile/'<%= comment.user.profile_img  %>'" alt="프로필">
+                                                                <% }else{ %>
+                                                                    <img class="profile_img" src="/static/images/logo.png" alt="프로필">
+                                                                <% } %>
                                                             <%=comment.nk_name%>
                                                         </span>
                                                     </div>
                                                     <div class="cmt_time">
                                                         <span><%=comment.createdAt.toLocaleString("ko-KR")%></span>
                                                     </div>
-                                                    <select id="cmt<%=comment.c_id%>_status" style="display: none">
+                                                    <select id="cmt<%=comment.c_id%>_status" class="comment_select" style="display: none">
                                                         <option value="public">공개</option>
                                                         <option value="private">비공개</option>
                                                     </select>
                                                 </div>
+                                            <% if(comment.status==="PUBLIC"){ %>
                                                 <div id="cmt<%=comment.c_id%>_content" class="cmt_content">
                                                     <%=comment.content%>
                                                 </div>
+                                                <% } else{%>
+                                                    <div id="cmt<%=comment.c_id%>_content" class="cmt_content">
+                                                        비공개 댓글입니다.
+                                                    </div>
+                                                    <% } %>
+                                               
                                                 <div class="cmt_bottom">
                                                     <% if (session.u_id===comment.u_id) {%>
-                                                        <input type="button" id="cmt_update_btn<%=comment.c_id%>"
+                                                        <input type="button" class="btn" id="cmt_update_btn<%=comment.c_id%>"
                                                             onclick="change_comment('<%=comment.c_id%>')"
                                                             value="댓글 수정" />
-                                                        <input type="button" id="cmt_delete_btn<%=comment.c_id%>"
+                                                        <input type="button" id="cmt_delete_btn<%=comment.c_id%>" class="btn_remove btn"
                                                             onclick="comment_delete('<%=comment.c_id%>')"
                                                             value="댓글 삭제" />
                                                         <%}%>
@@ -151,7 +163,7 @@
                                                 <!-- 답글 시작 -->
                                                 <div class="cmt_reply">
                                                     <!-- 답글 폼 호출 -->
-                                                    <form name="reply_form<%=comment.c_id%>" style="display: none">
+                                                    <form name="reply_form<%=comment.c_id%>" style="display: none" onsubmit="reply_insert('<%=comment.c_id%>')">
                                                         <input type="hidden" name="b_id" value="<%=board.b_id%>" />
                                                         <input type="hidden" name="u_id" value="<%=session.u_id%>" />
                                                         <input type="hidden" name="parent_id"
@@ -162,8 +174,8 @@
                                                             <option value="public">공개</option>
                                                             <option value="private">비공개</option>
                                                         </select>
-                                                        <textarea name="reply_content" rows="3" placeholder="댓글을 입력하세요"
-                                                            required></textarea>
+                                                        <input type="text" name="reply_content" class="reply_content" placeholder="댓글을 입력하세요">
+
                                                         <input type="button" id="reply_insert_btn" class="btn"
                                                             onclick="reply_insert('<%=comment.c_id%>')" value="답글 작성" />
                                                     </form>
@@ -177,6 +189,11 @@
                                                                         <input type="hidden"
                                                                             value="<%=reply.parent_id%>">
                                                                         <span>
+                                                                            <% if(reply.user.profile_img){ %>
+                                                                                <img class="profile_img" src="/static/images/profile/'<%= reply.user.profile_img  %>'" alt="프로필">
+                                                                                <% }else{ %>
+                                                                                    <img class="profile_img" src="/static/images/logo.png" alt="프로필">
+                                                                                <% } %>
                                                                             <%=reply.nk_name %>
                                                                         </span>
                                                                         <span><%=reply.createdAt.toLocaleString("ko-KR")%></span>
@@ -186,19 +203,23 @@
                                                                             <option value="private">비공개</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div id="cmt<%=reply.c_id%>_wrap">
-                                                                        <span id="cmt<%=reply.c_id%>_content">
+                                                                    <% if(reply.status==="PUBLIC"){ %>
+                                                                        <div id="cmt<%=reply.c_id%>_content" class="reply_content">
                                                                             <%=reply.content%>
-                                                                        </span>
-                                                                    </div>
+                                                                        </div>
+                                                                        <% } else{%>
+                                                                            <div id="cmt<%=reply.c_id%>_content" class="reply_content">
+                                                                                비공개 댓글입니다.
+                                                                            </div>
+                                                                            <% } %>
                                                                     <div class="reply_btm">
                                                                         <% if (session.u_id===reply.u_id) {%>
                                                                             <input type="button"
-                                                                                id="cmt_update_btn<%=reply.c_id%>"
+                                                                                id="cmt_update_btn<%=reply.c_id%>" class="btn"
                                                                                 onclick="change_comment('<%=reply.c_id%>')"
                                                                                 value="댓글 수정" />
                                                                             <input type="button"
-                                                                                id="cmt_delete_btn<%=reply.c_id%>"
+                                                                                id="cmt_delete_btn<%=reply.c_id%>" class="btn_remove btn"
                                                                                 onclick="comment_delete('<%=reply.c_id%>')"
                                                                                 value="댓글 삭제" />
                                                                             <%}%>
