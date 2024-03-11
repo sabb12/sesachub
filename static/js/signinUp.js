@@ -199,3 +199,20 @@ function signin() {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 버튼 클릭으로 로그인
+    document.getElementById("loginBtn").addEventListener("click", function (event) {
+        signin(); // signin 함수 호출
+    });
+
+    // Enter 키 눌러서 로그인
+    document
+        .querySelector("form[name=sign_in_form]")
+        .addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                signin();
+            }
+        });
+});

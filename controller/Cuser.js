@@ -41,20 +41,18 @@ exports.duplicateCheck = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         const { u_id, pw, name, nk_name, email, phone, cs_id } = req.body;
-        console.log(cs_id);
-        const signup = await user
-            .create({
-                u_id,
-                pw: hashPw(pw),
-                name,
-                nk_name,
-                email,
-                phone,
-                cs_id,
-            })
-            .then(() => {
-                res.send("회원가입 성공");
-            });
+        await user.create({
+            u_id,
+            pw: hashPw(pw),
+            name,
+            nk_name,
+            email,
+            phone,
+            cs_id,
+        });
+        res.send(
+            '회원가입 성공! 환영합니다 🎉 \n수강중인 학생 또는 관계자 권한 확인 후 "예약 하기", "커뮤니티" 이용 가능합니다.',
+        );
     } catch (error) {
         console.log("signup controller err :: ", error);
         res.status(500).send("server error!");
@@ -110,7 +108,7 @@ exports.deleteUser = async (req, res) => {
 
         const isUser = await user.findOne({ where: { u_id } });
         if (isUser && comparePw(pw, isUser.pw)) {
-            const isDelete = await user.destroy({ where: { u_id } }).then(() => {
+            await user.destroy({ where: { u_id } }).then(() => {
                 res.send("회원 탈퇴");
             });
         } else {
