@@ -27,7 +27,7 @@ async function updateProfileImg() {
 }
 
 function deleteProfileImg() {
-    const deleteConfirm = confirm("기본 이미지로 변경 하시겠습니까?");
+    const deleteConfirm = confirm("기본 프로필로 변경 하시겠습니까?");
     if (deleteConfirm) {
         axios({
             method: "delete",
