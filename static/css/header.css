@@ -17,7 +17,7 @@ header {
 
 .headerContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     z-index: 1;
 }
@@ -65,10 +65,7 @@ header {
 .dropdown-content button {
     transition: background-color 0.6s ease;
 }
-/* 드롭다운 내용(링크) 호버 시 스타일링 */
-.dropdown-content button:hover {
-    background-color: #ddd;
-}
+
 
 /* 드롭다운 버튼 클릭 시 드롭다운 내용 보이게 함 */
 .show {

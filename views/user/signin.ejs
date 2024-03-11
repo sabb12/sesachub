@@ -129,7 +129,6 @@
                       <% courseList.forEach(course => { %>
                         <%= (course.course_name.length > 37) ? course.course_name=course.course_name.slice(0, 37) + '...' : course.course_name %>
                       <option value="<%=course.cs_id  %>"><%=course.course_name%></option>
-                      
                       <%})%>
                   </select>
                  </div>
