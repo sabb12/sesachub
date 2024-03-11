@@ -98,15 +98,13 @@ async function comment_insert() {
 }
 // 댓글, 답글 수정 폼 호출
 function change_comment(c_id) {
+    const status = document.getElementById(`cmt${c_id}_status`);
+    const contentInput = document.getElementById(`cmt${c_id}_wrap`);
     const content = document.getElementById(`cmt${c_id}_content`).innerText;
-    document.getElementById(`cmt${c_id}_wrap`).innerHTML =
-        `<textarea id="update${c_id}">${content}</textarea>`;
-    document.getElementById(`c_delete_btn${c_id}`).setAttribute("type", "hidden");
-    document.getElementById(`reply_btn${c_id}`).setAttribute("type", "hidden");
-    document.getElementById(`cmt${c_id}_status`).style.display = "block";
-    document
-        .getElementById(`c_update_btn${c_id}`)
-        .setAttribute("onclick", `update_comment("${c_id}")`);
+    const btn = document.getElementById(`cmt_update_btn${c_id}`);
+    status.style.display = "block";
+    contentInput.innerHTML = `<textarea id="update${c_id}">${content}</textarea>`;
+    btn.setAttribute("onclick", `update_comment('${c_id}')`);
 }
 // 댓글, 답글 수정
 async function update_comment(c_id) {

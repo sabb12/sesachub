@@ -149,7 +149,15 @@ exports.board = async (req, res) => {
                 },
                 {
                     model: comment,
-                    attributes: ["c_id", "nk_name", "content", "parent_id", "createdAt", "u_id"], // 댓글 가져오기
+                    attributes: [
+                        "c_id",
+                        "nk_name",
+                        "content",
+                        "parent_id",
+                        "createdAt",
+                        "u_id",
+                        "status",
+                    ], // 댓글 가져오기
                     as: "comments", // 별칭 추가
                     include: [
                         {
@@ -159,9 +167,10 @@ exports.board = async (req, res) => {
                                 "c_id",
                                 "parent_id",
                                 "nk_name",
-                                "content",
                                 "createdAt",
                                 "u_id",
+                                "content",
+                                "status",
                             ], // 대댓글의 속성 선택
                         },
                     ],
@@ -184,7 +193,18 @@ exports.board = async (req, res) => {
                 ],
             },
         });
-        console.log(boarder);
+        // if (boarder.status === "PRIVATE") {
+        //     for (let comment of boarder.comments) {
+        //         if (
+        //             req.session.permission !== "admin" &&
+        //             boarder.u_id !== req.session.u_id &&
+        //             comment.u_id !== req.session.u_id
+        //         ) {
+        //             comment.content = "비밀 댓글입니다.";
+        //         }
+        //     }
+        // }
+        // console.log(board.comments.status);
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
