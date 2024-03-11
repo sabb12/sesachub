@@ -43,9 +43,9 @@
                                                     </td>
                                                     <th scope="row">작성일</th>
                                                     <td rowspan="1">
-                                                        <%=board.createdAt.toLocaleString('ko-KR', { year: 'numeric' ,
+                                                        <%=board.updatedAt.toLocaleString('ko-KR', { year: 'numeric' ,
                                                             month: '2-digit' , day: '2-digit' , hourCycle:'h24',
-                                                            hour:'2-digit',minute:'2-digit',second:'2-digit' })%>
+                                                            hour:'2-digit' })%>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -60,29 +60,36 @@
                                     <div class="bottom_area">
                                         <div class="icon_box">
                                             <div class="like_box">
-                                                <button type="button"
-                                                    onclick="like('<%=board.b_id%>','<%=session.u_id%>')">🤍</button>
+                                                <% let liked = false; %>
+                                                <% board.board_likes.forEach(like => { %>
+                                                    <% if (like.u_id === session.u_id) { %>
+                                                        <% liked = true; %>
+                                                    <% } %>
+                                                <% }); %>
+                                                
+                                                <button type="button" onclick="like('<%= board.b_id %>','<%= session.u_id %>')">
+                                                    <%= liked ? '❤️' : '🤍' %>
+                                                </button>
                                                 <span id="like_count">
-
+                                                    <!-- 좋아요 수 출력 코드 -->
                                                     <%= board.dataValues.like_count%>
                                                 </span>
                                             </div>
                                             <div class="bookmark_box" class="btn_bookmark" id="check_bookmark">
                                                 <!-- <span>북마크</span> -->
-                                                <% if (board.bookmarks && board.bookmarks.length> 0) { %>
-                                                    <% for(let bookmark of board.bookmarks) { %>
-                                                        <% if (bookmark.u_id===session.u_id) { %>
-                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                                id="bookmark">&#9733;</a>
-                                                            <% } else { %>
-                                                                <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                                    id="bookmark">&#9734;</a>
-                                                                <% } %>
-                                                                    <% } %>
-                                                                        <% } else { %>
-                                                                            <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
-                                                                                id="bookmark">&#9734;</a>
-                                                                            <% } %>
+                                                <% let bookmarked = false; %>
+                                                <% if (board.bookmarks && board.bookmarks.length > 0) { %>
+                                                    <% for (let bookmark of board.bookmarks) { %>
+                                                        <% if (bookmark.u_id === session.u_id) { %>
+                                                            <% bookmarked = true; %>
+                                                        <% } %>
+                                                    <% } %>
+                                                <% } %>
+                                                
+                                                <a href="javascript:bookmark('<%= board.b_id %>','<%= session.u_id %>')" id="bookmark">
+                                                    <%= bookmarked ? '🌟' : '☆' %> 북마크
+                                                </a>
+                                                
 
 
                                             </div>
@@ -128,15 +135,18 @@
                                                             <%=comment.nk_name%>
                                                         </span>
                                                     </div>
-                                                    <div class="cmt_time">
-                                                        <span><%=comment.createdAt.toLocaleString("ko-KR")%></span>
+                                                    <div class="cmt_time update<%=comment.c_id %>">
+                                                        <span><%=comment.updatedAt.toLocaleString('ko-KR', { year: 'numeric' ,
+                                                            month: '2-digit' , day: '2-digit' , hourCycle:'h24',
+                                                            hour:'2-digit' })%></span>
                                                     </div>
                                                     <select id="cmt<%=comment.c_id%>_status" class="comment_select" style="display: none">
                                                         <option value="public">공개</option>
                                                         <option value="private">비공개</option>
                                                     </select>
                                                 </div>
-                                            <% if(comment.status==="PUBLIC"){ %>
+                                                
+                                            <% if(comment.status==="PUBLIC" ||session.u_id===comment.u_id||session.permission==="admin"){ %>
                                                 <div id="cmt<%=comment.c_id%>_content" class="cmt_content">
                                                     <%=comment.content%>
                                                 </div>
@@ -172,7 +182,7 @@
                                                             value="<%=comment.c_id%>" />
                                                         <input type="hidden" name="nk_name"
                                                             value="<%=session.nk_name%>" />
-                                                        <select name="status">
+                                                        <select name="status" >
                                                             <option value="public">공개</option>
                                                             <option value="private">비공개</option>
                                                         </select>
@@ -198,22 +208,25 @@
                                                                                 <% } %>
                                                                             <%=reply.nk_name %>
                                                                         </span>
-                                                                        <span><%=reply.createdAt.toLocaleString("ko-KR")%></span>
+                                                                        <span class="update<%=reply.c_id %>"><%=reply.updatedAt.toLocaleString('ko-KR', { year: 'numeric' ,
+                                                                            month: '2-digit' , day: '2-digit' , hourCycle:'h24',
+                                                                            hour:'2-digit' })%></span>
                                                                         <select id="cmt<%=reply.c_id%>_status"
                                                                             style="display:none">
                                                                             <option value="public">공개</option>
                                                                             <option value="private">비공개</option>
                                                                         </select>
                                                                     </div>
-                                                                    <% if(reply.status==="PUBLIC"){ %>
+                                                                    <% if (reply.status === "PUBLIC" || session.u_id === reply.u_id||session.permission==="admin") { %>
                                                                         <div id="cmt<%=reply.c_id%>_content" class="reply_content">
-                                                                            <%=reply.content%>
+                                                                            <%= reply.content %>
                                                                         </div>
-                                                                        <% } else{%>
-                                                                            <div id="cmt<%=reply.c_id%>_content" class="reply_content">
-                                                                                비공개 댓글입니다.
-                                                                            </div>
-                                                                            <% } %>
+                                                                    <% } else { %>
+                                                                        <div id="cmt<%=reply.c_id%>_content" class="reply_content">
+                                                                            비공개 댓글입니다.
+                                                                        </div>
+                                                                    <% } %>
+                                                                    
                                                                     <div class="reply_btm">
                                                                         <% if (session.u_id===reply.u_id) {%>
                                                                             <input type="button"

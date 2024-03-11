@@ -617,6 +617,7 @@ h2 {
 }
 .reply_btm {
     text-align: end;
+    margin-top: 30px;
 }
 .cmt_bottom {
     text-align: end;
@@ -636,7 +637,7 @@ h2 {
     border: 1px solid;
 }
 .comment_content,.reply_content{
-    width: 100%;
+    width: 97%;
     height: 50px;
 }
 .comment_select,.reply_select{

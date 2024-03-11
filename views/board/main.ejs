@@ -97,8 +97,8 @@
                                                 <td>
 
                                                     <a href="/board/board?b_id=<%=board.b_id%>">
-                                                        <% (board.title.length> 10) ? board.title=board.title.slice(0,
-                                                            10) + '...' : board.title %>
+                                                        <% (board.title.length> 30) ? board.title=board.title.slice(0,
+                                                            30) + '...' : board.title %>
                                                             <%= board.title%>
                                                     </a>
                                                 </td>

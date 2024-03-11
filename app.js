@@ -4,6 +4,7 @@ const profileRouter = require("./routes/profile");
 const reservationRouter = require("./routes/reservation");
 const boardRouter = require("./routes/board");
 const adminRouter = require("./routes/admin");
+const {course } = require("./models");
 const app = express();
 const PORT = 8080;
 const URL = "localhost";
@@ -30,7 +31,20 @@ app.use(
         },
     }),
 );
+const sessionCheck =async (req, res, next) => {
+    let courseList = await course.findAll();
 
+    if (typeof req.session === 'undefined' || !req.session.u_id) {
+         res.render("user/signin", { courseList: courseList, message: "로그인 하셔야 이용 가능합니다.." });
+
+        if (req.session.permission !== "admin") {
+            return res.render("index",{message: "진입 불가능한 경로입니다." });
+        }
+        return
+    } 
+    
+    next();
+};
 // 각 페이지 렌더링 시 세션 정보 주입하는 미들웨어 (라우팅 코드 위에 작성)
 app.use((req, res, next) => {
     res.locals.session = req.session;
@@ -41,9 +55,9 @@ app.get("/", (req, res) => {
 });
 app.use("/user", userRouter);
 app.use("/profile", profileRouter);
-app.use("/reservation", reservationRouter);
-app.use("/board", boardRouter);
-app.use("/admin", adminRouter);
+app.use("/reservation",sessionCheck, reservationRouter);
+app.use("/board",sessionCheck, boardRouter);
+app.use("/admin",sessionCheck, adminRouter);
 
 app.get("*", (req, res) => {
     res.render("404");

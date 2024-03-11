@@ -11,18 +11,28 @@ function page_update(b_id) {
 }
 // 게시글 수정
 async function update_board(b_id) {
-    const form = document.forms["update_form"];
-    await axios({
-        method: "PATCH",
-        url: "/board",
-        data: {
-            b_id: form.b_id.value,
-            category: form.category.value,
-            title: form.title.value,
-            content: form.content.value,
-        },
-    });
-    location.href = `/board?b_id=${b_id}`;
+    if (confirm("글을 수정하시겠습니까?")) {
+        const form = document.forms["update_form"];
+        const result=await axios({
+            method: "PATCH",
+            url: "/board",
+            data: {
+                b_id: form.b_id.value,
+                category: form.category.value,
+                title: form.title.value,
+                content: form.content.value,
+            },
+        });
+        if(result.status===200){
+            alert('수정 성공하였습니다.')
+        }else{
+            alert('수정 실패하였습니다.')
+        }
+
+        location.href = `/board?b_id=${b_id}`;
+    }else{
+        alert('수정 취소하였습니다.')
+    }
 }
 // 게시글 삭제
 function delete_board(b_id) {
@@ -32,8 +42,15 @@ function delete_board(b_id) {
             url: "/board",
             params: { b_id: b_id },
         }).then(function (res) {
+            if(res.status===200){
+                alert('삭제 성공하였습니다.')
+            }else{
+                alert('삭제 실패하였습니다.')
+            }
             location.href = "/board";
         });
+    }else{
+        alert('취소하였습니다.')
     }
 }
 // 게시글 좋아요
@@ -46,11 +63,7 @@ async function like(b_id, u_id) {
     });
     document.getElementById("like_count").innerText = response.data.like_count;
 
-    if (likeBtn.classList.contains("on")) {
-        likeBtn.classList.remove("on");
-    } else {
-        likeBtn.classList.add("on");
-    }
+    location.reload();
 }
 // 게시글 북마크
 async function bookmark(b_id, u_id) {
@@ -64,17 +77,8 @@ async function bookmark(b_id, u_id) {
                 u_id: u_id,
             },
         });
-        if (!response.data.result) {
-            bookmark.innerHTML = "&#9733;";
-        } else {
-            bookmark.innerHTML = "&#9734;";
-        }
+        location.reload();
 
-        if (bookmark.classList.contains("on")) {
-            bookmark.classList.remove("on");
-        } else {
-            bookmark.classList.add("on");
-        }
     } catch (err) {
         console.error(err);
     }
@@ -98,12 +102,14 @@ async function comment_insert() {
 }
 // 댓글, 답글 수정 폼 호출
 function change_comment(c_id) {
+    const updateTag = document.querySelector(`.update${c_id}`);
     const status = document.getElementById(`cmt${c_id}_status`);
-    const contentInput = document.getElementById(`cmt${c_id}_wrap`);
+    const contentInput = document.getElementById(`cmt${c_id}_content`);
     const content = document.getElementById(`cmt${c_id}_content`).innerText;
     const btn = document.getElementById(`cmt_update_btn${c_id}`);
     status.style.display = "block";
-    contentInput.innerHTML = `<textarea id="update${c_id}">${content}</textarea>`;
+    contentInput.innerHTML = `<input id="update${c_id}" class="reply_content" value='${content}'></input>`;
+    updateTag.style.display = "none";
     btn.setAttribute("onclick", `update_comment('${c_id}')`);
 }
 // 댓글, 답글 수정
