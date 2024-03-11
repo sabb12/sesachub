@@ -2,7 +2,6 @@
 <html lang="ko">
 <%- include('../include/include.ejs',{title:"커뮤니티"}) %>
     <link rel="stylesheet" href="/static/css/board.css">
-    <script src="/static/js/board/main.js"></script>
 
     <body>
         <%- include('../include/header.ejs') %>
@@ -18,7 +17,7 @@
                                 <li><a href="/board?category=employ">취업정보</a></li>
                                 <li><a href="/board?category=qualification">자격증 & 어학</a></li>
                             </ul>
-                            <select id="sort_by" onchange="sort()">
+                            <select class="sort_list" onchange="sort('<%=category%>','<%=search%>')">
                                 <option value="">정렬</option>
                                 <option value="latest">최근 등록 순</option>
                                 <option value="like">좋아요 순</option>
@@ -29,7 +28,6 @@
                         <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
                             <!-- 검색조건 박스 -->
                             <div class="search_filter_box">
-                                <form name="search_form" class="search_form" action="">
                                     <div class="table_box">
                                         <table>
                                             <caption>검색 조건 목록</caption>
@@ -48,25 +46,19 @@
                                                                         <option value="제목" selected="selected"><span
                                                                                 class="arrow"><i
                                                                                     class="xi-angle-down">제목</i></span>
-                                                                        </option>
-                                                                        <option value="검토요청">검토요청</option>
-                                                                        <option value="검토중">검토중</option>
-                                                                        <option value="검토완료">검토완료</option>
-
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" name="search_keyword"
-                                                                placeholder="검색어를 입력해주세요" />
+                                                            <input type="text" class="search_keyword"
+                                                                placeholder="검색어를 입력해주세요" onkeypress="searchOnEnter(event,'<%=category%>')"/>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                </form>
                                 <div class="btn_wrap">
-                                    <a href="javascript:search();" class="btn basic">검색</a>
+                                    <a onclick=" searchPost('<%=category%>')" class="btn basic">검색</a>
                                 </div>
                             </div>
                             <!-- ///검색조건 박스 -->
@@ -85,6 +77,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    
                                         <% for (let board of boardList) {%>
                                             <tr>
                                                 <td>
@@ -96,7 +89,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <%= board.nk_name%>
+                                                    <%= board.user.nk_name%>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
@@ -109,23 +102,35 @@
                                             <%}%>
                                     </tbody>
                                 </table>
-                                <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                                <% if(boardList.length===0){ %>
+                                    <h3 class="err_message">데이터가 없습니다</ㅗ>
+                                    <% } %>
                             </div>
-                            <div class="bottom_area">
-                                <!-- 페이지네이션 -->
-                                <div class="board_page">
-                                    <% for (i=1; i <=totalPages; i++) { %>
-                                        <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
-                                                <%= i %>
-                                            </a></div>
-                                        <% } %>
-                                </div>
-                                <!-- ///페이지네이션 -->
-                            </div>
+                            
                         </div>
+                        
                     </main>
+                    <div class="insert_btn">
+                        <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                    </div>
                 </div>
             </div>
+            <div class="bottom_area">
+                <!-- 페이지네이션 -->
+                <div class="board_page">
+                    <% if(boardList.length===0){totalPages=''} %>
+                    <% for (i=1; i <=totalPages; i++) { %>
+                        <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                <%= i %>
+                            </a></div>
+                        <% } %>
+                </div>
+                <!-- ///페이지네이션 -->
+                
+
+            </div>
+            <script src="/static/js/board/main.js"></script>
+
     </body>
 
 </html>
