@@ -141,7 +141,7 @@ exports.board = async (req, res) => {
                 },
                 {
                     model: boardLike,
-                    attributes: [],
+                    attributes: ["u_id"],
                 },
                 {
                     model: bookMark,
