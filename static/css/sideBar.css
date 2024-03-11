@@ -5,19 +5,22 @@
     border-radius: 5px;
     width: 100px;
     height: 200px;
+    padding-top: 35px;
 }
 
 .sidebar_container {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 100px;
-    height: 200px;
+    background-color: RGB(239, 248, 239);
+    padding: 20px 10px;
 }
 
 .sidebar_container a {
     text-decoration: none;
     color: black;
     font-weight: bold;
+    padding-left: 9px;
 }
