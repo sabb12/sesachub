@@ -14,7 +14,7 @@ exports.main = async (req, res) => {
     try {
         const { u_id, nk_name } = req.session;
         const userInfo = await user.findOne({ where: { u_id, nk_name } });
-        const courseInfo = await course.findOne({ where: userInfo.cs_id });
+        const courseInfo = await course.findOne({ where: { cs_id: userInfo.cs_id } });
         // console.log("profile_img userInfo ::", userInfo.profile_img);
         res.render("profile/main", { userInfo, courseInfo });
     } catch (error) {
@@ -22,6 +22,7 @@ exports.main = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
+
 exports.confirmation = async (req, res) => {
     try {
         const { u_id } = req.session;
@@ -61,7 +62,7 @@ exports.deleteAccount = (req, res) => {
 exports.updateProfile = async (req, res) => {
     try {
         const { u_id } = req.session;
-        const { pw, name, nk_name, phone, email } = req.body;
+        const { pw, nk_name, phone, email } = req.body;
 
         const userInfo = await user.findOne({ where: { u_id } });
         if (!pw) return res.send("비밀번호를 입력해주세요.");
@@ -69,7 +70,7 @@ exports.updateProfile = async (req, res) => {
         if (!comparePw(pw, userInfo.pw))
             return res.send("비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
 
-        await user.update({ nk_name, phone, email }, { where: { u_id, name } });
+        await user.update({ nk_name, phone, email }, { where: { u_id } });
         res.send("프로필 수정이 완료되었습니다.");
     } catch (error) {
         console.log("updateProfile controller err :: ", error);

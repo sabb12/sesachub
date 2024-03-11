@@ -17,8 +17,9 @@ exports.main = async (req, res) => {
 };
 
 exports.duplicateCheck = async (req, res) => {
+    console.log("req.query ::", req.query);
     console.log("req.query.u_id ::", req.query.u_id);
-    const { u_id, nk_name } = req;
+    const { u_id, nk_name } = req.query;
     let idCheck, nkNameCheck;
     try {
         if (u_id) {
