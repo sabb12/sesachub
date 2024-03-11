@@ -1,0 +1,59 @@
+.body_container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 100px 0 100px;
+    gap: 10px;
+}
+
+.section2_container {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+.free_board {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.reservation_container {
+    display: flex;
+    width: 1000px;
+    height: 310px;
+    flex-direction: column;
+    border: 1px solid black;
+}
+.checkbox_all {
+    display: flex;
+}
+
+.reservation_header {
+    display: flex;
+    border: 1px solid #dcdcdc;
+    background-color: lightgray;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.reservation_body {
+    height: 454px;
+}
+
+.posting_list_container,
+.bookmarkPost_list_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.reservation_pagination {
+    display: flex;
+    border: 1px solid #dcdcdc;
+    justify-content: center;
+    align-items: center;
+}
