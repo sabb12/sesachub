@@ -11,11 +11,11 @@
                         <h2>커뮤니티</h2>
                         <div class="sort_cntr flex_row">
                             <ul>
-                                <li><a href="/board">전체글</a></li>
-                                <li><a href="/board?category=free">자유</a></li>
-                                <li><a href="/board?category=study">공부</a></li>
-                                <li><a href="/board?category=employ">취업정보</a></li>
-                                <li><a href="/board?category=qualification">자격증 & 어학</a></li>
+                                <li><a href="/board" class="all">전체글</a></li>
+                                <li><a href="/board?category=free" class="free" >자유</a></li>
+                                <li><a href="/board?category=study" class="study">공부</a></li>
+                                <li><a href="/board?category=employ" class="employ">취업정보</a></li>
+                                <li><a href="/board?category=qualification" class="qualification">자격증 & 어학</a></li>
                             </ul>
                             <select class="sort_list" onchange="sort('<%=category%>','<%=search%>')">
                                 <option value="">정렬</option>
@@ -70,6 +70,7 @@
                                     <thead>
                                         <tr>
                                             <th>번호</th>
+                                            <th>카테고리</th>
                                             <th>제목</th>
                                             <th>작성자</th>
                                             <th>작성일</th>
@@ -84,8 +85,11 @@
                                                     <%= board.b_id%>
                                                 </td>
                                                 <td>
+                                                    <%=board.category %>
+                                                </td>
+                                                <td>
                                                     <a href="/board/board?b_id=<%=board.b_id%>">
-                                                        <%= board.title%>
+                                                       <%= board.title%>
                                                     </a>
                                                 </td>
                                                 <td>
@@ -129,6 +133,14 @@
                 
 
             </div>
+            <script>
+                let category='<%=category%>'
+                if(category===''){
+                    category="all"
+                }
+                document.querySelector(`.${category}`).classList.add('active')
+                console.log(category)
+            </script>
             <script src="/static/js/board/main.js"></script>
 
     </body>
