@@ -180,3 +180,19 @@ window.onclick = function (event) {
         table.querySelectorAll(".member_data").forEach((row) => row.remove());
     }
 };
+
+function search(permission) {
+    let category = document.getElementById("category").value;
+    let searchValue = document.getElementById("search").value;
+        if(permission==='true'){
+            location.href=`/admin/user?category=${category}&search=${searchValue}`
+        }else{
+            location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
+        }
+}
+function key_press(event,permission){
+
+    if(event.key==='Enter'){
+        search(permission)
+    }
+}

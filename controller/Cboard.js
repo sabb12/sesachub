@@ -154,7 +154,7 @@ exports.board = async (req, res) => {
                         "nk_name",
                         "content",
                         "parent_id",
-                        "createdAt",
+                        "updatedAt",
                         "u_id",
                         "status",
                     ], // 댓글 가져오기
@@ -171,7 +171,7 @@ exports.board = async (req, res) => {
                                 "c_id",
                                 "parent_id",
                                 "nk_name",
-                                "createdAt",
+                                "updatedAt",
                                 "u_id",
                                 "content",
                                 "status",

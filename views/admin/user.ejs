@@ -12,8 +12,8 @@
                 <option value="name">이름</option>
                 <!-- 다른 카테고리도 필요에 따라 추가하세요 -->
             </select>
-            <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-            <button onclick="search()">검색</button>
+            <input type="text" name="search" id="search" placeholder="검색어를 입력하세요" onkeypress="key_press(event,'<%=permission%>')">
+            <button onclick="search('<%=permission%>')">검색</button>
         </div>
         <div class="pagination">
             <% if(permission){ %>
@@ -99,6 +99,7 @@
         </div>
     </div>
     <script>
+     
         (()=> {
         let totalPages = '<%= page %>'-1 // totalPages 값은 서버에서 렌더링할 때 클라이언트로 전달되어야 합니다.
         let paginationDiv = document.querySelector('.pagination');
@@ -112,17 +113,7 @@
         }
         }
         })();
-        function search() {
-            let category = document.getElementById("category").value;
-            let searchValue = document.getElementById("search").value;
-                console.log(category,searchValue)
-                let permission='<%=permission%>'
-                if(permission==='true'){
-                    location.href=`/admin/user?category=${category}&search=${searchValue}`
-                }else{
-                    location.href=`/admin/user?category=${category}&search=${searchValue}&permission=null`
-                }
-        }
+      
     </script>
     <script src="/static/js/admin/user.js"></script>
     
