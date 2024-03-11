@@ -5,28 +5,42 @@
     <link rel="stylesheet" href="/static/css/profile/deleteAccount.css">
 <body>
     <%-include("../include/header")%>
-    <div class="bodyContainer">
+    <div class="body_container">
       <%-include("../include/sideBar")%>
       <div class="section2_container">
         <div class="title">회원 탈퇴</div>
         <div class="delete_account_container">
           <div class="delete_account_header">
-            <p>본인 확인을 위해 아이디와 비밀번호를 한 번 더 입력해주세요.</p>
+            <div class="header_title">본인 확인을 위해 아이디와 비밀번호를</div>
+            <div class="header_title">한 번 더 입력해주세요.</div>
           </div>
-          <div class="deleteAccountBody">
-            <form name="delete_form">
-              <div class="delete_account_input">
-                <div>ID</div>
-                <input type="text" name="u_id" />
-              </div>
-              <div class="delete_account_input">
-                <div>PW</div>
-                <input type="password" name="pw"/>
+          <!-- <div class="deleteAccountBody"> -->
+            <form name="delete_account_form" class="delete_form">
+              <div class="input_wrapper">
+                <div class="input_container id_input">
+                  <!-- user icon -->
+                  <div class="circleContainer">
+                    <div class="circle"></div>
+                    <div class="halfCircle"></div>
+                  </div>
+                  <input type="text" class="input" name="u_id" placeholder="아이디를 입력해주세요." required />
+                </div>
+
+                <div class="input_container pw_input">
+                  <!-- password icon -->
+                  <div class="circleContainer">
+                    <div class="halfUCircle"></div>
+                    <div class="lockCircle"></div>
+                    <div class="dot"></div>
+                    <div class="verticalLine"></div>
+                  </div>
+                  <input type="password" class="input" name="pw" placeholder="비밀번호를 입력해주세요." autocomplete="off" required />
+                </div>
               </div>
             </form>
-            </div>
+          <!-- </div> -->
           <div class="button_container">
-            <button onclick="deleteAccount()">회원 탈퇴</button>
+            <button class="delete_account_btn" onclick="deleteAccount()">회원 탈퇴</button>
           </div>
         </div>
       </div>

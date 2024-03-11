@@ -1,8 +1,8 @@
-.bodyContainer {
+.body_container {
     display: flex;
     flex-direction: row;
-    padding: 10px 100px 0 100px;
-    gap: 10px;
+    padding: 20px 350px 0 350px;
+    gap: 130px;
 }
 
 .section2_container {
@@ -18,25 +18,145 @@
 
 .delete_account_container {
     display: flex;
-    width: 1000px;
-    height: 500px;
     flex-direction: column;
-    border: 1px solid black;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    width: 430px;
+    gap: 15px;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.delete_form {
+    border-radius: 8px;
+    height: 115px;
 }
 
 .delete_account_header {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.delete_account_input {
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.button_container {
-    display: flex;
-    justify-content: end;
+.header_title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.input_wrapper {
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    /* height: 99px; */
+    margin-bottom: 35px;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.input_container {
+    border: 1px solid #dcdcdc;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    width: 350px;
+    height: 55px;
+}
+
+.id_input {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.pw_input {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.input {
+    border: none;
+    width: 237px;
+    height: 20px;
+}
+
+.circleContainer {
+    position: relative;
+    height: 23px;
+    width: 23px;
+}
+
+/*passwork icon*/
+.circle {
+    width: 6px;
+    height: 6px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 50%;
+    transform: translate(7px, 4px);
+}
+
+.halfCircle {
+    width: 12px;
+    height: 3px;
+    border: 1.5px solid #c0c0c0;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    position: relative;
+    border-bottom: none;
+    transform: translate(4px, 5px);
+}
+
+/*lock icon*/
+.halfUCircle {
+    width: 3px;
+    height: 5px;
+    border: 1.5px solid #c0c0c0;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    position: relative;
+    border-bottom: none;
+    transform: translate(8.5px, 3px);
+}
+
+.lockCircle {
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 50%;
+    transform: translate(5px, 2px);
+}
+
+.dot {
+    width: 2px;
+    height: 2px;
+    background: #c0c0c0;
+    border-radius: 50%;
+    /* position: absolute; */
+    transform: translate(10px, -7.4px);
+}
+
+.verticalLine {
+    width: 1px;
+    height: 4px;
+    /* position: absolute; */
+    background-color: #c0c0c0;
+    transform: translate(10.4px, -8px);
+}
+
+.delete_account_btn {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(208, 48, 60);
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
