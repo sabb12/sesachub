@@ -5,45 +5,54 @@
     <link rel="stylesheet" href="/static/css/confirmation.css">
 <body>
     <%-include("../include/header")%>
-    <div class="bodyContainer">
+    <div class="body_container">
       <%-include("../include/sideBar")%>
-      <div class="section2Container">
+      <div class="section2_container">
         <div class="title">예약 관리</div>
-        <div class="reservationContainer">
-          <div class="reservationHeader">
-            <div class="check_all">
-              <input type="checkbox" name="checkbox" id="checkAll"/>
-              <label for="checkAll"> 전체 선택 </label>
-            </div>
-            <div>No.</div>
-            <div>예약 장소</div>
-            <div>예약 시간</div>
-            <div>예약 인원</div>
+        <!-- ///검색조건 박스 -->
+        <div class="table_box">
+          <table>
+            <thead>
+                <tr>
+                  <th class="check_all">
+                    <input type="checkbox" name="checkbox" id="checkAll"/>
+                  </th>
+                  <th>No.</th>
+                  <th>예약 장소</th>
+                  <th>예약 시간</th>
+                  <th>예약 인원</th>
+                  <th>삭제</th>
+                </tr>
+            </thead>
+             <tbody> 
+               <% reservationData.forEach(reservation => { %>
+                  <tr>
+                    <td class="check_all">
+                      <input type="checkbox" name="checkbox" class="check-option" data-r-id="<%= reservation.r_id %>" data-u-id="<%= reservation.u_id %>" />
+                    </td>
+                    <td><%= reservation.r_id%></td>
+                    <td><%= reservation.st_room %></td>
+                    <td>
+                      <%if(reservation.time < 10){%>
+                        <div><%= `0${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
+                      <%} else {%>
+                        <div><%= `${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
+                      <%}%>
+                    </td>
+                    <td><%= reservation.count %></td>
+                    <td>
+                      <button class="delete_button" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
+                    </td>
+                  </tr>
+                <%})%>
+              </tbody>
+            </table>
+            <div class="pagination"> < 1,2,3,3,4,5> </div>
           </div>
-          <div class="reservation_body">
-            <% reservationData.forEach(reservation => { %>
-              <div class="reservation_list_container">
-                <div class="check_all">
-                  <input type="checkbox" name="checkbox" class="check-option" data-r-id="<%= reservation.r_id %>" data-u-id="<%= reservation.u_id %>" />
-                </div>
-                <div><%= reservation.r_id %></div>
-                <div><%= reservation.st_room %></div>
-                <div><%= reservation.day %></div>
-                <%if(reservation.time < 10){%>
-                <div><%= `0${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
-                <%} else {%>
-                <div><%= `${reservation.time}:00 ~ ${Number(reservation.time) + 1}:00` %></div>
-                <%}%>
-                <div><%= reservation.count %></div>
-                 <button class="deleteButton" onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
-                </div>
-                <% }); %>
-              </div>
-            <div class="reservationPagination">< 1,2,3,4,5 ></div>
+          <div class="confirmation_btn_container">
+            <button class="delete_all_btn" onclick="deleteAllCheckedBtn()">예약 취소</button>
           </div>
-          <div class="reserCancelContainer">
-            <button class="delete-all-btn" onclick="deleteAllCheckedBtn()">예약 취소</button>
-          </div>
+        </div>
       </div>
     </div>
     <script src="/static/js/confirmation.js"></script>
