@@ -54,25 +54,29 @@ async function like(b_id, u_id) {
 }
 // 게시글 북마크
 async function bookmark(b_id, u_id) {
-    const bookmark = document.getElementById("bookmark");
-    const response = await axios({
-        method: "POST",
-        url: "/board/bookmark",
-        data: {
-            b_id: b_id,
-            u_id: u_id,
-        },
-    });
-    // if (!response.data.result) {
-    //     bookmark.innerHTML = "&#9733;";
-    // } else {
-    //     bookmark.innerHTML = "&#9734;";
-    // }
+    try {
+        const bookmark = document.getElementById("bookmark");
+        const response = await axios({
+            method: "POST",
+            url: "/board/bookmark",
+            data: {
+                b_id: b_id,
+                u_id: u_id,
+            },
+        });
+        if (!response.data.result) {
+            bookmark.innerHTML = "&#9733;";
+        } else {
+            bookmark.innerHTML = "&#9734;";
+        }
 
-    if (bookmark.classList.contains("on")) {
-        bookmark.classList.remove("on");
-    } else {
-        bookmark.classList.add("on");
+        if (bookmark.classList.contains("on")) {
+            bookmark.classList.remove("on");
+        } else {
+            bookmark.classList.add("on");
+        }
+    } catch (err) {
+        console.error(err);
     }
 }
 /* 댓글 관련 */
