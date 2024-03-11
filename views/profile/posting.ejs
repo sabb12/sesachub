@@ -13,10 +13,10 @@
                     <div class="title">내가 쓴 글 목록</div>
                     <div class="reservation_container">
                         <div class="reservation_header">
-                            <div class="checkbox_all">
-                                <input type="checkbox" />
-                                <div>전체삭제</div>
-                            </div>
+                            <div class="check_all">
+                                <input type="checkbox" name="checkbox" id="posting_checkAll"/>
+                                <label for="posting_checkAll"> 전체 선택 </label>
+                              </div>
                             <div>No.</div>
                             <div>글제목</div>
                             <div>작성일시</div>
@@ -25,12 +25,12 @@
                             <% postings.forEach(post => { %>
                                 <div class="posting_list_container">
                                   <div class="check_all">
-                                    <input type="checkbox" name="checkbox" class="check-option"  />
+                                    <input type="checkbox" name="checkbox" class="posting_check-option"  />
                                   </div>
                                   <div><%= post.b_id %></div>
-                                  <div><%= post.title %></div>
+                                  <div><a href="/board/board?b_id=<%= post.b_id %>"><%= post.title %></a></div>
                                   <div><%= post.post_time %></div>
-                                   <button class="deleteButton" onclick="deleteButton(this, '<%= post.u_id%>')">삭제</button>
+                                   <button class="deleteButton" onclick="deleteButton(this, '<%= post.b_id%>', '<%= post.u_id%>')">삭제</button>
                                   </div>
                                   <% }); %>
                                 </div>
@@ -42,10 +42,10 @@
                     <div class="title">복마크 목록</div>
                     <div class="reservation_container">
                         <div class="reservation_header">
-                            <div class="checkbox_all">
-                                <input type="checkbox" />
-                                <div>전체삭제</div>
-                            </div>
+                            <div class="check_all">
+                                <input type="checkbox" name="checkbox" id="bookMark_checkAll"/>
+                                <label for="bookMark_checkAll"> 전체 선택 </label>
+                              </div>
                             <div>No.</div>
                             <div>글제목</div>
                             <div>작성일시</div>
@@ -54,12 +54,12 @@
                             <% bookmarkPostings.forEach(bookmarkPost => { %>
                                 <div class="bookmarkPost_list_container">
                                   <div class="check_all">
-                                    <input type="checkbox" name="checkbox" class="check-option"  />
+                                    <input type="checkbox" name="checkbox" class="bookMark_check-option"  />
                                   </div>
                                   <div><%= bookmarkPost.b_id %></div>
-                                  <div><%= bookmarkPost.title %></div>
+                                  <div><a href="/board/board?b_id=<%= bookmarkPost.b_id %>"><%= bookmarkPost.title %></a></div>
                                   <div><%= bookmarkPost.post_time %></div>
-                                   <button class="deleteButton" onclick="deleteButton(this, '<%= bookmarkPost.u_id%>')">삭제</button>
+                                   <button class="deleteButton" onclick="unmark_bookmark(this,'<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
                                   </div>
                                   <% }); %>
                                 </div>
@@ -71,5 +71,7 @@
                 </div>
             </div>
         </div>
+        <script defer src="/static/js/posting.js"></script>
+        <script defer src="/static/js/board/board.js"></script>
     </body>
 </html>
