@@ -7,7 +7,6 @@ function updateProfile() {
         url: "/profile",
         data: {
             name: form.name.value,
-            // u_id: form.u_id.value,
             pw: form.pw.value,
             nk_name: form.nk_name.value,
             phone: form.phone.value,
@@ -22,21 +21,18 @@ function updateProfile() {
 
 const updatebtn = document.querySelector(".show_modal");
 const closeBtn = document.querySelector(".close_btn");
-
 const popupContainer = document.querySelector(".modal_container");
 
-// updatebtn.addEventListener("click", (e) => {
-//     e.preventDefault();
-//     popupContainer.style.visibility = "visible";
-// });
-// closeBtn.addEventListener("click", (e) => {
-//     e.preventDefault();
-//     popupContainer.style.visibility = "hidden";
-// });
 updatebtn.addEventListener("click", (e) => {
     e.preventDefault();
     popupContainer.classList.add("active");
 });
 closeBtn.addEventListener("click", (e) => {
+    
+    popupContainer.classList.remove("active");
+});
+
+document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("modal_container")) return;
     popupContainer.classList.remove("active");
 });
