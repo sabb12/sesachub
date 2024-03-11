@@ -2,15 +2,15 @@
 <html lang="ko">
 <%- include('../include/include.ejs', {title:"커뮤니티"}); %>
     <link rel="stylesheet" href="/static/css/board.css">
-    <script src="/static/js/board/board.js"></script>
 
     <body>
         <%- include('../include/header.ejs'); %>
-            <% let isBookmarked=board.bookmarks.some(bookmark=> bookmark.u_id === session.u_id); %>
+            <% let isBookmarked=Object.keys(board.bookmarks).some(bookmarks=> bookmarks.u_id === session.u_id); %>
                 <div class="container">
                     <div class="center">
                         <main role="main">
-                            <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
+                            <div class="content board">
+                                <!-- 본문 시작 -->
                                 <div id="board">
                                     <div class="table_box no_border">
                                         <table>
@@ -63,11 +63,11 @@
                                             <div class="bookmark_box" class="btn_bookmark" id="check_bookmark">
                                                 <!-- <span>북마크</span> -->
                                                 <% if (isBookmarked) {%>
-                                                    <a href="#" id="bookmark"
-                                                        onclick="bookmark('<%=board.b_id%>','<%=session.u_id%>')"></a>
+                                                    <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                        id="bookmark">&#9733;</a>
                                                     <%} else {%>
-                                                        <a href="#" class="btn_bookmark" id="bookmark"
-                                                            onclick="bookmark('<%=board.b_id%>','<%=session.u_id%>')"></a>
+                                                        <a href="javascript:bookmark('<%=board.b_id%>','<%=session.u_id%>')"
+                                                            class="btn_bookmark" id="bookmark">&#9734;</a>
                                                         <%}%>
                                             </div>
                                         </div>
@@ -80,140 +80,128 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="comment_box">
-                                <form name="comment" class="cmt_form">
-                                    <input type="hidden" name="b_id" value="<%=board.b_id%>" />
-                                    <input type="hidden" name="u_id" value="<%=session.u_id%>" />
-                                    <input type="hidden" name="nk_name" value="<%=session.nk_name%>" />
-                                    <select name="status">
-                                        <option value="public">공개</option>
-                                        <option value="private">비공개</option>
-                                    </select>
-                                    <textarea name="comment_content" rows="3" placeholder="댓글을 입력하세요"></textarea>
-                                    <input type="button" class="btn" onclick="comment_insert()" value="댓글 작성">
-                                </form>
-
-                                <ul class="cmt_list">
-                                    <% for(comment of board.comments) {%>
-                                        <!-- 댓글 시작 -->
-                                        <li id="cmt<%=comment.c_id%>_wrap">
-                                            <div class="cmt_top">
-                                                <div class="cmt_nm">
-                                                    <%=comment.nk_name%>
+                                <!-- 본문 끝 -->
+                                <!-- 댓글 시작 -->
+                                <div class="comment_box">
+                                    <!-- 댓글폼 호출 -->
+                                    <form name="comment" class="cmt_form">
+                                        <input type="hidden" name="b_id" value="<%=board.b_id%>" />
+                                        <input type="hidden" name="u_id" value="<%=session.u_id%>" />
+                                        <input type="hidden" name="nk_name" value="<%=session.nk_name%>" />
+                                        <select name="status">
+                                            <option value="public">공개</option>
+                                            <option value="private">비공개</option>
+                                        </select>
+                                        <textarea name="comment_content" rows="3" placeholder="댓글을 입력하세요"></textarea>
+                                        <input type="button" class="btn" onclick="comment_insert()" value="댓글 작성">
+                                    </form>
+                                    <!-- 댓글 목록 -->
+                                    <ul class="cmt_list">
+                                        <!-- 원 댓글 시작 -->
+                                        <% for(comment of board.comments) {%>
+                                            <li id="cmt<%=comment.c_id%>_wrap">
+                                                <div class="cmt_top">
+                                                    <div class="cmt_nm">
+                                                        <span>
+                                                            <%=comment.nk_name%>
+                                                        </span>
+                                                    </div>
+                                                    <div class="cmt_time">
+                                                        <span><%=comment.createdAt.toLocaleString("ko-KR")%></span>
+                                                    </div>
+                                                    <select id="cmt<%=comment.c_id%>_status" style="display: none">
+                                                        <option value="public">공개</option>
+                                                        <option value="private">비공개</option>
+                                                    </select>
                                                 </div>
-                                                <div class="cmt_time">
-                                                    <%=comment.createdAt.toLocaleString("ko-KR")%>
+                                                <div id="cmt<%=comment.c_id%>_content" class="cmt_content">
+                                                    <%=comment.content%>
                                                 </div>
-                                                <select id="cmt<%=comment.c_id%>_status" style="display: none">
-                                                    <option value="public">공개</option>
-                                                    <option value="private">비공개</option>
-                                                </select>
-                                            </div>
-                                            <div id="cmt<%=comment.c_id%>_content" class="cmt_content">
-                                                <%=comment.content%>
-                                            </div>
-                                            <div class="cmt_bottom">
-                                                <% if (session.u_id===comment.u_id) {%>
-                                                    <input type="button" id="cmt_update_btn<%=comment.c_id%>"
-                                                        onclick="change_comment('<%=comment.c_id%>')" value="댓글 수정" />
-                                                    <input type="button" id="cmt_delete_btn<%=comment.c_id%>"
-                                                        onclick="comment_delete('<%=comment.c_id%>')" value="댓글 삭제" />
-                                                    <%}%>
-                                                        <input type="button" class="btn" id="reply_btn<%=comment.c_id%>"
-                                                            onclick="call_reply_form('<%=comment.c_id%>')"
-                                                            value="답글 쓰기" />
-                                            </div>
-                                        </li>
-                                        <!-- 댓글 끝 -->
-                                        <li>
-
-                                            <!-- 답댓글 시작 -->
-                                            <ul>
-                                                <li>
-                                                    <div class="cmt_reply">
-                                                        <form name="reply_form<%=comment.c_id%>" style="display: none">
-                                                            <input type="hidden" name="b_id" value="<%=board.b_id%>" />
-                                                            <input type="hidden" name="u_id"
-                                                                value="<%=session.u_id%>" />
-                                                            <input type="hidden" name="parent_id"
-                                                                value="<%=comment.c_id%>" />
-                                                            <input type="hidden" name="nk_name"
-                                                                value="<%=session.nk_name%>" />
-                                                            <select name="status">
-                                                                <option value="public">공개</option>
-                                                                <option value="private">비공개</option>
-                                                            </select>
-                                                            <textarea name="reply_content" rows="3"
-                                                                placeholder="댓글을 입력하세요" required></textarea>
-                                                            <input type="button" id="reply_insert_btn" class="btn"
-                                                                onclick="reply_insert('<%=comment.c_id%>')"
-                                                                value="답글 작성" />
-                                                        </form>
+                                                <div class="cmt_bottom">
+                                                    <% if (session.u_id===comment.u_id) {%>
+                                                        <input type="button" id="cmt_update_btn<%=comment.c_id%>"
+                                                            onclick="change_comment('<%=comment.c_id%>')"
+                                                            value="댓글 수정" />
+                                                        <input type="button" id="cmt_delete_btn<%=comment.c_id%>"
+                                                            onclick="comment_delete('<%=comment.c_id%>')"
+                                                            value="댓글 삭제" />
+                                                        <%}%>
+                                                            <input type="button" class="btn"
+                                                                id="reply_btn<%=comment.c_id%>"
+                                                                onclick="call_reply_form('<%=comment.c_id%>')"
+                                                                value="답글 쓰기" />
+                                                </div>
+                                                <!-- 원 댓글 끝 -->
+                                                <!-- 답글 시작 -->
+                                                <div class="cmt_reply">
+                                                    <!-- 답글 폼 호출 -->
+                                                    <form name="reply_form<%=comment.c_id%>" style="display: none">
+                                                        <input type="hidden" name="b_id" value="<%=board.b_id%>" />
+                                                        <input type="hidden" name="u_id" value="<%=session.u_id%>" />
+                                                        <input type="hidden" name="parent_id"
+                                                            value="<%=comment.c_id%>" />
+                                                        <input type="hidden" name="nk_name"
+                                                            value="<%=session.nk_name%>" />
+                                                        <select name="status">
+                                                            <option value="public">공개</option>
+                                                            <option value="private">비공개</option>
+                                                        </select>
+                                                        <textarea name="reply_content" rows="3" placeholder="댓글을 입력하세요"
+                                                            required></textarea>
+                                                        <input type="button" id="reply_insert_btn" class="btn"
+                                                            onclick="reply_insert('<%=comment.c_id%>')" value="답글 작성" />
+                                                    </form>
+                                                    <!-- 답글 목록 -->
+                                                    <ul>
                                                         <% if (comment.replies.length> 0) {%>
                                                             <% for (reply of comment.replies) {%>
-                                                                <div class="reply_top">
-                                                                    <input type="hidden" value="<%=reply.parent_id%>">
-                                                                    <%=reply.nk_name %>
-                                                                        <%=reply.createdAt.toLocaleString("ko-KR")%>
-                                                                            <select id="cmt<%=reply.c_id%>_status"
-                                                                                style="display:none">
-                                                                                <option value="public">공개</option>
-                                                                                <option value="private">비공개</option>
-                                                                            </select>
-                                                                </div>
-                                                    </div>
-                                                </li>
-                                                <li id="cmt<%=reply.c_id%>_wrap">
-                                                    <span id="cmt<%=reply.c_id%>_content">
-                                                        <%=reply.content%>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <div class="reply_btm">
-                                                        <% if (session.u_id===reply.u_id) {%>
-                                                            <input type="button" id="cmt_update_btn<%=reply.c_id%>"
-                                                                onclick="change_comment('<%=reply.c_id%>')"
-                                                                value="댓글 수정" />
-                                                            <input type="button" id="cmt_delete_btn<%=reply.c_id%>"
-                                                                onclick="comment_delete('<%=reply.c_id%>')"
-                                                                value="댓글 삭제" />
-                                                            <%}%>
-                                                                <input type="button" class="btn"
-                                                                    id="reply_btn<%=reply.c_id%>"
-                                                                    onclick="call_reply_form('<%=reply.c_id%>')"
-                                                                    value="답글 쓰기" />
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                            <!-- 답댓글 끝 -->
-                                        </li>
-
-                                </ul>
-                                <%}%>
-                                    <%}%>
-                                        <%}%>
+                                                                <li>
+                                                                    <div class="reply_top">
+                                                                        <input type="hidden"
+                                                                            value="<%=reply.parent_id%>">
+                                                                        <span>
+                                                                            <%=reply.nk_name %>
+                                                                        </span>
+                                                                        <span><%=reply.createdAt.toLocaleString("ko-KR")%></span>
+                                                                        <select id="cmt<%=reply.c_id%>_status"
+                                                                            style="display:none">
+                                                                            <option value="public">공개</option>
+                                                                            <option value="private">비공개</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div id="cmt<%=reply.c_id%>_wrap">
+                                                                        <span id="cmt<%=reply.c_id%>_content">
+                                                                            <%=reply.content%>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="reply_btm">
+                                                                        <% if (session.u_id===reply.u_id) {%>
+                                                                            <input type="button"
+                                                                                id="cmt_update_btn<%=reply.c_id%>"
+                                                                                onclick="change_comment('<%=reply.c_id%>')"
+                                                                                value="댓글 수정" />
+                                                                            <input type="button"
+                                                                                id="cmt_delete_btn<%=reply.c_id%>"
+                                                                                onclick="comment_delete('<%=reply.c_id%>')"
+                                                                                value="댓글 삭제" />
+                                                                            <%}%>
+                                                                    </div>
+                                                                </li>
+                                                                <%}%>
+                                                                    <%}%>
+                                                    </ul>
+                                                </div>
+                                                <!-- 답글 끝 -->
+                                            </li>
+                                            <%}%>
+                                    </ul>
+                                </div>
+                                <!-- 댓글 끝 -->
                             </div>
-                            <!-- </li> -->
-                            <!-- </ul> -->
-                            <!-- </li> -->
-
-                            <!-- </ul> -->
+                        </main>
                     </div>
-                    </main>
                 </div>
-                </div>
-                <script>
-                    const isBookmarked = board.bookmarks.some(bookmark => bookmark.u_id === session.u_id);
-                    const format_date = function (date) {
-                        let year = date.getFullYear();
-                        let month = new String(date.getMonth() + 1).padStart(2, "0");
-                        let day = new String(date.getDate()).padStart(2, "0");
-
-                        return year + "-" + month + "-" + day;
-                    }
-                </script>
+                <script src="/static/js/board/board.js"></script>
     </body>
 
 </html>
