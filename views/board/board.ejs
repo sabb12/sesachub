@@ -33,7 +33,7 @@
                                                 <tr>
                                                     <th scope="row">작성자</th>
                                                     <td rowspan="1">
-                                                        <%=board.u_id%>
+                                                        <%=board.user.nk_name%>
                                                     </td>
                                                     <th scope="row">작성일</th>
                                                     <td rowspan="1">
@@ -155,7 +155,8 @@
                                                     <ul>
                                                         <% if (comment.replies.length> 0) {%>
                                                             <% for (reply of comment.replies) {%>
-                                                                <li>
+                                                                <li class="reply">
+                                                                    ↘
                                                                     <div class="reply_top">
                                                                         <input type="hidden"
                                                                             value="<%=reply.parent_id%>">

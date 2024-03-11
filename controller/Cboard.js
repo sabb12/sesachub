@@ -136,6 +136,10 @@ exports.board = async (req, res) => {
             },
             include: [
                 {
+                    model: user,
+                    attributes: ["nk_name"],
+                },
+                {
                     model: boardLike,
                     attributes: [],
                 },
@@ -180,6 +184,7 @@ exports.board = async (req, res) => {
                 ],
             },
         });
+        console.log(boarder);
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
@@ -256,90 +261,120 @@ exports.boardInsert = async (req, res) => {
 };
 // 게시글 수정 페이지 이동
 exports.boardUpdatePage = async function (req, res) {
-    const { b_id } = req.query;
-    const boardInfo = await board.findOne({
-        attributes: ["b_id", "category", "title", "content"],
-        where: {
-            b_id: b_id,
-        },
-    });
-    console.log(boardInfo);
-    res.render("board/update", { board: boardInfo });
+    try {
+        const { b_id } = req.query;
+        const boardInfo = await board.findOne({
+            attributes: ["b_id", "category", "title", "content"],
+            where: {
+                b_id: b_id,
+            },
+        });
+        console.log(boardInfo);
+        res.render("board/update", { board: boardInfo });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 };
 // 게시글 수정
 exports.boardPatch = async (req, res) => {
-    const { b_id, title, content, category } = req.body;
-    const update = await board.update(
-        {
-            title: title,
-            content: content,
-            category: category,
-        },
-        {
-            where: { b_id: b_id },
-        },
-    );
-    if (update) {
-        res.send("수정성공");
-    } else {
-        res.send("수정실패");
+    try {
+        const { b_id, title, content, category } = req.body;
+        const update = await board.update(
+            {
+                title: title,
+                content: content,
+                category: category,
+            },
+            {
+                where: { b_id: b_id },
+            },
+        );
+        if (update) {
+            res.send("수정성공");
+        } else {
+            res.send("수정실패");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
     }
 };
 // 댓글 대댓글 등록
 exports.commentInsert = async (req, res) => {
-    const { u_id, nk_name, b_id, content, parent_id, status } = req.body;
+    try {
+        const { u_id, nk_name, b_id, content, parent_id, status } = req.body;
 
-    const result = await comment.create({
-        nk_name: nk_name,
-        u_id: u_id,
-        b_id: b_id,
-        parent_id: parent_id,
-        content: content,
-        status: status,
-    });
-    res.end();
+        const result = await comment.create({
+            nk_name: nk_name,
+            u_id: u_id,
+            b_id: b_id,
+            parent_id: parent_id,
+            content: content,
+            status: status,
+        });
+        res.end();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 };
 // 댓글 대댓글 수정
 exports.commentPatch = async (req, res) => {
-    const { c_id, content, status } = req.body;
-    const result = await comment.update(
-        {
-            content: content,
-            status: status,
-        },
-        {
-            where: { c_id: c_id },
-        },
-    );
-    res.end();
+    try {
+        const { c_id, content, status } = req.body;
+        const result = await comment.update(
+            {
+                content: content,
+                status: status,
+            },
+            {
+                where: { c_id: c_id },
+            },
+        );
+        res.end();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 };
 // 댓글 대댓글 삭제
 exports.commentDelete = async (req, res) => {
-    const result = await comment.destroy({
-        where: {
-            c_id: req.query.c_id,
-        },
-    });
-    res.end();
+    try {
+        const result = await comment.destroy({
+            where: {
+                c_id: req.query.c_id,
+            },
+        });
+        res.end();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 };
 // 북마크등록
 exports.bookmarkInsert = async (req, res) => {
-    const { u_id, b_id } = req.body;
-    const result = await bookMark.findOne({
-        where: { u_id: u_id, b_id: b_id },
-    });
-    if (result) {
-        const bookMarkDelete = await bookMark.destroy({
-            where: {
+    try {
+        const { u_id, b_id } = req.body;
+        const result = await bookMark.findOne({
+            where: { u_id: u_id, b_id: b_id },
+        });
+        if (result) {
+            const bookMarkDelete = await bookMark.destroy({
+                where: {
+                    b_id: b_id,
+                    u_id: u_id,
+                },
+            });
+        } else {
+            const insert = await bookMark.create({
                 b_id: b_id,
                 u_id: u_id,
-            },
-        });
-    } else {
-        const insert = await bookMark.create({
-            b_id: b_id,
-            u_id: u_id,
-        });
+            });
+        }
+        res.send({ result: result });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
     }
-    res.send({ result: result });
 };

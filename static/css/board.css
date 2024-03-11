@@ -522,6 +522,7 @@ table caption {
     background: #eff8ef;
     border-radius: 4px;
     padding: 10px;
+    border-radius: 10px;
 }
 .comment_box .cmt_list > li ~ li {
     margin-top: 10px;
@@ -550,9 +551,19 @@ a {
     font-size: large;
     font-weight: bold;
 }
-h2{
+h2 {
     font-size: 3rem;
 }
-.err_message{
+.err_message {
     text-align: center;
+}
+
+.reply {
+    background: #d5f8d5;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+}
+.sort_cntr a.active{
+    color: #5fc233;
 }
