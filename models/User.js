@@ -22,6 +22,7 @@ const UserModel = (sequelize, DataTypes) => {
             profile_img: {
                 type: DataTypes.STRING(255),
                 allowNull: true,
+                defaultValue: "uploads\\logo.png",
             },
             email: {
                 type: DataTypes.STRING(30),
@@ -35,10 +36,10 @@ const UserModel = (sequelize, DataTypes) => {
                 type: DataTypes.ENUM("user", "student", "admin", "graduate_student"),
                 allowNull: true,
             },
-            cs_id:{
-                type:DataTypes.INTEGER,
-                allowNull:false
-            }
+            cs_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             freezeTableName: true,

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controller/Cprofile");
+const uploadDetail = require("../util/multer");
 
 /* ----------------- GET ------------------ */
 // /profile
@@ -21,6 +22,9 @@ router.patch("/", controller.updateProfile);
 
 // /profile/password
 router.patch("/password", controller.updatePassword);
+
+// /profile/image
+router.patch("/image", uploadDetail.single("profile_img"), controller.updateProfileImg);
 /* ----------------- DELETE ------------------ */
 // /profile/image
 router.delete("/image", controller.deleteProfileImg);
