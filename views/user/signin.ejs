@@ -127,8 +127,8 @@
                   <select name="cs_id" id="cs_id" required>
                     <option class="hidden_option" value="" selected disabled hidden>[필수] 수강중인 과정을 선택해주세요.</option>
                       <% courseList.forEach(course => { %>
+                        <%= (course.course_name.length > 50) ? course.course_name=course.course_name.slice(0, 50) + '...' : course.course_name %>
                       <option value="<%=course.cs_id  %>"><%=course.course_name%></option>
-                      
                       <%})%>
                   </select>
                  </div>
