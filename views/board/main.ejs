@@ -24,7 +24,6 @@
                                 <option value="like">좋아요 순</option>
                             </select>
                         </div>
-                        <input type="button" class="btn" onclick="page_insert()" value="글 작성">
                     </div>
                     <main role="main">
                         <div class="content board"> <!-- 게시판에만 클래스 board추가 -->
@@ -46,14 +45,15 @@
                                                             <div class="select_box">
                                                                 <div class="s_txt">
                                                                     <select name="search_opt" class="select_list">
-                                                                        <option value="제목" selected="selected">제목
+                                                                        <option value="제목" selected="selected"><span
+                                                                                class="arrow"><i
+                                                                                    class="xi-angle-down">제목</i></span>
                                                                         </option>
                                                                         <option value="검토요청">검토요청</option>
                                                                         <option value="검토중">검토중</option>
                                                                         <option value="검토완료">검토완료</option>
+
                                                                     </select>
-                                                                    <span class="arrow"><i
-                                                                            class="xi-angle-down"></i></span>
                                                                 </div>
                                                             </div>
                                                             <input type="text" name="search_keyword"
@@ -109,6 +109,7 @@
                                             <%}%>
                                     </tbody>
                                 </table>
+                                <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
                             </div>
                             <div class="bottom_area">
                                 <!-- 페이지네이션 -->

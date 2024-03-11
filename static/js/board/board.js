@@ -38,12 +38,19 @@ function delete_board(b_id) {
 }
 // 게시글 좋아요
 async function like(b_id, u_id) {
+    const likeBtn = document.querySelector(".btn_like");
     const response = await axios({
         method: "POST",
         url: "/board/like",
         data: { b_id: b_id, u_id: u_id },
     });
     document.getElementById("like_count").innerText = response.data.like_count;
+
+    if (likeBtn.classList.contains("on")) {
+        likeBtn.classList.remove("on");
+    } else {
+        likeBtn.classList.add("on");
+    }
 }
 // 게시글 북마크
 async function bookmark(b_id, u_id) {
@@ -56,10 +63,16 @@ async function bookmark(b_id, u_id) {
             u_id: u_id,
         },
     });
-    if (!response.data.result) {
-        bookmark.innerHTML = "&#9733;";
+    // if (!response.data.result) {
+    //     bookmark.innerHTML = "&#9733;";
+    // } else {
+    //     bookmark.innerHTML = "&#9734;";
+    // }
+
+    if (bookmark.classList.contains("on")) {
+        bookmark.classList.remove("on");
     } else {
-        bookmark.innerHTML = "&#9734;";
+        bookmark.classList.add("on");
     }
 }
 /* 댓글 관련 */
