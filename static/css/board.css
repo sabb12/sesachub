@@ -530,3 +530,29 @@ table caption {
     text-indent: 15px;
     padding: 10px 0;
 }
+.board_page {
+    display: flex;
+    margin: auto;
+}
+.board_page .page_num {
+    padding: 5px;
+}
+.insert_btn {
+    text-align: end;
+    margin: 10px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.sort_cntr {
+    font-size: large;
+    font-weight: bold;
+}
+h2{
+    font-size: 3rem;
+}
+.err_message{
+    text-align: center;
+}

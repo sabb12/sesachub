@@ -1,4 +1,4 @@
-const { board, boardLike, comment, bookMark } = require("../models");
+const { board, boardLike, comment, bookMark, user } = require("../models");
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 // 전체 게시글 조회 ( 카테,좋아요,최신순,검색)
@@ -8,10 +8,10 @@ exports.boardList = async (req, res) => {
     const like = req.query.like;
     const pageSize = 10; // 한 페이지에 표시할 항목의 수
     try {
-        const totalCount = await board.count(); // 전체 데이터의 수
-        const totalPages = Math.ceil(totalCount / pageSize); // 전체 페이지 수
-        const offset = (page - 1) * pageSize; // 오프셋 계산
         if (!category) {
+            const totalCount = await board.count(); // 전체 데이터의 수
+            const totalPages = Math.ceil(totalCount / pageSize); // 전체 페이지 수
+            const offset = (page - 1) * pageSize; // 오프셋 계산
             let orderby = [];
             if (like) {
                 orderby.push("like_count");
@@ -29,6 +29,10 @@ exports.boardList = async (req, res) => {
                 limit: pageSize,
                 offset: offset,
                 include: [
+                    {
+                        model: user,
+                        attributes: ["nk_name"],
+                    },
                     {
                         model: boardLike,
                         attributes: [],
@@ -54,6 +58,7 @@ exports.boardList = async (req, res) => {
                 boardList: boardList,
                 category: category,
                 totalPages: totalPages,
+                search: req.query.search,
             });
         } else {
             let orderby = [];
@@ -69,6 +74,15 @@ exports.boardList = async (req, res) => {
                     { content: { [Op.like]: `%${req.query.search}%` } },
                 ];
             }
+            const totalCount = await board.count({
+                where: {
+                    category: category, // 카테고리가 있는 경우만 조회
+                    ...search, // 검색어 조건 추가
+                },
+            });
+
+            const totalPages = Math.ceil(totalCount / pageSize); // 전체 페이지 수
+            const offset = (page - 1) * pageSize; // 오프셋 계산
             const boardList = await board.findAll({
                 where: {
                     category: category, // 카테고리가 있는 경우만 조회
@@ -77,6 +91,10 @@ exports.boardList = async (req, res) => {
                 limit: pageSize,
                 offset: offset,
                 include: [
+                    {
+                        model: user,
+                        attributes: ["nk_name"],
+                    },
                     {
                         model: boardLike,
                         attributes: [],
@@ -100,6 +118,7 @@ exports.boardList = async (req, res) => {
                 boardList: boardList,
                 category: category,
                 totalPages: totalPages,
+                search: req.query.search,
             });
         }
     } catch (error) {

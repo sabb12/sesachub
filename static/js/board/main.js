@@ -17,3 +17,26 @@ async function board_insert() {
     });
     location.href = "/board";
 }
+const sortList = document.querySelector(".sort_list");
+
+function sort(category, search) {
+    let selectedValue = sortList.value;
+    if (selectedValue === "latest") {
+        location.href = `/board?category=${category}&like=&search=${search}`;
+    } else if (selectedValue === "like") {
+        location.href = `/board?category=${category}&like=like&search=${search}`;
+    }
+}
+function searchPost(category) {
+    const keyword = document.querySelector(".search_keyword").value;
+    location.href = `/board?category=${category}&search=${keyword}`;
+}
+
+function searchOnEnter(event, category) {
+    if (category === "undefined") {
+        category = "";
+    }
+    if (event.key === "Enter") {
+        searchPost(category);
+    }
+}
