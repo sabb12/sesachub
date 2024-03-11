@@ -35,8 +35,7 @@
                         <div class="wrapper idWrapper">
                             <div class="subTitle idTitle">비밀번호</div>
                             <div class="inputContainer">
-                                <input type="password" name="pw" placeholder="비밀번호" value=""/>
-                                <button class="show_modal">수정</button>
+                                <input type="password" name="pw" autocomplete="off" placeholder="비밀번호" value=""/>
                             </div>
                         </div>
                         <div class="wrapper nickNameWrapper">
@@ -52,14 +51,14 @@
                                 <input type="text" name="phone" placeholder="연락처" value="<%=userInfo.phone%>" />
                             </div>
                         </div>
-
+                        
                         <div class="wrapper emailWrapper">
                             <div class="subTitle emailTitle">이메일</div>
-                            <div clas        s="inputContainer">
+                            <div class="inputContainer">
                                 <input type="text" name="email" placeholder="이메일" value="<%=userInfo.email%>"/>
                             </div>
                         </div>
-
+                        
                         <div class="wrapper nameWrapper">
                             <div class="subTitle courseTitle">수강중인과정</div>
                             <div class="inputContainer">
@@ -69,8 +68,9 @@
                     </div>
                </form>
                <div>
-                   <button onclick="updateProfile()">수정</button>
-               </div>
+                   <button class="show_modal"> 비밀번호 수정</button>
+                   <button onclick="updateProfile()">프로필 수정</button>
+                </div>
             </div>
         </div>
         <!--Modal-->
@@ -82,19 +82,19 @@
                   <div class="modal_input_container">
                     <div class="modal current_pw">
                       <div class="title currentPW">현재 비밀번호</div>
-                      <input type="text" placeholder="현재 비밀번호" />
+                      <input type="password" name="pw" autocomplete="off" placeholder="현재 비밀번호" />
                     </div>
                     <div class="modal new_pw">
                       <div class="title newPW">새로운 비밀번호</div>
-                      <input type="text" placeholder="새로운 비밀번호" />
+                      <input type="password" name="newPw" autocomplete="off" placeholder="새로운 비밀번호" />
                     </div>
                     <div class="modal confirm_new_pw">
                       <div class="title newPWConfirmation">새로운 비밀번호 확인</div>
-                      <input type="text" placeholder="새로운 비밀번호 확인" />
+                      <input type="password" name="newPwCheck" autocomplete="off" placeholder="새로운 비밀번호 확인" />
                     </div>
                   </div>
                   <div class="modal_buttons">
-                    <button class="close_btn">비밀번호 수정</button>
+                    <button class="close_btn" >비밀번호 수정</button>
                   </div>
                 </form>
               </div>
