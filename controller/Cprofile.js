@@ -52,36 +52,83 @@ exports.confirmation = async (req, res) => {
         res.status(500).send("server error!");
     }
 };
+
 exports.findAllPosting = async (req, res) => {
     const { u_id } = req.session;
-    const page = parseInt(req.query.page) || 1; // 페이지 번호
-    const limit = parseInt(req.query.limit) || 5; // 페이지 당 아이템 수
+    const limit = 5; // 페이지 당 아이템 수
+    const totalPostings = await board.count({ where: { u_id } }); // 커뮤니티에서 내가 작성한 게시글 수
+    const totalPostPages = Math.ceil(totalPostings / limit); // 내가 쓴 글 총 페이지 수
+    const totalBookmarks = await bookMark.count({ where: { u_id } }); // 커뮤니티에서 내가 북마크한 게시글 수
+    const totalBookmarkPages = Math.ceil(totalBookmarks / limit); // 내가 북마크한 글 총 페이지 수
 
     try {
-        const offset = (page - 1) * limit; // 페이지 시작 오프셋 계산
+        // 해당 유저가 쓴 글 목록 전체 조회
         const postings = await board.findAll({
             limit: limit,
-            offset: offset,
             where: { u_id },
             order: [["createdAt", "DESC"]],
         });
 
-        // 유저의 전체 북마크 중 b_id만 추출한 배열
+        // 해당 유저의 북마크 목록 전체 조회
         const bookmarks = await bookMark.findAll({
             where: { u_id },
             order: [["bm_id", "DESC"]],
         });
+        // 유저의 전체 북마크 중 b_id만 추출한 배열
         const b_ids = bookmarks.map((bookmark) => bookmark.dataValues.b_id);
 
-        // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
+        // 전체 게시글 중 유저의 북마크와 b_id가 같은 글 조회
         const bookmarkPostings = await board.findAll({
             limit: limit,
-            offset: offset,
             where: { b_id: { [Op.in]: b_ids } },
         });
-        res.render("profile/posting", { postings, bookmarkPostings });
+        res.render("profile/posting", {
+            postings,
+            totalPostPages,
+            bookmarkPostings,
+            totalBookmarkPages,
+        });
     } catch (error) {
         console.log("Cprofile findAllPosting err :: ", error);
+        res.status(500).send("server error!");
+    }
+};
+
+exports.findPosts = async (req, res) => {
+    const { u_id } = req.session;
+    const page = parseInt(req.body.pageNum) || 1; // 페이지 번호
+    const action = req.body.action; // 내가 쓴 글 목록의 페이지와 내 북마크 페이지를 구별하기 위한 메소드
+    const limit = 5; // 페이지 당 아이템 수
+    try {
+        if (action === "posts") {
+            //
+            const offset = (page - 1) * limit; // 페이지 시작 오프셋 계산
+            // 해당 유저가 쓴 글 목록 전체 조회
+            const postings = await board.findAll({
+                limit: limit,
+                offset: offset,
+                where: { u_id },
+                order: [["createdAt", "DESC"]],
+            });
+            res.send({ postings, page });
+        } else if (action === "bookmarks") {
+            const offset = (page - 1) * limit; // 페이지 시작 오프셋 계산
+            // 해당 유저의 북마크 목록 전체 조회
+            const myBookmarks = await bookMark.findAll({
+                where: { u_id },
+                order: [["bm_id", "DESC"]],
+            });
+            // 유저의 전체 북마크 중 b_id만 추출한 배열
+            const b_ids = myBookmarks.map((bookmark) => bookmark.dataValues.b_id);
+            // 전체 게시글 중 유저의 북마크와 b_id가 같은 글 가져오기
+            const bookmarkPostings = await board.findAll({
+                limit: limit,
+                offset: offset,
+                where: { b_id: { [Op.in]: b_ids } },
+            });
+            res.send({ bookmarkPostings, page });
+        }
+    } catch (err) {
         res.status(500).send("server error!");
     }
 };

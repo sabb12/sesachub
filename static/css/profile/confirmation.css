@@ -140,6 +140,7 @@ table {
 }
 
 .delete_all_btn {
+    cursor: pointer;
     background-color: white;
     border: 1px solid #dcdcdc;
     padding: 10px;

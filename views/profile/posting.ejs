@@ -1,102 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include("../include/include", {title: "로그인 및 회원가입"})%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<%- include("../include/include", {title: "로그인 및 회원가입" })%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/static/css/profile/posting.css">
-<body>
-    <%-include("../include/header")%>
-        <div class="body_container">
-            <%-include("../include/sideBar")%>
-            <div class="section2_container">
-                <!--내가 쓴 글 목록-->
-                <div class="free_board posting_container">
-                    <div class="title">내가 쓴 글 목록</div>
-                    <div class="table_box">
-                        <table>
-                        <thead>
-                            <tr>
-                                <th class="check_all">
-                                <input type="checkbox" name="checkbox" id="posting_checkAll"/>
-                                </th>
-                                <th>No.</th>
-                                <th>글제목</th>
-                                <th>작성일자</th>
-                                <th>삭제</th>
-                            </tr>
-                        </thead>
-                            <tbody> 
-                                <% postings.forEach(post => { %>
-                                    <tr>
-                                        <td class="check_all">
-                                            <input type="checkbox" name="checkbox" class="posting_check-option" data-b-id="<%= post.b_id %>"/>
-                                        </td>
-                                        <td><%= post.b_id%></td>
-                                        <td><a href="/board/board?b_id=<%= post.b_id %>"><%= post.title %></a></td>
-                                        <td><%= post.createdAt.toLocaleString("ko-KR", {year: '2-digit', month: '2-digit', day: '2-digit'})%></td>
-                                        <td>
-                                            <button class="delete_button" onclick="deletePosting('<%= post.b_id%>')">삭제</button>
-                                        </td>
-                                    </tr>
-                                <%})%>
-                                <%if(postings.length === 0) {%>
-                                    <tr>
-                                        <td colspan="5" class="empty_text">개시글이 없습니다.</td>
-                                    </tr>
-                                <%}%>
-                            </tbody>
-                        </table>
-                        <div class="pagination"> < 1,2,3,3,4,5></div>
-                        <div class="confirmation_btn_container">
-                            <button class="delete_all_btn" onclick="deletePostingAll()">전체 삭제</button>
+
+    <body>
+        <%- include("../include/header")%>
+            <div class="body_container">
+                <%- include("../include/sideBar")%>
+                    <div class="section2_container">
+                        <!--내가 쓴 글 목록-->
+                        <div class="free_board posting_container">
+                            <div class="title">내가 쓴 글 목록</div>
+                            <div class="table_box">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="check_all">
+                                                <input type="checkbox" name="checkbox" id="posting_checkAll" />
+                                            </th>
+                                            <th>No.</th>
+                                            <th>글제목</th>
+                                            <th>작성일자</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="postingCntr">
+                                        <% postings.forEach(post=> { %>
+                                            <tr>
+                                                <td class="check_all">
+                                                    <input type="checkbox" name="checkbox" class="posting_check-option"
+                                                        data-b-id="<%= post.b_id %>" />
+                                                </td>
+                                                <td>
+                                                    <%= post.b_id%>
+                                                </td>
+                                                <td><a href="/board/board?b_id=<%= post.b_id %>">
+                                                        <%= post.title %>
+                                                    </a></td>
+                                                <td>
+                                                    <%= post.createdAt.toLocaleString("ko-KR", {year: '2-digit' ,
+                                                        month: '2-digit' , day: '2-digit' })%>
+                                                </td>
+                                                <td>
+                                                    <button class="delete_button"
+                                                        onclick="deletePosting('<%= post.b_id%>')">삭제</button>
+                                                </td>
+                                            </tr>
+                                            <%})%>
+                                                <%if(postings.length===0) {%>
+                                                    <tr>
+                                                        <td colspan="5" class="empty_text">개시글이 없습니다.</td>
+                                                    </tr>
+                                                    <%}%>
+                                    </tbody>
+                                </table>
+                                <div class="pagination">
+                                    <% if(postings.length===0){ totalPostPages='' } %>
+                                        <% for (let i=1; i <=totalPostPages; i++) { %>
+                                            <div class="page_num"><a href="javascript:postPage(<%=i%>)"
+                                                    class="postPage<%=i%>">
+                                                    <%= i %>
+                                                </a></div>
+                                            <% } %>
+                                </div>
+                                <div class="confirmation_btn_container">
+                                    <button class="delete_all_btn" onclick="deletePostingAll()">전체 삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 북마크 목록 -->
+                        <div class="free_board book_mark_container">
+                            <div class="title">북마크 목록</div>
+                            <div class="table_box">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="check_all">
+                                                <input type="checkbox" name="checkbox" id="bookMark_checkAll" />
+                                            </th>
+                                            <th>No.</th>
+                                            <th>글제목</th>
+                                            <th>작성일자</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bookmarkCntr">
+                                        <% bookmarkPostings.forEach(bookmarkPost=> { %>
+                                            <tr>
+                                                <td class="check_all">
+                                                    <input type="checkbox" name="checkbox" class="bookMark_check-option"
+                                                        data-b-id="<%= bookmarkPost.b_id %>"
+                                                        data-u-id="<%= bookmarkPost.u_id %>" />
+                                                </td>
+                                                <td>
+                                                    <%= bookmarkPost.b_id %>
+                                                </td>
+                                                <td><a href="/board/board?b_id=<%= bookmarkPost.b_id %>">
+                                                        <%= bookmarkPost.title %>
+                                                    </a></td>
+                                                <td>
+                                                    <%= bookmarkPost.createdAt.toLocaleString("ko-KR", {year: '2-digit'
+                                                        , month: '2-digit' , day: '2-digit' })%>
+                                                </td>
+                                                <td>
+                                                    <button class="delete_button"
+                                                        onclick="deleteBookmark('<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
+                                                </td>
+                                            </tr>
+                                            <%})%>
+                                                <%if(bookmarkPostings.length===0) {%>
+                                                    <tr>
+                                                        <td colspan="5" class="empty_text">북마크가 없습니다.</td>
+                                                    </tr>
+                                                    <%}%>
+
+                                    </tbody>
+                                </table>
+                                <div class="pagination">
+                                    <% if(bookmarkPostings.length===0){ totalBookmarkPages='' } %>
+                                        <% for (let i=1; i <=totalBookmarkPages; i++) { %>
+                                            <div class="page_num"><a href="javascript:bookmarkPage(<%=i%>)"
+                                                    class="bookmarkPage<%=i%>">
+                                                    <%= i %>
+                                                </a></div>
+                                            <% } %>
+                                </div>
+                                <div class="confirmation_btn_container">
+                                    <button class="delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- 북마크 목록 -->
-                <div class="free_board book_mark_container">
-                    <div class="title">북마크 목록</div>
-                    <div class="table_box">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="check_all">
-                                        <input type="checkbox" name="checkbox" id="bookMark_checkAll"/>
-                                    </th>
-                                    <th>No.</th>
-                                    <th>글제목</th>
-                                    <th>작성일자</th>
-                                    <th>삭제</th>
-                                </tr>
-                            </thead>
-                            <tbody> 
-                                <% bookmarkPostings.forEach(bookmarkPost => { %>
-                                    <tr>
-                                        <td class="check_all">
-                                            <input type="checkbox" name="checkbox" class="bookMark_check-option"  data-b-id="<%= bookmarkPost.b_id %>" data-u-id="<%= bookmarkPost.u_id %>"/>
-                                        </td>
-                                        <td><%= bookmarkPost.b_id %></td>
-                                        <td><a href="/board/board?b_id=<%= bookmarkPost.b_id %>"><%= bookmarkPost.title %></a></td>
-                                        <td><%= bookmarkPost.createdAt.toLocaleString("ko-KR", {year: '2-digit', month: '2-digit', day: '2-digit'})%></td>
-                                        <td>
-                                            <button class="delete_button" onclick="deletBookmark('<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <%})%>
-                                    <%if(bookmarkPostings.length === 0) {%>
-                                    <tr>
-                                        <td colspan="5" class="empty_text">북마크가 없습니다.</td>
-                                    </tr>
-                                    <%}%>
-                                    
-                            </tbody>
-                        </table>
-                        <div class="pagination"> < 1,2,3,3,4,5></div>
-                        <div class="confirmation_btn_container">
-                            <button class="delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <script defer src="/static/js/profile/posting.js"></script>
-        <script defer src="/static/js/board/board.js"></script>
+                    <script src="/static/js/profile/posting.js"></script>
+                    <script defer src="/static/js/board/board.js"></script>
     </body>
+
 </html>
