@@ -23,48 +23,70 @@
                         <div class="wrapper nameWrapper">
                             <div class="subTitle nameTitle">이름</div>
                             <div class="inputContainer">
-                                <input type="text" name="name" class="name" placeholder="이름" value="<%=userInfo.name%>" readonly/>
+                                <input type="text" name="name" class="name" placeholder="이름" value="<%=userInfo.name%>" disabled/>
                             </div>
                         </div>
 
                         <div class="wrapper idWrapper">
                             <div class="subTitle idTitle">아이디</div>
                             <div class="inputContainer">
-                                <input type="text" name="u_id" placeholder="아이디" value="<%=userInfo.u_id%>" readonly/>
+                                <input type="text" name="u_id" placeholder="아이디" value="<%=userInfo.u_id%>" disabled/>
                             </div> 
                         </div>
 
                         <div class="wrapper idWrapper">
                             <div class="subTitle idTitle">비밀번호</div>
                             <div class="inputContainer">
-                                <input type="password" name="pw" autocomplete="off" placeholder="비밀번호" value=""/>
+                                <input type="password" name="pw" autocomplete="off" placeholder="프로필 수정 시 비밀번호를 입력해주세요." value=""/>
                             </div>
                         </div>
                         <div class="wrapper nickNameWrapper">
                             <div class="subTitle nickNameTitle">닉네임</div>
                             <div class="inputContainer">
-                                <input type="text" name="nk_name" placeholder="닉네임" value="<%=userInfo.nk_name%>"/>
+                                <input type="text" name="nk_name" placeholder="한글, 영어 대소문자, 숫자 (2 ~ 16자)" value="<%=userInfo.nk_name%>"/>
+                                <button type="button" id="nk_name_check_btn" onclick="duplicateCheck()">중복 확인</button>
                             </div>
                         </div>
 
                         <div class="wrapper contactWrapper">
                             <div class="subTitle contactTitle">연락처</div>
                             <div class="inputContainer">
-                                <input type="text" name="phone" placeholder="연락처" value="<%=userInfo.phone%>" />
+                                <input type="text" name="phone" placeholder="공백이나 '-' 없이 숫자만, ex) 01012341234 또는 021231234" value="<%=userInfo.phone%>" />
                             </div>
                         </div>
                         
                         <div class="wrapper emailWrapper">
                             <div class="subTitle emailTitle">이메일</div>
                             <div class="inputContainer">
-                                <input type="text" name="email" placeholder="이메일" value="<%=userInfo.email%>"/>
+                                <input type="text" name="email" placeholder="example@example.com" value="<%=userInfo.email%>"/>
                             </div>
                         </div>
                         
-                        <div class="wrapper nameWrapper">
+                        <div class="wrapper courseWrapper">
                             <div class="subTitle courseTitle">수강중인과정</div>
                             <div class="inputContainer">
-                                <input type="text" name="course" placeholder="수강중인과정" value="<%=courseInfo.course_name%>" readonly/>
+                                <% if (courseInfo.course_name.length > 30) { %>
+                                    <input type="text" name="course" placeholder="수강중인과정" value="<%= courseInfo.course_name.slice(0, 30) + '...' %>" disabled/>
+                                <% } else { %>
+                                    <input type="text" name="course" placeholder="수강중인과정" value="<%= courseInfo.course_name %>" disabled/>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="wrapper nameWrapper">
+                            <div class="subTitle courseTitle">권한</div>
+                            <div class="inputContainer">
+                                <% if(userInfo.permission === "student") { %>
+                                    <input type="text" name="permission" placeholder="권한" value="수강생" disabled/>
+                                <% } else if(userInfo.permission === "admin") { %>
+                                    <input type="text" name="permission" placeholder="권한" value="관리자" disabled/>
+                                <% } else if(userInfo.permission === "user") { %>
+                                    <input type="text" name="permission" placeholder="권한" value="관계자" disabled/>
+                                <% } else if(userInfo.permission === "graduate_student") { %>
+                                    <input type="text" name="permission" placeholder="권한" value="수료생 ('예약하기' 사용 불가)" disabled/>
+                                <% } else {%>                                
+                                    <input type="text" name="permission" placeholder="권한" value="관리자에게 권한 신청을 해주세요. ('예약하기' 사용 불가)" disabled/>
+                                <%}%>    
                             </div>
                         </div>
                     </div>

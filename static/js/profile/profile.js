@@ -38,17 +38,108 @@ function deleteProfileImg() {
     }
 }
 
+/* --------------------------------------------------------------------- */
+
+const patterns = {
+    pw: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    nk_name: /^[가-힣a-zA-Z0-9]{2,16}$/,
+    phone: /^(\d{9,11})$/,
+    email: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+};
+
+// 입력값 검증
+const inputs = document.querySelectorAll(".inputContainer input");
+inputs.forEach((input) => {
+    input.addEventListener("input", (e) => {
+        validate(e.target, patterns[e.target.attributes.name.value]);
+    });
+});
+// 유효성 검증 함수
+function validate(field, regex) {
+    if (regex.test(field.value)) {
+        showSuccess(field);
+    } else {
+        showError(field);
+    }
+}
+
+function showError(input) {
+    const formControl = input.parentElement;
+    formControl.className = "inputContainer error";
+    // formControl.querySelector("small").style.visibility = "visible";
+}
+
+function showSuccess(input) {
+    const formControl = input.parentElement;
+    formControl.className = "inputContainer success";
+    // formControl.querySelector("small").style.visibility = "hidden";
+}
+
+let nkNameFlag = false;
+
+// 플래그 설정 함수
+function setNkNameFlag(value) {
+    nkNameFlag = value;
+}
+
+function duplicateCheck() {
+    const nkNameBtn = document.querySelector("#nk_name_check_btn");
+    const nkNameInput = document.querySelector("input[name=nk_name]");
+    nkNameBtn.addEventListener("click", async function (e) {
+        e.preventDefault();
+        const nkNamePattern = patterns.nk_name;
+        if (!nkNamePattern.test(nkNameInput.value)) {
+            alert("닉네임 양식에 맞게 작성해주세요.");
+            nkNameInput.value = "";
+            return;
+        }
+
+        try {
+            await axios({
+                method: "get",
+                url: "/user/duplicate",
+                params: {
+                    nk_name: nkNameInput.value,
+                },
+            }).then((res) => {
+                if (res.data.isDuplicate)
+                    alert("이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.");
+                else {
+                    alert("사용 가능한 닉네임 입니다.");
+                    setNkNameFlag(true);
+                }
+            });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
 function updateProfile() {
+    if (!nkNameFlag) return alert("닉네임 중복 확인을 해주세요.");
     const form = document.forms["profile_form"];
+
+    // 연락처 데이터
+    let phone = form.phone.value; // 숫자 9 ~ 11 자리 중 하나
+    switch (phone.length) {
+        case 9:
+            phone = phone.slice(0, 2) + "-" + phone.slice(2, 5) + "-" + phone.slice(5);
+            break;
+        case 10:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6);
+            break;
+        case 11:
+            phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
+            break;
+    }
 
     axios({
         method: "patch",
         url: "/profile",
         data: {
-            name: form.name.value,
             pw: form.pw.value,
             nk_name: form.nk_name.value,
-            phone: form.phone.value,
+            phone: phone,
             email: form.email.value,
         },
     })
