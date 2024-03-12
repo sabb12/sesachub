@@ -1,3 +1,117 @@
+//수정 섬머노트js
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+$(document).ready(function () {
+    $("#summernote").summernote({
+        height: 800, // 에디터 높이
+        minHeight: 800, // 최소 높이
+        maxHeight: 800, // 최대 높이
+        focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+        lang: "ko-KR", // 한글 설정
+        placeholder: "최대 2048자까지 쓸 수 있습니다", //placeholder 설정
+        callbacks: {
+            // 이미지를 업로드하는 부분
+            onImageUpload: function (files) {
+                uploadSummernoteImageFile(files[0], this);
+            },
+            onMediaDelete: function (target) {
+                const delete_confirm = confirm(
+                    "정말 삭제하시 겠습니까? 한번 삭제시 데이터는 사라집니다.\n(한장의 사진만 삭제됩니다.)",
+                );
+                if (delete_confirm) {
+                    const imgNameList = [];
+                    removeSummernoteImage(target, imgNameList);
+                } else {
+                    alert("취소 하였습니다.");
+                    location.reload();
+                }
+            },
+            onPaste: function (e) {
+                var clipboardData = e.originalEvent.clipboardData;
+                if (clipboardData && clipboardData.items && clipboardData.items.length) {
+                    var item = clipboardData.items[0];
+                    if (item.kind === "file" && item.type.indexOf("image/") !== -1) {
+                        e.preventDefault();
+                    }
+                }
+            },
+            onKeydown: function (e) {
+                console.log(e.keyCode);
+                if (e.keyCode === 8 || e.keyCode === 46) {
+                    // 백스페이스 또는 딜리트 키
+                    const delete_confirm = confirm(
+                        "정말 삭제하시 겠습니까?\n 백스페이스키 나 delete 키를 사용시 전체이미지가 완전히 삭제됩니다\n 마우스 왼쪽 클릭으로 삭제 권장드려요",
+                    );
+                    // 입력된 내용을 HTML로 파싱
+                    if (delete_confirm) {
+                        var htmlContent = $(this).summernote("code");
+
+                        const srcRegex = /\/uploads\\([^"]+)"/g;
+                        const imgNameList = [];
+                        let match;
+
+                        while ((match = srcRegex.exec(htmlContent)) !== null) {
+                            imgNameList.push(match[1]);
+                        }
+                        console.log(imgNameList);
+                        // 파싱된 HTML에서 이미지 태그를 찾음
+                        var hasImage = $(htmlContent).find("img").length > 0;
+                        // 이미지를 포함하는지 확인
+                        if (hasImage) {
+                            // 이미지 삭제 로직 실행
+                            removeSummernoteImage(e, imgNameList);
+                        }
+                    } else {
+                        alert("취소 하였습니다.");
+                        e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
+                    }
+                }
+            },
+        },
+    });
+    let board_content = document.querySelector(".update_content");
+    let content = decodeHtml(board_content.value);
+
+    // 역슬래시를 슬래시로 변경
+    content = content.replace(/\/uploadshero/g, "/uploads/hero");
+    $("#summernote").summernote("code", content);
+});
+
+async function uploadSummernoteImageFile(file, editor) {
+    const data = new FormData();
+    data.append("file", file);
+    try {
+        const response = await axios.post("/board/imgupload", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        const imageUrl = response.data;
+        console.log(imageUrl);
+        $(editor).summernote("insertImage", "/" + imageUrl);
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function removeSummernoteImage(target, imgNameList) {
+    try {
+        if (imgNameList.length != 0 || imgNameList.length === 1) {
+            const res = await axios.post("/board/imgdelete", { imgName: imgNameList });
+            return;
+        }
+        const imgName = target[0].src.split("/").pop();
+        console.log(imgName); //이미지 이름 가져옴
+        const res = await axios.post("/board/imgdelete", { imgName: imgName });
+        console.log("이미지 삭제 요청 성공:", res.data);
+    } catch (error) {
+        console.error("이미지 삭제 요청 실패:", error);
+    }
+}
+
 /* 게시글 관련 */
 // 게시글 수정 페이지로 이동
 function page_update(b_id) {
@@ -12,45 +126,66 @@ function page_update(b_id) {
 // 게시글 수정
 async function update_board(b_id) {
     if (confirm("글을 수정하시겠습니까?")) {
+        var content = $("#summernote").summernote("code");
         const form = document.forms["update_form"];
-        const result=await axios({
+        const srcRegex = /\/uploads\\([^"]+)"/g;
+        const imgNameList = [];
+        let match;
+
+        while ((match = srcRegex.exec(content)) !== null) {
+            imgNameList.push(match[1]);
+        }
+        //새로 등록되는 이미지리스트값
+        console.log(imgNameList);
+        const result = await axios({
             method: "PATCH",
             url: "/board",
             data: {
                 b_id: form.b_id.value,
                 category: form.category.value,
                 title: form.title.value,
-                content: form.content.value,
+                content: content,
+                imgNameList: imgNameList,
             },
         });
-        if(result.status===200){
-            alert('수정 성공하였습니다.')
-        }else{
-            alert('수정 실패하였습니다.')
+        if (result.status === 200) {
+            alert("수정 성공하였습니다.");
+        } else {
+            alert("수정 실패하였습니다.");
         }
 
         location.href = `/board?b_id=${b_id}`;
-    }else{
-        alert('수정 취소하였습니다.')
+    } else {
+        alert("수정 취소하였습니다.");
     }
 }
 // 게시글 삭제
-function delete_board(b_id) {
+function delete_board(b_id, content) {
     if (confirm("글을 삭제하시겠습니까?")) {
+        console.log(content);
+        const srcRegex = /\/uploads([^"]+)"/g;
+        const imgNameList = [];
+        let match;
+
+        while ((match = srcRegex.exec(content)) !== null) {
+            imgNameList.push(match[1]);
+        }
+        //새로 등록되는 이미지리스트값
+        console.log(imgNameList);
         axios({
             method: "DELETE",
             url: "/board",
-            params: { b_id: b_id },
+            params: { b_id: b_id, imgNameList: imgNameList },
         }).then(function (res) {
-            if(res.status===200){
-                alert('삭제 성공하였습니다.')
-            }else{
-                alert('삭제 실패하였습니다.')
+            if (res.status === 200) {
+                alert("삭제 성공하였습니다.");
+            } else {
+                alert("삭제 실패하였습니다.");
             }
             location.href = "/board";
         });
-    }else{
-        alert('취소하였습니다.')
+    } else {
+        alert("취소하였습니다.");
     }
 }
 // 게시글 좋아요
@@ -78,7 +213,6 @@ async function bookmark(b_id, u_id) {
             },
         });
         location.reload();
-
     } catch (err) {
         console.error(err);
     }

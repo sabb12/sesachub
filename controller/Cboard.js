@@ -1,6 +1,8 @@
-const { board, boardLike, comment, bookMark, user } = require("../models");
+const { board, boardLike, comment, bookMark, user, boardImg } = require("../models");
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
+const fs = require("fs");
+
 // 전체 게시글 조회 ( 카테,좋아요,최신순,검색)
 exports.boardList = async (req, res) => {
     const page = req.query.page || 1; // 요청된 페이지 번호, 기본값은 1
@@ -176,13 +178,12 @@ exports.board = async (req, res) => {
                                 "content",
                                 "status",
                             ], // 대댓글의 속성 선택
-                            include:[
+                            include: [
                                 {
-                                    model:user,
+                                    model: user,
                                     attributes: ["u_id", "profile_img"],
-
-                                }
-                            ]
+                                },
+                            ],
                         },
                     ],
                     where: { parent_id: null }, // 부모 댓글만 가져오도록 추가된 where 조건
@@ -257,15 +258,46 @@ exports.handleLike = async (req, res) => {
 exports.boardDelete = async (req, res) => {
     try {
         const b_id = Number(req.query.b_id);
+        const imgNameList = req.query.imgNameList;
+        console.log(imgNameList);
+
+        const imgNames = Array.isArray(imgNameList) ? imgNameList : [imgNameList]; // 이미지 이름 배열 또는 단일 값으로 변환
+
+        // 모든 이미지에 대해 순차적으로 처리
+        for (const img of imgNames) {
+            try {
+                // 파일 경로 설정
+                const filePath = `uploads/${img}`;
+
+                // 파일 삭제
+                await fs.promises.unlink(filePath);
+
+                // 이미지 정보 삭제
+                await boardImg.destroy({
+                    where: {
+                        path: img,
+                    },
+                });
+
+                console.log(`이미지 정보 ${img} 삭제 완료`);
+            } catch (error) {
+                console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
+                return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
+            }
+        }
+
+        // 게시물 삭제
         await board.destroy({
             where: { b_id: b_id },
         });
-        res.end();
+
+        res.status(200).send("게시물 및 이미지가 성공적으로 삭제되었습니다.");
     } catch (error) {
         console.error(error);
-        res.status(500).send("Server Error");
+        res.status(500).send("서버 오류가 발생했습니다.");
     }
 };
+
 // 게시글 등록 페이지 이동
 exports.boardWritePage = function (req, res) {
     res.render("board/insert");
@@ -273,7 +305,8 @@ exports.boardWritePage = function (req, res) {
 // 게시글등록
 exports.boardInsert = async (req, res) => {
     try {
-        const { u_id, title, content, category } = req.body;
+        const { u_id, title, content, category, srcArray } = req.body;
+        console.log(content, srcArray);
         const insert = await board.create({
             u_id: u_id,
             title: title,
@@ -281,6 +314,15 @@ exports.boardInsert = async (req, res) => {
             category: category,
         });
         if (insert) {
+            const b_id = insert.b_id; // 새로 생성된 게시글의 ID
+
+            // 각 이미지에 대해 보드 이미지 생성
+            for (let src of srcArray) {
+                const img_result = await boardImg.create({
+                    b_id: b_id,
+                    path: src,
+                });
+            }
             res.send("등록성공");
         } else {
             res.send("등록실패");
@@ -310,7 +352,21 @@ exports.boardUpdatePage = async function (req, res) {
 // 게시글 수정
 exports.boardPatch = async (req, res) => {
     try {
-        const { b_id, title, content, category } = req.body;
+        const { b_id, title, content, category, imgNameList } = req.body;
+        const imgList=[];
+
+        for (const imgName of imgNameList) {
+            try {
+                const img = await boardImg.findOne({ where: { path: imgName } });
+                if (!img) {
+                    // 이미지 테이블에 존재하지 않으면 imgList에 추가
+                    imgList.push(imgName);
+                }
+            } catch (error) {
+                console.error(`이미지 정보 조회 중 오류 (${imgName}):`, error);
+            }
+        }  
+
         const update = await board.update(
             {
                 title: title,
@@ -322,6 +378,12 @@ exports.boardPatch = async (req, res) => {
             },
         );
         if (update) {
+            for (let src of imgList) {
+                const img_result = await boardImg.create({
+                    b_id: b_id,
+                    path: src,
+                });
+            }
             res.send("수정성공");
         } else {
             res.send("수정실패");
@@ -407,5 +469,65 @@ exports.bookmarkInsert = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
+    }
+};
+
+//파일 업로드후 미리보기 뿌려주기
+exports.imgupload = async (req, res) => {
+    // 파일 업로드가 완료되면 이 곳에서 처리합니다.
+    // req.file에 업로드된 파일에 대한 정보가 담겨 있습니다.
+    console.log("진입");
+    console.log(req.file);
+    const file = req.file;
+    if (!file) {
+        return res.status(400).send("파일이 업로드되지 않았습니다.");
+    }
+    const filePath = file.path; //파일경로
+    console.log("filePath ::", filePath);
+
+    res.send(filePath);
+};
+
+//수정중 파일삭제시
+
+exports.imgdelete = async (req, res) => {
+    const { imgName } = req.body;
+
+    try {
+        const imgNames = Array.isArray(imgName) ? imgName : [imgName]; // 이미지 이름 배열 또는 단일 값으로 변환
+
+        // 각 이미지에 대해 처리
+        for (const img of imgNames) {
+            const filePath = `uploads/${img}`; // 파일 경로 설정
+
+            // 파일 삭제
+            fs.unlink(filePath, async (err) => {
+                if (err) {
+                    console.error(`파일 삭제 중 오류 (${img}):`, err);
+                    return res.status(500).send("파일 삭제 중 오류가 발생했습니다.");
+                }
+
+                try {
+                    // 이미지 정보 삭제
+                    await boardImg.destroy({
+                        where: {
+                            path: img,
+                        },
+                    });
+                    console.log(`이미지 정보 ${img} 삭제 완료`);
+                } catch (error) {
+                    console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
+                    return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
+                }
+
+                // 모든 이미지 처리 완료 후 성공 응답 전송
+                if (img === imgNames[imgNames.length - 1]) {
+                    res.status(200).send("파일이 성공적으로 삭제되었습니다.");
+                }
+            });
+        }
+    } catch (error) {
+        console.error("이미지 파일 삭제 중 오류:", error);
+        res.status(500).send("서버 오류가 발생했습니다.");
     }
 };

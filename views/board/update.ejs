@@ -2,7 +2,8 @@
 <html lang="en">
 <%- include('../include/include.ejs', {title:"커뮤니티"}); %>
     <link rel="stylesheet" href="/static/css/board.css">
-    <script src="/static/js/board/board.js"></script>
+
+    <%- include('../include/summer.ejs'); %>
 
     <body>
         <%- include('../include/header.ejs'); %>
@@ -50,14 +51,11 @@
                                                         <input type="text" name="title" value="<%=board.title%>" />
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">내용</th>
-                                                    <td class="board_content">
-                                                        <textarea rows="30" name="content"><%=board.content%></textarea>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div id="summernote" name="content">
+                                        
                                     </div>
                                     <div class="btn_wrap">
                                         <a href="javascript:update_board('<%=board.b_id%>')" class="btn basic">수정</a>
@@ -69,6 +67,9 @@
                     </main>
                 </div>
             </div>
+            <input type="hidden" name="" class="update_content" value="<%=board.content %>">
+
+                <script src="/static/js/board/board.js"></script>
     </body>
 
 </html>

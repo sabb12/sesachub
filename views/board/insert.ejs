@@ -2,8 +2,7 @@
 <html lang="en">
 <%- include('../include/include.ejs', {title:"커뮤니티"}); %>
     <link rel="stylesheet" href="/static/css/board.css">
-    <script src="/static/js/board/main.js"></script>
-
+    <%- include('../include/summer.ejs'); %>
     <body>
         <%- include('../include/header.ejs'); %>
             <div class="container">
@@ -41,14 +40,12 @@
                                                         <input type="text" name="title" />
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">내용</th>
-                                                    <td class="board_content">
-                                                        <textarea name="content" rows="24"></textarea>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div id="summernote" name="content">
+                                        
+                                    </div>
                                     </div>
                                     <div class="btn_wrap">
                                         <a href="javascript:board_insert()" class="btn basic">등록</a>
@@ -60,6 +57,7 @@
                     </main>
                 </div>
             </div>
+            <script src="/static/js/board/main.js"></script>
     </body>
 
 </html>
