@@ -80,12 +80,10 @@ function setNkNameFlag(value) {
 }
 
 // function duplicateCheck() {
-//     console.log("clilck");
 const nkNameBtn = document.querySelector("#nk_name_check_btn");
 nkNameBtn.addEventListener("click", async function (e) {
     e.preventDefault();
 
-    console.log("click2");
     const nkNameInput = document.querySelector("input[name=nk_name]");
     const nkNamePattern = patterns.nk_name;
 
