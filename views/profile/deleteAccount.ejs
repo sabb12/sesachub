@@ -46,5 +46,40 @@
       </div>
     </div>
     <script src="/static/js/profile/deleteAccount.js"></script>
+    <script>
+      function deleteAccount() {
+    const form = document.forms["delete_account_form"];
+
+    if (!form.u_id.value || !form.pw.value) return alert("아이디와 비밀번호를 입력해주세요.");
+
+    if (form.u_id.value !== "<%= session.u_id%>") {
+        alert("로그인 된 아이디와 입력한 아이디가 일치하지 않습니다.");
+        form.u_id.value = "";
+        form.pw.value = "";
+        return;
+    }
+
+    const areYouSure = confirm("정말 회원 탈퇴를 하시겠습니까?🥺");
+    if (areYouSure) {
+        axios({
+            method: "DELETE",
+            url: "/user",
+            data: {
+                u_id: form.u_id.value,
+                pw: form.pw.value,
+            },
+        }).then((res) => {
+            if (res.data.success) {
+                alert(res.data.msg);
+                document.location.href = "/";
+            } else {
+                alert(res.data);
+                form.u_id.value = "";
+                form.pw.value = "";
+            }
+        });
+    }
+}
+    </script>
   </body>
 </html>

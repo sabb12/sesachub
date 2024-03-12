@@ -79,17 +79,14 @@ exports.deleteAccount = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { u_id, s_nk_name } = req.session;
+        const { u_id } = req.session;
         const { pw, nk_name, phone, email } = req.body;
 
         if (!pw || !nk_name || !email || !phone) {
             return res.send({ success: false, msg: "입력칸을 모두 채워주세요." });
         }
-        if (s_nk_name === nk_name)
-            return res.send({ success: false, msg: "닉네임 중복 확인을 해주세요." });
 
         const userInfo = await user.findOne({ where: { u_id } });
-        if (!pw) return res.send("비밀번호를 입력해주세요.");
 
         if (!comparePw(pw, userInfo.pw))
             return res.send("비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
