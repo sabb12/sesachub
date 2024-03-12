@@ -43,7 +43,7 @@
                         <div class="wrapper nickNameWrapper">
                             <div class="subTitle nickNameTitle">닉네임</div>
                             <div class="inputContainer edit">
-                                <input type="text" name="nk_name" placeholder="한글, 영어 대소문자, 숫자 (2 ~ 16자)" value="<%=userInfo.nk_name%>"/>
+                                <input type="text" name="nk_name" placeholder="한글, 영어 대소문자, 숫자 (2 ~ 16자)" value="<%=userInfo.nk_name%>" minlength="2" maxlength="5" autocomplete="off" required />
                                 <button type="button" id="nk_name_check_btn" >중복 확인</button>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                         <div class="wrapper contactWrapper">
                             <div class="subTitle contactTitle">연락처</div>
                             <div class="inputContainer edit">
-                                <input type="text" name="phone" placeholder="공백이나 '-' 없이 숫자만, ex) 01012341234 또는 021231234" value="<%=userInfo.phone%>" />
+                                <input type="text" name="phone" placeholder="공백이나 '-' 없이 숫자만, ex) 01012341234 또는 021231234" value="<%=userInfo.phone%>" minlength="9" maxlength="11" required />
                             </div>
                         </div>
                         
@@ -125,5 +125,47 @@
             </div>
           </div>
         <script src="/static/js/profile/profile.js"></script>
+        <script>
+            function updateProfile() {
+                console.log("ejs ::", '<%=userInfo.nk_name%>');
+                if ('<%=userInfo.nk_name%>' === nkNameInput.value) nkNameFlag = true;
+                if (!nkNameFlag) return alert("닉네임 중복 확인을 해주세요.");
+                const form = document.forms["profile_form"];
+
+                // 연락처 데이터
+                let phone = form.phone.value; // 숫자 9 ~ 11 자리 중 하나
+                switch (phone.length) {
+                    case 9:
+                        phone = phone.slice(0, 2) + "-" + phone.slice(2, 5) + "-" + phone.slice(5);
+                        break;
+                    case 10:
+                        phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6);
+                        break;
+                    case 11:
+                        phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
+                        break;
+                }
+
+                axios({
+                    method: "patch",
+                    url: "/profile",
+                    data: {
+                        pw: form.pw.value,
+                        nk_name: form.nk_name.value,
+                        phone: phone,
+                        email: form.email.value,
+                    },
+                })
+                    .then((res) => {
+                        if (res.data && res.data.success === false) {
+                            alert(res.data.msg);
+                        } else {
+                            alert(res.data);
+                            location.reload(true);
+                        }
+                    })
+                    .catch((err) => console.error("update error", err));
+            }
+        </script>
     </body>
 </html>
