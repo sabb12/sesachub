@@ -1,8 +1,9 @@
 .body_container {
     display: flex;
     flex-direction: row;
+    /* justify-content: center; */
     padding: 20px 350px 0 350px;
-    gap: 48px;
+    gap: 70px;
 }
 
 .section2_container {
@@ -21,9 +22,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 7px 0px 7px 0px;
+    border-radius: 10px;
+    padding: 20px 0px 15px 0px;
     width: 825px;
-    height: 606px;
+    height: 695px;
     border: 1px solid #dcdcdc;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -33,28 +35,33 @@
 .wrapper {
     display: flex;
     width: 636px;
-    height: 70px;
+    height: 60px;
 }
 
 .image_wrapper {
-    height: 160px;
+    height: 230px;
 }
 
 .image_container {
     display: flex;
     flex-direction: column;
-    width: 452px;
+    width: 365px;
+    height: 140px;
     align-items: center;
-    padding: 10px;
-    gap: 5px;
+    padding: 10px 0;
+    gap: 15px;
 }
 
 .image {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     position: relative;
     z-index: 1;
+    cursor: pointer;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .image_input {
@@ -62,7 +69,6 @@
     top: 0;
     left: 0;
     opacity: 0;
-    cursor: pointer;
     width: 100px;
     height: 100px;
     z-index: 2;
@@ -80,6 +86,7 @@
     border-radius: 5px;
     font-size: 13px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .subTitle {
@@ -95,7 +102,7 @@
     display: flex;
     align-items: center;
     padding-left: 10px;
-    gap: 5px;
+    gap: 10px;
 }
 
 .input_container input {
@@ -134,6 +141,7 @@
     border-radius: 5px;
     font-size: 13px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .update_button_container {
@@ -145,8 +153,11 @@
 }
 
 .update_button_container button {
-    height: 57px;
+    background-color: #6fc274;
+    color: #fff;
+    height: 40px;
     font-size: 15px;
+    cursor: pointer;
 }
 
 /*top right bottom left*/
@@ -157,6 +168,7 @@ button {
     border-radius: 5px;
     font-size: 13px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 /* Modal css*/
@@ -196,9 +208,9 @@ button {
     justify-content: center;
     width: 500px;
     background: #f2f2f2;
-    border-radius: 6px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 10px 20px 30px 20px;
     transform: scale(0);
 }
 
@@ -212,13 +224,21 @@ button {
     display: flex;
     flex-direction: column;
     padding-bottom: 5px;
-    gap: 7px;
+    margin-top: 20px;
+    gap: 12px;
 }
 
 .modal {
     display: flex;
     justify-content: end;
-    gap: 10px;
+    gap: 25px;
+}
+
+.modal input {
+    border: 1px solid #777;
+    border-radius: 5px;
+    padding-left: 5px;
+    height: 30px;
 }
 
 .title {
@@ -227,14 +247,17 @@ button {
 
 .modal_buttons {
     text-align: center;
+    margin-top: 20px;
 }
 
 .close_btn {
     background-color: white;
     border: 1px solid #dcdcdc;
+    color: #fff;
+    background-color: #6fc274;
     padding: 10px;
     border-radius: 5px;
-    height: 57px;
+    height: 40px;
     font-size: 15px;
     font-weight: bold;
 }
