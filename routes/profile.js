@@ -15,7 +15,8 @@ router.get("/posting", controller.findAllPosting);
 
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
-
+/* ------------------ POST ------------------ */
+router.post("/posting/", controller.findPosts);
 /* ----------------- PATCH ------------------ */
 // /profile
 router.patch("/", controller.updateProfile);

@@ -83,6 +83,9 @@ table {
 .table_box table tr:nth-child(even) {
     background-color: #eff8ef;
 }
+.table_box table tr:last-child {
+    border-bottom: 1px solid #363636;
+}
 .table_box table td {
     text-align: center;
     padding: 6px 10px;
@@ -136,9 +139,18 @@ table {
     justify-content: center;
     align-items: center;
     height: 30px;
-    border-top: 1px solid #363636;
-    border-bottom: 1px solid #363636;
 }
+.section2_container .table_box .pagination .page_num a {
+    padding: 2px 6px;
+    margin: 0 6px;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+}
+/* .section2_container .table_box .pagination .page_num a.on {
+    color: #6fc274;
+} */
 
 .confirmation_btn_container {
     display: flex;
@@ -147,6 +159,7 @@ table {
 }
 
 .delete_all_btn {
+    cursor: pointer;
     background-color: white;
     border: 1px solid #dcdcdc;
     padding: 10px;

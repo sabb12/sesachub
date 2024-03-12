@@ -90,7 +90,7 @@ function deletePostingAll() {
 }
 
 // 각 북마크 삭제
-function deletBookmark(b_id, u_id) {
+function deleteBookmark(b_id, u_id) {
     const areYouSure = confirm("삭제하시겠습니까?");
     if (areYouSure) {
         axios({
@@ -139,5 +139,111 @@ function deleteBookmarkAll() {
                     });
             }
         }
+    }
+}
+
+async function postPage(pageNum) {
+    try {
+        const response = await axios.post("/profile/posting", { pageNum, action: "posts" });
+        const postings = response.data.postings;
+        const pCntr = document.getElementById("postingCntr");
+        // 글 목록을 비움
+        pCntr.innerHTML = "";
+        postings.forEach((post) => {
+            let tr = document.createElement("tr"); // 행 생성
+
+            let tdCheck = document.createElement("td"); // check 셀 생성
+            tdCheck.classList.add("check_all");
+            tdCheck.innerHTML = `<input type="checkbox" name="checkbox" class="posting_check-option" data-b-id="${post.b_id}" />`;
+
+            let tdID = document.createElement("td"); // 글 번호 셀 생성
+            tdID.textContent = `${post.b_id}`;
+
+            let tdTitle = document.createElement("td"); // 글 제목 셀 생성
+            tdTitle.innerHTML = `<a href="/board/board?b_id=${post.b_id}">${post.title}</a>`;
+
+            let tdTime = document.createElement("td"); // 글 작성 시간 셀 생성
+            tdTime.textContent = `${post.createdAt.toLocaleString("ko-KR", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "2-digit",
+            })}`;
+
+            let tdBtn = document.createElement("td"); // 글 삭제 버튼 셀 생성
+            tdBtn.innerHTML = `<button class="delete_button" onclick="deletePosting('${post.b_id}')">삭제</button>`;
+
+            // 생성한 셀을 행에 추가
+            tr.append(tdCheck, tdID, tdTitle, tdTime, tdBtn);
+
+            // 행을 테이블에 추가
+            pCntr.append(tr);
+        });
+        // document.querySelectorAll(`.postPage${pageNum}`).forEach((item) => {
+        //     item.addEventListener("click", function (e) {
+        //         e.preventDefault();
+
+        //         const page = document.querySelectorAll(`.postPage${pageNum}`);
+        //         page[0].classList.add("on");
+        //         page.forEach((link) => {
+        //             link.classList.remove("on");
+        //         });
+        //         this.classList.add("on");
+        //     });
+        // });
+    } catch (err) {
+        console.log("posting postPage error :: ", err);
+    }
+}
+
+async function bookmarkPage(pageNum) {
+    try {
+        const response = await axios.post("/profile/posting", { pageNum, action: "bookmarks" });
+        const bookmarkPostings = response.data.bookmarkPostings;
+        const bCntr = document.getElementById("bookmarkCntr");
+        // 글 목록을 비움
+        bCntr.innerHTML = "";
+        bookmarkPostings.forEach((bookmark) => {
+            let tr = document.createElement("tr"); // 행 생성
+
+            let tdCheck = document.createElement("td"); // check 셀 생성
+            tdCheck.classList.add("check_all");
+            tdCheck.innerHTML = `<input type="checkbox" name="checkbox" class="bookMark_check-option" data-b-id="${bookmark.b_id}" data-u_id="${bookmark.u_id}" />`;
+
+            let tdID = document.createElement("td"); // 글 번호 셀 생성
+            tdID.textContent = `${bookmark.b_id}`;
+
+            let tdTitle = document.createElement("td"); // 글 제목 셀 생성
+            tdTitle.innerHTML = `<a href="/board/board?b_id=${bookmark.b_id}">${bookmark.title}</a>`;
+
+            let tdTime = document.createElement("td"); // 글 작성 시간 셀 생성
+            tdTime.textContent = `${bookmark.createdAt.toLocaleString("ko-KR", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "2-digit",
+            })}`;
+
+            let tdBtn = document.createElement("td"); // 글 삭제 버튼 셀 생성
+            tdBtn.innerHTML = `<button class="delete_button" onclick="deletBookmark('${bookmark.b_id}','${bookmark.u_id}')">삭제</button>`;
+
+            // 생성한 셀을 행에 추가
+            tr.append(tdCheck, tdID, tdTitle, tdTime, tdBtn);
+
+            // 행을 테이블에 추가
+            bCntr.append(tr);
+        });
+        // document.querySelectorAll(`.bookmarkPage${pageNum}`).forEach((item) => {
+        //     item.addEventListener("click", function (e) {
+        //         e.preventDefault();
+        //         const page = document.querySelectorAll(`.bookmarkPage${pageNum}`);
+        //         page[0].classList.add("on");
+        //         page.forEach((link) => {
+        //             link.classList.remove("on");
+        //         });
+        //         this.classList.add("on");
+        //     });
+        // });
+        document.querySelector(`.bookmarkPage${pageNum}`).classList.add("on");
+    } catch (err) {
+        console.log("posting bookmarkPage error :: ", err);
     }
 }
