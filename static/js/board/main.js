@@ -97,6 +97,10 @@ async function board_insert() {
     content = content_code.trim(); // 앞뒤 공백 제거
     content = content_code.replace(/\s{2,}/g, " ");
     console.log(content);
+    if(content===' '||form.title.value===""){
+        alert('값을 입력 하셔야 합니다.')
+        return
+    }
     // 정규 표현식을 사용하여 img 태그에서 src 속성값 추출
     const srcRegex = /\/uploads\\([^"]+)"/g;
     const srcArray = [];
@@ -108,7 +112,7 @@ async function board_insert() {
 
     console.log(srcArray);
 
-    await axios({
+    const res=await axios({
         method: "POST",
         url: "/board/insert",
         data: {
@@ -119,7 +123,12 @@ async function board_insert() {
             srcArray: srcArray,
         },
     });
-    location.href = "/board";
+    if(res.status===200){
+        alert('등록 성공 하였습니다.')
+        location.href = "/board";
+    }else{
+        alert('등록 실패 하였습니다.')
+    }
 }
 const sortList = document.querySelector(".sort_list");
 
