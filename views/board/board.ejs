@@ -33,12 +33,7 @@
                                                 <tr>
                                                     <th scope="row">작성자</th>
                                                     <td rowspan="1">
-                                                        <% if(board.user.profile_img){ %>
-                                                            <img class="profile_img" src="/static/images/profile/'<%= board.user.profile_img  %>'" alt="프로필">
-                                                            <% }else{ %>
-                                                                <img class="profile_img" src="/static/images/logo.png"
-                                                                    alt="프로필">
-                                                                <% } %>
+                                                            <img class="profile_img" src="/<%= board.user.profile_img  %>" alt="프로필">
                                                                     <%=board.user.nk_name%>
                                                     </td>
                                                     <th scope="row">작성일</th>
@@ -124,11 +119,8 @@
                                                 <div class="cmt_top">
                                                     <div class="cmt_nm">
                                                         <span>
-                                                            <% if(comment.user.profile_img){ %>
-                                                                <img class="profile_img" src="/static/images/profile/'<%= comment.user.profile_img  %>'" alt="프로필">
-                                                                <% }else{ %>
-                                                                    <img class="profile_img" src="/static/images/logo.png" alt="프로필">
-                                                                <% } %>
+                                                                <img class="profile_img" src="/<%= comment.user.profile_img  %>" alt="프로필">
+                                                    
                                                             <%=comment.nk_name%>
                                                         </span>
                                                     </div>
@@ -199,7 +191,7 @@
                                                                             value="<%=reply.parent_id%>">
                                                                         <span>
                                                                             <% if(reply.user.profile_img){ %>
-                                                                                <img class="profile_img" src="/static/images/profile/'<%= reply.user.profile_img  %>'" alt="프로필">
+                                                                                <img class="profile_img" src="/<%= reply.user.profile_img  %>" alt="프로필">
                                                                                 <% }else{ %>
                                                                                     <img class="profile_img" src="/static/images/logo.png" alt="프로필">
                                                                                 <% } %>
