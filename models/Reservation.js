@@ -21,7 +21,7 @@ const reservationModel = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             time: {
-                type: DataTypes.STRING(30),
+                type: DataTypes.INTEGER,
                 allowNull: false,
             },
             count: {

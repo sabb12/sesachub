@@ -67,7 +67,7 @@ exports.createReservation = async (req, res) => {
             u_id,
             day,
             st_room,
-            time,
+            time: parseInt(time),
             count,
         });
         if (reservation) return res.send({ status: "success", msg: "예약 완료" });

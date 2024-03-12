@@ -30,12 +30,14 @@
                                         </th>
                                         <th>No.</th>
                                         <th>예약 장소</th>
+                                        <th>예약 날짜</th>
                                         <th>예약 시간</th>
                                         <th>예약 인원</th>
                                         <th>삭제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <% let i = (page - 1) * 10 + 1; %>
                                     <% reservationData.forEach(reservation=> { %>
                                         <tr>
                                             <td class="check_all">
@@ -44,10 +46,13 @@
                                                     data-u-id="<%= reservation.u_id %>" />
                                             </td>
                                             <td>
-                                                <%= reservation.r_id%>
+                                                <%= i %>
                                             </td>
                                             <td>
                                                 <%= reservation.st_room %>
+                                            </td>
+                                            <td>
+                                                <%= reservation.day %>
                                             </td>
                                             <td>
                                                 <%if(reservation.time < 10){%>
@@ -70,6 +75,7 @@
                                                     onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
                                             </td>
                                         </tr>
+                                        <% i++; %>
                                         <%})%>
                                             <%if(reservationData.length===0) {%>
                                                 <tr>
