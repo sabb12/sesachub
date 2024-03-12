@@ -47,7 +47,7 @@ const patterns = {
     email: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 };
 
-const inputs = document.querySelectorAll(".inputContainer.edit input");
+const inputs = document.querySelectorAll(".input_container.edit input");
 const nkNameBtn = document.querySelector("#nk_name_check_btn");
 const nkNameInput = document.querySelector("input[name=nk_name]");
 let prevNkNameValue = nkNameInput.value;
@@ -76,12 +76,12 @@ function validate(field, regex) {
 
 function showError(input) {
     const formControl = input.parentElement;
-    formControl.className = "inputContainer error";
+    formControl.className = "input_container error";
 }
 
 function showSuccess(input) {
     const formControl = input.parentElement;
-    formControl.className = "inputContainer success";
+    formControl.className = "input_container success";
 }
 
 let nkNameFlag = false;
