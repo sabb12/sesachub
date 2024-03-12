@@ -1,12 +1,15 @@
-.bodyContainer {
+.body_container {
     display: flex;
     flex-direction: row;
-    padding: 10px 100px 0 100px;
-    gap: 10px;
+    padding: 20px 350px 0 350px;
+    gap: 48px;
 }
 
-.section2Container {
-    width: 567px;
+.section2_container {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    gap: 10px;
 }
 
 .title {
@@ -14,26 +17,36 @@
     font-size: 20px;
 }
 
-.usermyPageWrapper {
+.main_page_wrapper {
     display: flex;
-    width: 1000px;
-    height: 500px;
     flex-direction: column;
-    border: 1px solid black;
+    align-items: center;
+    padding: 7px 0px 7px 0px;
+    width: 825px;
+    height: 606px;
+    border: 1px solid #dcdcdc;
+    box-shadow:
+        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .wrapper {
     display: flex;
+    width: 636px;
     height: 70px;
 }
 
-.imageWrapper {
-    height: 150px;
+.image_wrapper {
+    height: 160px;
 }
 
 .image_container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    width: 452px;
+    align-items: center;
+    padding: 10px;
+    gap: 5px;
 }
 
 .image {
@@ -55,21 +68,37 @@
     z-index: 2;
 }
 
-.subTitle {
+.image_button_container {
     display: flex;
-    padding: 10px 0 0 10px;
-    width: 150px;
-    font-size: 12px;
+    gap: 5px;
+}
+
+.image_button_container button {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
     font-weight: bold;
 }
 
-.inputContainer {
+.subTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.input_container {
     display: flex;
     align-items: center;
     padding-left: 10px;
+    gap: 5px;
 }
 
-.inputContainer input {
+.input_container input {
     width: 350px;
     height: 30px;
     border: 2px solid #dadada;
@@ -79,48 +108,64 @@
     font-size: 13px;
 }
 
-.inputContainer input:disabled {
+.input_container input:disabled {
     border: 2px solid #dadada;
     background-color: #f2f2f2;
     color: #777;
 }
 
-.inputContainer input:focus {
+.input_container input:focus {
     outline: 0;
     border-color: #777;
 }
 
-.inputContainer.success input {
+.input_container.success input {
     border-color: #6fc274;
 }
 
-.inputContainer.error input {
+.input_container.error input {
     border-color: #e74c3c;
+}
+
+#nk_name_check_btn {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.update_button_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 826px;
+    gap: 10px;
+}
+
+.update_button_container button {
+    height: 57px;
+    font-size: 15px;
 }
 
 /*top right bottom left*/
 button {
-    background: #fff;
-    cursor: pointer;
-    color: #363636;
-    border: 1px solid #dbdbdb;
-    font-size: 1rem;
-    border-radius: 4px;
-    box-shadow: none;
-    width: auto;
-    padding: 2px 5px 2px 5px;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 /* Modal css*/
 .show_modal {
-    padding: 18px 40px;
-    background: #6e78ff;
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #f2f2f2;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -163,6 +208,13 @@ button {
     transition-delay: 0.25s;
 }
 
+.modal_input_container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+    gap: 7px;
+}
+
 .modal {
     display: flex;
     justify-content: end;
@@ -175,4 +227,14 @@ button {
 
 .modal_buttons {
     text-align: center;
+}
+
+.close_btn {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+    height: 57px;
+    font-size: 15px;
+    font-weight: bold;
 }
