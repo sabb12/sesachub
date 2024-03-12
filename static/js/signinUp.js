@@ -134,7 +134,7 @@ duplicateCheck(nkNameBtn, nkNameInput, patterns.nk_name, setNkNameFlag);
 
 // 가입하기
 async function signup() {
-    if (!idFlag || !nkNameFlag) alert("아이디 또는 닉네임 중복 확인을 해주세요.");
+    if (!idFlag || !nkNameFlag) return alert("아이디 또는 닉네임 중복 확인을 해주세요.");
     const form = document.forms["sign_up_form"];
 
     // 연락처 데이터
@@ -164,8 +164,14 @@ async function signup() {
             cs_id: form.cs_id.value,
         },
     }).then((res) => {
-        alert(res.data);
-        document.location.reload();
+        if (res.data && res.data.success === false) {
+            alert(res.data.msg);
+            form.u_id.value = "";
+            form.pw.value = "";
+        } else {
+            alert(res.data);
+            document.location.reload();
+        }
     });
 }
 

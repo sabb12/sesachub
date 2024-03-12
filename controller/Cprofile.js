@@ -12,10 +12,11 @@ function comparePw(inputPw, hashedPw) {
 
 exports.main = async (req, res) => {
     try {
-        const { u_id, nk_name } = req.session;
-        const userInfo = await user.findOne({ where: { u_id, nk_name } });
+        const { u_id } = req.session;
+        const userInfo = await user.findOne({ where: { u_id } });
         const courseInfo = await course.findOne({ where: { cs_id: userInfo.cs_id } });
-        // console.log("profile_img userInfo ::", userInfo.profile_img);
+        // console.log("userInfo ::", userInfo);
+        // console.log("courseInfo ::", courseInfo);
         res.render("profile/main", { userInfo, courseInfo });
     } catch (error) {
         console.log("Cprofile main err :: ", error);
@@ -78,8 +79,14 @@ exports.deleteAccount = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { u_id } = req.session;
+        const { u_id, s_nk_name } = req.session;
         const { pw, nk_name, phone, email } = req.body;
+
+        if (!pw || !nk_name || !email || !phone) {
+            return res.send({ success: false, msg: "입력칸을 모두 채워주세요." });
+        }
+        if (s_nk_name === nk_name)
+            return res.send({ success: false, msg: "닉네임 중복 확인을 해주세요." });
 
         const userInfo = await user.findOne({ where: { u_id } });
         if (!pw) return res.send("비밀번호를 입력해주세요.");
@@ -123,7 +130,7 @@ exports.updateProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
         const file = req.file; // 단일 파일 업로드인 경우
-        console.log("profile_img ::", file);
+        // console.log("profile_img ::", file);
 
         if (!file) {
             return res.status(400).send("파일이 업로드되지 않았습니다.");
@@ -132,7 +139,7 @@ exports.updateProfileImg = async (req, res) => {
         // 파일 경로를 데이터베이스에 저장하거나 다른 작업 수행
         const filePath = file.path; // 파일 경로
 
-        console.log("filePath ::", filePath);
+        // console.log("filePath ::", filePath);
 
         await user.update({ profile_img: filePath }, { where: { u_id } });
         const userInfo = await user.findOne({ where: { u_id } });
@@ -148,7 +155,6 @@ exports.deleteProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
 
-        // TODO: 기본 프로필 이미지로 변경
         await user.update({ profile_img: "uploads\\logo.png" }, { where: { u_id } });
         res.end();
     } catch (error) {
@@ -161,6 +167,7 @@ exports.deleteReservation = async (req, res) => {
     try {
         const { u_id } = req.session;
         const { r_id } = req.body;
+
         await reservation.destroy({ where: { r_id, u_id } });
         res.send("예약이 취소되었습니다.");
     } catch (error) {

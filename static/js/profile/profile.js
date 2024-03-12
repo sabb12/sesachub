@@ -46,13 +46,24 @@ const patterns = {
     email: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 };
 
-// 입력값 검증
 const inputs = document.querySelectorAll(".inputContainer.edit input");
+const nkNameBtn = document.querySelector("#nk_name_check_btn");
+const nkNameInput = document.querySelector("input[name=nk_name]");
+let prevNkNameValue = nkNameInput.value;
+
+inputs.forEach((input) => {
+    input.addEventListener("click", (e) => {
+        e.target.value = "";
+    });
+});
+
+// 입력값 검증
 inputs.forEach((input) => {
     input.addEventListener("input", (e) => {
         validate(e.target, patterns[e.target.attributes.name.value]);
     });
 });
+
 // 유효성 검증 함수
 function validate(field, regex) {
     if (regex.test(field.value)) {
@@ -79,12 +90,7 @@ function setNkNameFlag(value) {
     nkNameFlag = value;
 }
 
-// function duplicateCheck() {
-const nkNameBtn = document.querySelector("#nk_name_check_btn");
-nkNameBtn.addEventListener("click", async function (e) {
-    e.preventDefault();
-
-    const nkNameInput = document.querySelector("input[name=nk_name]");
+async function nkNameCheck() {
     const nkNamePattern = patterns.nk_name;
 
     if (!nkNamePattern.test(nkNameInput.value)) {
@@ -111,42 +117,9 @@ nkNameBtn.addEventListener("click", async function (e) {
     } catch (error) {
         console.error("Error:", error);
     }
-});
-// }
-
-function updateProfile() {
-    if (!nkNameFlag) return alert("닉네임 중복 확인을 해주세요.");
-    const form = document.forms["profile_form"];
-
-    // 연락처 데이터
-    let phone = form.phone.value; // 숫자 9 ~ 11 자리 중 하나
-    switch (phone.length) {
-        case 9:
-            phone = phone.slice(0, 2) + "-" + phone.slice(2, 5) + "-" + phone.slice(5);
-            break;
-        case 10:
-            phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6);
-            break;
-        case 11:
-            phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
-            break;
-    }
-
-    axios({
-        method: "patch",
-        url: "/profile",
-        data: {
-            pw: form.pw.value,
-            nk_name: form.nk_name.value,
-            phone: phone,
-            email: form.email.value,
-        },
-    })
-        .then((res) => {
-            alert(res.data);
-        })
-        .catch((err) => console.error("update error", err));
 }
+
+nkNameBtn.addEventListener("click", nkNameCheck);
 
 const updateBtn = document.querySelector(".show_modal");
 const popupContainer = document.querySelector(".modal_container");

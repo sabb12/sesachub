@@ -17,8 +17,8 @@ exports.main = async (req, res) => {
 };
 
 exports.duplicateCheck = async (req, res) => {
-    console.log("req.query ::", req.query);
-    console.log("req.query.u_id ::", req.query.u_id);
+    // console.log("req.query ::", req.query);
+    // console.log("req.query.u_id ::", req.query.u_id);
     const { u_id, nk_name } = req.query;
     let idCheck, nkNameCheck;
     try {
@@ -31,7 +31,7 @@ exports.duplicateCheck = async (req, res) => {
                 where: { nk_name: nk_name },
             });
         }
-        console.log("idCheck ::", idCheck, "nkNameCheck ::", nkNameCheck);
+        // console.log("idCheck ::", idCheck, "nkNameCheck ::", nkNameCheck);
         idCheck || nkNameCheck ? res.send({ isDuplicate: true }) : res.send({ isDuplicate: false });
     } catch (error) {
         console.log("Cuser duplicateCheck err :: ", error);
@@ -42,6 +42,11 @@ exports.duplicateCheck = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         const { u_id, pw, name, nk_name, email, phone, cs_id } = req.body;
+
+        if (!u_id || !pw || !name || !nk_name || !email || !phone || !cs_id) {
+            return res.send({ success: false, msg: "입력칸을 모두 채워주세요." });
+        }
+
         await user.create({
             u_id,
             pw: hashPw(pw),
@@ -103,17 +108,22 @@ exports.logout = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
+    const { u_id, pw } = req.body;
+    console.log("u_id ::", u_id, "pw ::", pw);
     try {
+        // console.log("req.session.u_id ::", req.session.u_id);
         if (!req.session.u_id) return res.send("탈퇴 권한이 없습니다. 로그인 후 이용해주세요.");
-        const { u_id, pw } = req.body;
+
+        if (u_id !== req.session.u_id) return res.send("아이디를 정확하게 입력해주세요.");
 
         const isUser = await user.findOne({ where: { u_id } });
+
+        if (!comparePw(pw, isUser.pw)) return res.send("비밀번호가 일치하지 않습니다.");
         if (isUser && comparePw(pw, isUser.pw)) {
-            await user.destroy({ where: { u_id } }).then(() => {
-                res.send("회원 탈퇴");
+            await user.destroy({ where: { u_id } });
+            await req.session.destroy(() => {
+                return res.send({ success: true, msg: "회원 탈퇴" });
             });
-        } else {
-            res.send("아이디와 비밀번호를 다시 입력해주세요.");
         }
     } catch (error) {
         console.log("deleteUser controller err :: ", error);
