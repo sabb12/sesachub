@@ -41,7 +41,7 @@ exports.confirmation = async (req, res) => {
             limit: objNum,
             offset: offset,
         });
-        res.render("profile/confirmation", { reservationData, totalPage });
+        res.render("profile/confirmation", { reservationData, totalPage, page });
     } catch (error) {
         console.log("Cprofile confirmation err :: ", error);
         res.status(500).send("server error!");
@@ -54,7 +54,6 @@ exports.findAllPosting = async (req, res) => {
 
     try {
         const offset = (page - 1) * limit; // 페이지 시작 오프셋 계산
-
         const postings = await board.findAll({
             limit: limit,
             offset: offset,
@@ -75,7 +74,6 @@ exports.findAllPosting = async (req, res) => {
             offset: offset,
             where: { b_id: { [Op.in]: b_ids } },
         });
-
         res.render("profile/posting", { postings, bookmarkPostings });
     } catch (error) {
         console.log("Cprofile findAllPosting err :: ", error);
