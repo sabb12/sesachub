@@ -37,16 +37,33 @@ exports.confirmation = async (req, res) => {
     }
 };
 exports.findAllPosting = async (req, res) => {
+    const { u_id } = req.session;
+    const page = parseInt(req.query.page) || 1; // 페이지 번호
+    const limit = parseInt(req.query.limit) || 5; // 페이지 당 아이템 수
+
     try {
-        const { u_id } = req.session;
-        const postings = await board.findAll({ where: { u_id } });
+        const offset = (page - 1) * limit; // 페이지 시작 오프셋 계산
+
+        const postings = await board.findAll({
+            limit: limit,
+            offset: offset,
+            where: { u_id },
+            order: [["createdAt", "DESC"]],
+        });
 
         // 유저의 전체 북마크 중 b_id만 추출한 배열
-        const bookmarks = await bookMark.findAll({ where: { u_id } });
+        const bookmarks = await bookMark.findAll({
+            where: { u_id },
+            order: [["bm_id", "DESC"]],
+        });
         const b_ids = bookmarks.map((bookmark) => bookmark.dataValues.b_id);
 
         // 전체 게시글 중 북마크와 b_id가 같은 글 가져오기
-        const bookmarkPostings = await board.findAll({ where: { b_id: { [Op.in]: b_ids } } });
+        const bookmarkPostings = await board.findAll({
+            limit: limit,
+            offset: offset,
+            where: { b_id: { [Op.in]: b_ids } },
+        });
 
         res.render("profile/posting", { postings, bookmarkPostings });
     } catch (error) {
