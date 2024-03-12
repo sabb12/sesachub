@@ -33,7 +33,7 @@
                                         <th>예약 날짜</th>
                                         <th>예약 시간</th>
                                         <th>예약 인원</th>
-                                        <th>삭제</th>
+                                        <th>예약 취소</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,7 +72,7 @@
                                             </td>
                                             <td>
                                                 <button class="delete_button"
-                                                    onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">삭제</button>
+                                                    onclick="deleteButton(this, '<%= reservation.r_id%>','<%= reservation.u_id%>')">취소</button>
                                             </td>
                                         </tr>
                                         <% i++; %>
@@ -95,7 +95,7 @@
                                     <% } %>
                         </div>
                         <div class="confirmation_btn_container">
-                            <button class="delete_all_btn" onclick="deleteAllCheckedBtn()">예약 취소</button>
+                            <button class="delete_all_btn" onclick="deleteAllCheckedBtn()">전체 취소</button>
                         </div>
                     </div>
             </div>

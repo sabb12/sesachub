@@ -71,6 +71,9 @@
     width: 150px;
     height: 150px;
     opacity: 0;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
     z-index: 2;
 }
 
