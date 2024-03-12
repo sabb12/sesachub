@@ -37,10 +37,15 @@ exports.confirmation = async (req, res) => {
         const offset = (page - 1) * objNum;
         const reservationData = await reservation.findAll({
             where: { u_id },
-            // attributes: ["r_id", "day", "st_room", "time", "count"],
+            // group: ["st_room", "day"],
+            order: [
+                ["day", "ASC"],
+                ["time", "ASC"],
+            ],
             limit: objNum,
             offset: offset,
         });
+
         res.render("profile/confirmation", { reservationData, totalPage, page });
     } catch (error) {
         console.log("Cprofile confirmation err :: ", error);

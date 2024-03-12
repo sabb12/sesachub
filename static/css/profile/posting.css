@@ -9,7 +9,6 @@
     display: flex;
     flex-direction: column;
     width: 1000px;
-    gap: 30px;
 }
 
 .free_board {
@@ -134,12 +133,25 @@ table {
     cursor: pointer;
 }
 
-.pagination {
+.pagination_container {
     display: flex;
+    border: 1px solid #dcdcdc;
     justify-content: center;
     align-items: center;
-    height: 30px;
 }
+
+.pagination_list {
+    text-decoration: none;
+    display: inline-block;
+    width: 26px;
+    border: 1px solid transparent;
+    font-family: tahoma, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 26px;
+    color: #333;
+}
+
 .section2_container .table_box .pagination .page_num a {
     padding: 2px 6px;
     margin: 0 6px;
@@ -166,7 +178,4 @@ table {
     border-radius: 5px;
     font-size: 13px;
     font-weight: bold;
-    box-shadow:
-        rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }

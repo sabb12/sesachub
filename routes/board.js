@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controller/Cboard");
+const uploadDetail = require("../util/multer");
 
 router.get("/", controller.boardList); // 커뮤니티 진입
 router.get("/insert", controller.boardWritePage); // 게시글 등록 페이지
@@ -16,4 +17,6 @@ router.patch("/comment", controller.commentPatch); // 댓글 대댓글 수정
 router.post("/like", controller.handleLike); // 해당 게시글 좋아요 등록 취소
 
 router.post("/bookmark", controller.bookmarkInsert); // 북마크 등록
+router.post("/imgupload", uploadDetail.single("file"), controller.imgupload); //이미지 파일저장후 뿌리기
+router.post("/imgdelete", controller.imgdelete); //수정시 이미지 삭제
 module.exports = router;

@@ -58,7 +58,7 @@
         return;
     }
 
-    const areYouSure = confirm("정말 회원 탈퇴를 하시겠습니까?🥺");
+    const areYouSure = confirm("정말 회원 탈퇴를 하시겠습니까?🥺 \n탈퇴 시 계정은 삭제되며, 복구되지 않습니다.");
     if (areYouSure) {
         axios({
             method: "DELETE",
