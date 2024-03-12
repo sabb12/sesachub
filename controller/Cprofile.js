@@ -25,13 +25,20 @@ exports.main = async (req, res) => {
 };
 
 exports.confirmation = async (req, res) => {
+    const page = req.query.page || 1; //
+    const objNum = 10; // 한 페이지 내에 담기는 항목의 개수
     try {
         const { u_id } = req.session;
+        const totalNum = await reservation.count(); // reservation 테이블의 전체 데이터 수
+        const totalPage = Math.ceil(totalNum / objNum);
+        const offset = (page - 1) * objNum;
         const reservationData = await reservation.findAll({
             where: { u_id },
             // attributes: ["r_id", "day", "st_room", "time", "count"],
+            limit: objNum,
+            offset: offset,
         });
-        res.render("profile/confirmation", { reservationData });
+        res.render("profile/confirmation", { reservationData, totalPage });
     } catch (error) {
         console.log("Cprofile confirmation err :: ", error);
         res.status(500).send("server error!");
