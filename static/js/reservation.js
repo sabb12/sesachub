@@ -290,12 +290,12 @@ function reservationResult() {
     const date = selected[0] ? `날짜: ${selected[0]}<br>` : "";
     const room = selected[1] ? `공간: ${selected[1]}<br>` : "";
     let time = "";
-    if (selected[2] < 10) {
-        time = `시간: 0${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>`;
+    if (selected[2].length === 0) {
+        time = "";
     } else if (selected[2] >= 10) {
         time = `시간: ${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>`;
-    } else {
-        time = "";
+    } else if (selected[2] < 10) {
+        time = `시간: 0${selected[2]}:00 ~ ${Number(selected[2]) + 1}:00<br>`;
     }
     const count = selected[3] ? `인원: ${selected[3]}명<br>` : "";
 
