@@ -70,6 +70,7 @@
     top: 0;
     left: 0;
     opacity: 0;
+    cursor: pointer;
     width: 100px;
     height: 100px;
     z-index: 2;

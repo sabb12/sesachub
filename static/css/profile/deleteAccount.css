@@ -2,13 +2,13 @@
     display: flex;
     flex-direction: row;
     padding: 20px 350px 0 350px;
-    gap: 130px;
+    gap: 270px;
 }
 
 .section2_container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
 .title {
@@ -20,11 +20,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 50px 10px;
     border: 1px solid #dcdcdc;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 430px;
-    gap: 15px;
+    gap: 28px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
@@ -45,6 +45,7 @@
 .header_title {
     font-size: 18px;
     font-weight: bold;
+    color: #777;
 }
 
 .input_wrapper {
@@ -72,11 +73,13 @@
 .id_input {
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
+    margin-top: 15px;
 }
 
 .pw_input {
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
+    margin-bottom: 15px;
 }
 
 .input {
@@ -156,7 +159,9 @@
     font-size: 13px;
     font-weight: bold;
     color: rgb(208, 48, 60);
+    margin-top: 15px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    cursor: pointer;
 }
