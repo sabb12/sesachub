@@ -4,6 +4,7 @@
     /* justify-content: center; */
     padding: 20px 350px 0 350px;
     gap: 70px;
+    margin-bottom: 40px;
 }
 
 .section2_container {
@@ -149,7 +150,8 @@
     justify-content: center;
     align-items: center;
     width: 826px;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 .update_button_container button {
@@ -199,6 +201,7 @@ button {
     opacity: 1;
     pointer-events: auto;
     transition: 0.4s ease;
+    padding: 40px 0;
 }
 
 .modal_container .modal_box {
