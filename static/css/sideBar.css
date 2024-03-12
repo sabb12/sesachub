@@ -24,3 +24,7 @@
     font-weight: bold;
     padding-left: 9px;
 }
+
+.sidebar_container a.active {
+    color: #6fc274;
+}
