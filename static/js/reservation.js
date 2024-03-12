@@ -356,5 +356,7 @@ function reservation() {
                 alert(msg);
                 break;
         }
+        window.scrollTo(0, 0);
+        location.reload();
     });
 }
