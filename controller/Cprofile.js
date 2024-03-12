@@ -1,5 +1,8 @@
 const { Op } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 const { user, reservation, board, bookMark, course } = require("../models");
+
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -126,17 +129,13 @@ exports.updatePassword = async (req, res) => {
 exports.updateProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
-        const file = req.file; // 단일 파일 업로드인 경우
-        // console.log("profile_img ::", file);
+        const file = req.file;
 
         if (!file) {
             return res.status(400).send("파일이 업로드되지 않았습니다.");
         }
 
-        // 파일 경로를 데이터베이스에 저장하거나 다른 작업 수행
         const filePath = file.path; // 파일 경로
-
-        // console.log("filePath ::", filePath);
 
         await user.update({ profile_img: filePath }, { where: { u_id } });
         const userInfo = await user.findOne({ where: { u_id } });
@@ -151,6 +150,17 @@ exports.updateProfileImg = async (req, res) => {
 exports.deleteProfileImg = async (req, res) => {
     try {
         const { u_id } = req.session;
+
+        const userInfo = await user.findOne({ where: { u_id } });
+
+        if (userInfo.profile_img !== "uploads\\logo.png") {
+            if (fs.existsSync(userInfo.profile_img)) {
+                fs.unlinkSync(userInfo.profile_img);
+                console.log("이전 이미지 삭제 성공");
+            } else {
+                console.log("이전 이미지가 존재하지 않습니다.");
+            }
+        }
 
         await user.update({ profile_img: "uploads\\logo.png" }, { where: { u_id } });
         res.end();
