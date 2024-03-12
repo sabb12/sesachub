@@ -33,6 +33,7 @@ table {
     display: block;
     scrollbar-color: #c4c4c4 #e0e0e0;
     scrollbar-width: thin;
+    border-bottom: 1px solid #363636;
 }
 .table_box::-webkit-scrollbar {
     width: 10px;
@@ -131,8 +132,6 @@ table {
     justify-content: center;
     align-items: center;
     height: 30px;
-    border-top: 1px solid #363636;
-    border-bottom: 1px solid #363636;
 }
 
 .confirmation_btn_container {
@@ -151,4 +150,24 @@ table {
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+/* body & table min-width 추가 */
+.body_container.confirmation {
+    min-width: 800px;
+}
+.body_container.confirmation .section2_container {
+    min-width: 600px;
+}
+/* pagintion */
+.section2_container .pagination .page_num a {
+    padding: 2px 6px;
+    margin: 0 6px;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+}
+/* 해당 페이지 선택 시 색상 변경 */
+.section2_container .pagination .page_num a.on {
+    color: #6fc274;
 }

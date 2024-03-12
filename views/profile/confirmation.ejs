@@ -82,7 +82,8 @@
                         <div class="pagination">
                             <% if(reservationData.length===0){ totalPage='' } %>
                                 <% for (i=1; i <=totalPage; i++) { %>
-                                    <div class="page_num"><a href="/profile/confirmation?page=<%=i%>" class="page_num">
+                                    <div class="page_num"><a href="/profile/confirmation?page=<%=i%>"
+                                            class="page<%=i%>">
                                             <%= i %>
                                         </a></div>
                                     <% } %>
@@ -93,6 +94,13 @@
                     </div>
             </div>
             </div>
+            <script>
+                let page = '<%=page%>';
+                if (page === '') {
+                    page === 1;
+                }
+                document.querySelector(`.page${page}`).classList.add('on');
+            </script>
             <script src="/static/js/profile/confirmation.js"></script>
     </body>
 
