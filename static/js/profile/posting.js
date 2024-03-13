@@ -38,7 +38,6 @@ bookMark_chkbx.forEach((checkbox) => {
     });
 });
 
-
 // 각 게시글 삭제
 function deletePosting(b_id, content) {
     if (confirm("글을 삭제하시겠습니까?")) {
@@ -77,7 +76,7 @@ function deletePostingAll() {
         return checkbox.parentElement.parentElement;
     });
     if (checkedPostings.length > 0) {
-        const areYouSure = confirm("전체 삭제하시겠습니까?");
+        const areYouSure = confirm("선택한 글을 삭제하시겠습니까?");
         if (areYouSure) {
             for (let posting of checkedPostings) {
                 const b_id = posting
@@ -126,7 +125,7 @@ function deleteBookmarkAll() {
         return checkbox.parentElement.parentElement;
     });
     if (checkedBookMark.length > 0) {
-        const areYouSure = confirm("전체 삭제하시겠습니까?");
+        const areYouSure = confirm("선택한 북마크를 삭제하시겠습니까?");
         if (areYouSure) {
             for (let bookmark of checkedBookMark) {
                 const b_id = bookmark
