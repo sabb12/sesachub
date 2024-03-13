@@ -43,19 +43,19 @@ $(document).ready(function () {
                 console.log(e.keyCode);
                 if (e.keyCode === 8 || e.keyCode === 46) {
                     // 백스페이스 또는 딜리트 키
-                    let range = $('#summernote').summernote('createRange');
+                    let range = $("#summernote").summernote("createRange");
                     let currentNode = range.sc;
-            
+
                     // 현재 커서가 이미지에 위치하는지 확인
-                    if (currentNode.children[0].tagName.toLowerCase() === 'img') {
+                    if (currentNode.children[0].tagName.toLowerCase() === "img") {
                         const delete_confirm = confirm(
                             "💥💢💥이미지 삭제는 마우스 왼쪽 클릭후 remove imgage 버튼을 이용하셔야 합니다.💥💢💥",
                         );
                         if (!delete_confirm) {
                             alert("취소 하였습니다.");
                             e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
-                        }else{
-                            alert("감사합니다 😋")
+                        } else {
+                            alert("감사합니다 😋");
                             e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
                         }
                     }
@@ -139,14 +139,13 @@ async function update_board(b_id) {
             },
         });
         if (result.status === 200) {
-            alert("수정 성공하였습니다.");
+            alert("글이 수정되었습니다.");
+            location.href = `/board/board?b_id=${b_id}`;
         } else {
-            alert("수정 실패하였습니다.");
+            alert("수정에 실패하였습니다.");
         }
-
-        location.href = `/board?b_id=${b_id}`;
     } else {
-        alert("수정 취소하였습니다.");
+        alert("수정을 취소하였습니다.");
     }
 }
 // 게시글 삭제
@@ -168,9 +167,9 @@ function delete_board(b_id, content) {
             params: { b_id: b_id, imgNameList: imgNameList },
         }).then(function (res) {
             if (res.status === 200) {
-                alert("삭제 성공하였습니다.");
+                alert("글을 삭제하였습니다.");
             } else {
-                alert("삭제 실패하였습니다.");
+                alert("해당 글을 지우지 못했습니다.");
             }
             location.href = "/board";
         });

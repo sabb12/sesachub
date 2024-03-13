@@ -103,10 +103,9 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                        <img class="profile_img"
-                                                            src="/<%= board.user.profile_img  %>"
-                                                            alt="프로필">
-                                                            <%=board.user.nk_name %>
+                                                    <img class="profile_img" src="/<%= board.user.profile_img  %>"
+                                                        alt="프로필">
+                                                    <%=board.user.nk_name %>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
@@ -123,16 +122,14 @@
                                     <h3 class="err_message">데이터가 없습니다</h3>
                                     <% } %>
                             </div>
-
                         </div>
-
                     </main>
-                    <div class="insert_btn">
-                        <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
-                    </div>
                 </div>
             </div>
             <div class="bottom_area">
+                <div class="insert_btn invisible">
+                    <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                </div>
                 <!-- 페이지네이션 -->
                 <div class="board_page">
                     <% if(boardList.length===0){totalPages='' } %>
@@ -142,9 +139,9 @@
                                 </a></div>
                             <% } %>
                 </div>
-                <!-- ///페이지네이션 -->
-
-
+                <div class="insert_btn">
+                    <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                </div>
             </div>
             <script>
                 let category = '<%=category%>'
