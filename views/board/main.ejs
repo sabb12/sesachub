@@ -103,15 +103,9 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <% if(board.profile_img){ %>
                                                         <img class="profile_img"
                                                             src="/static/images/profile/'<%= board.profile_img  %>'"
                                                             alt="프로필">
-                                                        <% }else{ %>
-                                                            <img class="profile_img" src="/static/images/logo.png"
-                                                                alt="프로필">
-                                                            <% } %>
-                                                                <%= board.user.nk_name%>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
