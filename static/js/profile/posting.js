@@ -39,21 +39,32 @@ bookMark_chkbx.forEach((checkbox) => {
 });
 
 // 각 게시글 삭제
-function deletePosting(btn, b_id) {
-    const areYouSure = confirm("삭제하시겠습니까?");
-    if (areYouSure) {
+function deletePosting( b_id,content) {
+    if (confirm("글을 삭제하시겠습니까?")) {
+        console.log(content);
+        const srcRegex = /\/uploads([^"]+)"/g;
+        const imgNameList = [];
+        let match;
+
+        while ((match = srcRegex.exec(content)) !== null) {
+            imgNameList.push(match[1]);
+        }
+        //새로 등록되는 이미지리스트값
+        console.log(imgNameList);
         axios({
             method: "DELETE",
             url: "/board",
-            params: { b_id: b_id },
-        })
-            .then(function (res) {
-                btn.parentElement.remove();
-                location.href = "/profile/posting";
-            })
-            .catch((error) => {
-                console.error("Error deleting reservation:", error);
-            });
+            params: { b_id: b_id, imgNameList: imgNameList },
+        }).then(function (res) {
+            if (res.status === 200) {
+                alert("삭제 성공하였습니다.");
+            } else {
+                alert("삭제 실패하였습니다.");
+            }
+            location.href = "/profile/posting";
+        });
+    } else {
+        alert("취소하였습니다.");
     }
 }
 
