@@ -140,8 +140,10 @@
                             <% } %>
                 </div>
                 <div class="insert_btn">
-                    <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
-                </div>
+                        <% if(session.permission) { %>
+                        <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                        <% } %>                
+</div>
             </div>
             <script>
                 let category = '<%=category%>'
