@@ -46,7 +46,7 @@
                                                 </td>
                                                 <td>
                                                     <button class="delete_button"
-                                                        onclick="deletePosting('<%= post.b_id%>')">삭제</button>
+                                                        onclick="deletePosting(this, '<%= post.b_id%>')">삭제</button>
                                                 </td>
                                             </tr>
                                             <%})%>
@@ -107,7 +107,7 @@
                                                 </td>
                                                 <td>
                                                     <button class="delete_button"
-                                                        onclick="deleteBookmark('<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
+                                                        onclick="deleteBookmark(this,'<%= bookmarkPost.b_id%>', '<%= bookmarkPost.u_id%>')">삭제</button>
                                                 </td>
                                             </tr>
                                             <%})%>
