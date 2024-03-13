@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Courgette&family=Noto+Sans+KR:wght@100..900&family=Poor+Story&family=Stylish&display=swap");
 .image-grid {
     display: grid;
-    /* grid-template-columns: repeat(4, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(1000px, 1fr)); /*자동으로 반복되는 그리드 설정*/
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 자동으로 반복되는 그리드 설정 */
     gap: 10px; /* 그리드 아이템 사이의 간격 설정 */
     overflow: hidden; /* 그리드 컨테이너를 벗어나는 내용을 숨김 */
     height: 700px;
