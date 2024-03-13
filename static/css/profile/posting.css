@@ -179,3 +179,10 @@ table {
     font-size: 13px;
     font-weight: bold;
 }
+
+/* pagintion */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

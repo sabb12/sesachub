@@ -259,33 +259,32 @@ exports.boardDelete = async (req, res) => {
     try {
         const b_id = Number(req.query.b_id);
         const imgNameList = req.query.imgNameList;
-        console.log(imgNameList);
+        if (imgNameList) {
+            const imgNames = Array.isArray(imgNameList) ? imgNameList : [imgNameList]; // 이미지 이름 배열 또는 단일 값으로 변환
 
-        const imgNames = Array.isArray(imgNameList) ? imgNameList : [imgNameList]; // 이미지 이름 배열 또는 단일 값으로 변환
+            console.log(imgNames);
+            // 모든 이미지에 대해 순차적으로 처리
+            for (const img of imgNames) {
+                try {
+                    // 파일 경로 설정
+                    const filePath = `uploads/${img}`;
 
-        // 모든 이미지에 대해 순차적으로 처리
-        for (const img of imgNames) {
-            try {
-                // 파일 경로 설정
-                const filePath = `uploads/${img}`;
+                    // 파일 삭제
+                    await fs.promises.unlink(filePath);
 
-                // 파일 삭제
-                await fs.promises.unlink(filePath);
-
-                // 이미지 정보 삭제
-                await boardImg.destroy({
-                    where: {
-                        path: img,
-                    },
-                });
-
-                console.log(`이미지 정보 ${img} 삭제 완료`);
-            } catch (error) {
-                console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
-                return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
+                    // 이미지 정보 삭제
+                    await boardImg.destroy({
+                        where: {
+                            path: img,
+                        },
+                    });
+                    console.log(`이미지 정보 ${img} 삭제 완료`);
+                } catch (error) {
+                    console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
+                    return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
+                }
             }
         }
-
         // 게시물 삭제
         await board.destroy({
             where: { b_id: b_id },
@@ -353,7 +352,7 @@ exports.boardUpdatePage = async function (req, res) {
 exports.boardPatch = async (req, res) => {
     try {
         const { b_id, title, content, category, imgNameList } = req.body;
-        const imgList=[];
+        const imgList = [];
 
         for (const imgName of imgNameList) {
             try {
@@ -365,7 +364,7 @@ exports.boardPatch = async (req, res) => {
             } catch (error) {
                 console.error(`이미지 정보 조회 중 오류 (${imgName}):`, error);
             }
-        }  
+        }
 
         const update = await board.update(
             {

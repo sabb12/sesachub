@@ -39,7 +39,7 @@ bookMark_chkbx.forEach((checkbox) => {
 });
 
 // 각 게시글 삭제
-function deletePosting(b_id) {
+function deletePosting(btn, b_id) {
     const areYouSure = confirm("삭제하시겠습니까?");
     if (areYouSure) {
         axios({
@@ -48,6 +48,7 @@ function deletePosting(b_id) {
             params: { b_id: b_id },
         })
             .then(function (res) {
+                btn.parentElement.remove();
                 location.href = "/profile/posting";
             })
             .catch((error) => {
@@ -79,6 +80,7 @@ function deletePostingAll() {
                 })
                     .then(function (res) {
                         location.href = "/profile/posting";
+                        posting.remove();
                         posting.checked = false;
                     })
                     .catch((error) => {
@@ -90,7 +92,7 @@ function deletePostingAll() {
 }
 
 // 각 북마크 삭제
-function deleteBookmark(b_id, u_id) {
+function deleteBookmark(btn, b_id, u_id) {
     const areYouSure = confirm("삭제하시겠습니까?");
     if (areYouSure) {
         axios({
@@ -101,6 +103,7 @@ function deleteBookmark(b_id, u_id) {
                 u_id: u_id,
             },
         }).then(function (res) {
+            btn.parentElement.remove();
             location.href = "/profile/posting";
         });
     }
@@ -132,6 +135,7 @@ function deleteBookmarkAll() {
                 })
                     .then(function (res) {
                         location.href = "/profile/posting";
+                        bookmark.remove();
                         bookmark.checked = false;
                     })
                     .catch((error) => {
