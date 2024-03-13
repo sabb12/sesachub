@@ -14,10 +14,10 @@ $("#summernote").summernote({
             removeSummernoteImage(target, imgNameList);
         },
         onPaste: function (e) {
-            var clipboardData = e.originalEvent.clipboardData; //에디터에 데이터접근
+            let clipboardData = e.originalEvent.clipboardData; //에디터에 데이터접근
             if (clipboardData && clipboardData.getData) {
                 //클립보드에 데이터가 있고, 그 안에 항목이 있는 경우에만 동작
-                var pastedData = clipboardData.getData("text/html");
+                let pastedData = clipboardData.getData("text/html");
                 if (pastedData && pastedData.includes("<img")) {
                     //첫번째항목이 이미지면 이벤트 막는다.
                     e.preventDefault();
@@ -28,23 +28,21 @@ $("#summernote").summernote({
             console.log(e.keyCode);
             if (e.keyCode === 8 || e.keyCode === 46) {
                 // 백스페이스 또는 딜리트 키
-                // 입력된 내용을 HTML로 파싱
-                var htmlContent = $(this).summernote("code");
-
-                const srcRegex = /\/uploads\\([^"]+)"/g;
-                const imgNameList = [];
-                let match;
-
-                while ((match = srcRegex.exec(htmlContent)) !== null) {
-                    imgNameList.push(match[1]);
-                }
-                console.log(imgNameList);
-                // 파싱된 HTML에서 이미지 태그를 찾음
-                var hasImage = $(htmlContent).find("img").length > 0;
-                // 이미지를 포함하는지 확인
-                if (hasImage) {
-                    // 이미지 삭제 로직 실행
-                    removeSummernoteImage(e, imgNameList);
+                let range = $('#summernote').summernote('createRange');
+                let currentNode = range.sc;
+        
+                // 현재 커서가 이미지에 위치하는지 확인
+                if (currentNode.children[0].tagName.toLowerCase() === 'img') {
+                    const delete_confirm = confirm(
+                        "💥💢💥이미지 삭제는 마우스 왼쪽 클릭후 remove imgage 버튼을 이용하셔야 합니다.💥💢💥",
+                    );
+                    if (!delete_confirm) {
+                        alert("취소 하였습니다.");
+                        e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
+                    }else{
+                        alert("감사합니다 😋")
+                        e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
+                    }
                 }
             }
         },
@@ -98,7 +96,7 @@ async function board_insert() {
     content = content_code.replace(/\s{2,}/g, " ");
     console.log(content);
     if(content===' '||form.title.value===""){
-        alert('값을 입력 하셔야 합니다.')
+        alert('제목과 내용을 입력 하셔야 합니다.')
         return
     }
     // 정규 표현식을 사용하여 img 태그에서 src 속성값 추출
