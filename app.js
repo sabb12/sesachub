@@ -18,7 +18,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/static", express.static(__dirname + "/static"));
 
 // body-parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // session 설정
