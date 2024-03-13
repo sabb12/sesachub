@@ -32,7 +32,7 @@
                                             <tr>
                                                 <td class="check_all">
                                                     <input type="checkbox" name="checkbox" class="posting_check-option"
-                                                        data-b-id="<%= post.b_id %>" />
+                                                        data-b-id="<%= post.b_id %>" data-content='<%= post.content%>'/>
                                                 </td>
                                                 <td>
                                                     <%= post.b_id%>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <script src="/static/js/profile/posting.js"></script>
-                    <script defer src="/static/js/board/board.js"></script>
+                    <!-- <script defer src="/static/js/board/board.js"></script> -->
     </body>
 
 </html>
