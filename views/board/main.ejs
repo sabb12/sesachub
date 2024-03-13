@@ -124,26 +124,26 @@
                             </div>
                         </div>
                     </main>
+                    <div class="bottom_area">
+                        <div class="insert_btn invisible">
+                            <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                        </div>
+                        <!-- 페이지네이션 -->
+                        <div class="board_page">
+                            <% if(boardList.length===0){totalPages='' } %>
+                                <% for (i=1; i <=totalPages; i++) { %>
+                                    <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                            <%= i %>
+                                        </a></div>
+                                    <% } %>
+                        </div>
+                        <div class="insert_btn">
+                            <% if(session.permission) { %>
+                                <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                                <% } %>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="bottom_area">
-                <div class="insert_btn invisible">
-                    <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
-                </div>
-                <!-- 페이지네이션 -->
-                <div class="board_page">
-                    <% if(boardList.length===0){totalPages='' } %>
-                        <% for (i=1; i <=totalPages; i++) { %>
-                            <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
-                                    <%= i %>
-                                </a></div>
-                            <% } %>
-                </div>
-                <div class="insert_btn">
-                        <% if(session.permission) { %>
-                        <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
-                        <% } %>                
-</div>
             </div>
             <script>
                 let category = '<%=category%>'
