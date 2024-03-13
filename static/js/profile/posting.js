@@ -39,7 +39,7 @@ bookMark_chkbx.forEach((checkbox) => {
 });
 
 // 각 게시글 삭제
-function deletePosting( b_id,content) {
+function deletePosting(b_id, content) {
     if (confirm("글을 삭제하시겠습니까?")) {
         console.log(content);
         const srcRegex = /\/uploads([^"]+)"/g;
@@ -177,12 +177,13 @@ async function postPage(pageNum) {
             let tdTitle = document.createElement("td"); // 글 제목 셀 생성
             tdTitle.innerHTML = `<a href="/board/board?b_id=${post.b_id}">${post.title}</a>`;
 
-            let tdTime = document.createElement("td"); // 글 작성 시간 셀 생성
-            tdTime.textContent = `${post.createdAt.toLocaleString("ko-KR", {
+            let tdTime = document.createElement("td");
+            let postingTime = `${post.createdAt}`;
+            tdTime.textContent = new Date(postingTime).toLocaleString("ko-KR", {
                 year: "2-digit",
                 month: "2-digit",
                 day: "2-digit",
-            })}`;
+            });
 
             let tdBtn = document.createElement("td"); // 글 삭제 버튼 셀 생성
             tdBtn.innerHTML = `<button class="delete_button" onclick="deletePosting('${post.b_id}')">삭제</button>`;
@@ -193,18 +194,6 @@ async function postPage(pageNum) {
             // 행을 테이블에 추가
             pCntr.append(tr);
         });
-        // document.querySelectorAll(`.postPage${pageNum}`).forEach((item) => {
-        //     item.addEventListener("click", function (e) {
-        //         e.preventDefault();
-
-        //         const page = document.querySelectorAll(`.postPage${pageNum}`);
-        //         page[0].classList.add("on");
-        //         page.forEach((link) => {
-        //             link.classList.remove("on");
-        //         });
-        //         this.classList.add("on");
-        //     });
-        // });
     } catch (err) {
         console.log("posting postPage error :: ", err);
     }
@@ -230,12 +219,13 @@ async function bookmarkPage(pageNum) {
             let tdTitle = document.createElement("td"); // 글 제목 셀 생성
             tdTitle.innerHTML = `<a href="/board/board?b_id=${bookmark.b_id}">${bookmark.title}</a>`;
 
-            let tdTime = document.createElement("td"); // 글 작성 시간 셀 생성
-            tdTime.textContent = `${bookmark.createdAt.toLocaleString("ko-KR", {
+            let tdTime = document.createElement("td");
+            let postingTime = `${bookmark.createdAt}`;
+            tdTime.textContent = new Date(postingTime).toLocaleString("ko-KR", {
                 year: "2-digit",
                 month: "2-digit",
                 day: "2-digit",
-            })}`;
+            });
 
             let tdBtn = document.createElement("td"); // 글 삭제 버튼 셀 생성
             tdBtn.innerHTML = `<button class="delete_button" onclick="deletBookmark('${bookmark.b_id}','${bookmark.u_id}')">삭제</button>`;
@@ -246,17 +236,6 @@ async function bookmarkPage(pageNum) {
             // 행을 테이블에 추가
             bCntr.append(tr);
         });
-        // document.querySelectorAll(`.bookmarkPage${pageNum}`).forEach((item) => {
-        //     item.addEventListener("click", function (e) {
-        //         e.preventDefault();
-        //         const page = document.querySelectorAll(`.bookmarkPage${pageNum}`);
-        //         page[0].classList.add("on");
-        //         page.forEach((link) => {
-        //             link.classList.remove("on");
-        //         });
-        //         this.classList.add("on");
-        //     });
-        // });
         document.querySelector(`.bookmarkPage${pageNum}`).classList.add("on");
     } catch (err) {
         console.log("posting bookmarkPage error :: ", err);

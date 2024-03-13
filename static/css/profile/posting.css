@@ -1,14 +1,14 @@
 .body_container {
+    width: 1080px;
     display: flex;
     flex-direction: row;
     padding: 20px 350px 0 350px;
-    gap: 48px;
+    gap: 28px;
 }
 
 .section2_container {
     display: flex;
     flex-direction: column;
-    width: 1000px;
 }
 
 .free_board {
@@ -152,7 +152,7 @@ table {
     color: #333;
 }
 
-.section2_container .table_box .pagination .page_num a {
+.section2_container .free_board .pagination .page_num a {
     padding: 2px 6px;
     margin: 0 6px;
     cursor: pointer;
@@ -160,14 +160,10 @@ table {
     text-decoration: none;
     color: black;
 }
-/* .section2_container .table_box .pagination .page_num a.on {
-    color: #6fc274;
-} */
 
 .confirmation_btn_container {
     display: flex;
     justify-content: end;
-    padding-top: 20px;
 }
 
 .delete_all_btn {
@@ -180,6 +176,34 @@ table {
     font-weight: bold;
 }
 
+/*  */
+.body_container .free_board .table_box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.table_box table td > a {
+    color: black;
+    text-decoration: none;
+}
+.table_box table td > a:hover {
+    font-weight: 700;
+}
+
+.section2_container .free_board .cntr_btm {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.section2_container .free_board .cntr_btm .invisible {
+    visibility: hidden;
+}
+
+.section2_container .free_board .cntr_btm button {
+    float: right;
+}
 /* pagintion */
 .pagination {
     display: flex;
