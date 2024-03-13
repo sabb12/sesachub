@@ -128,9 +128,10 @@ async function board_insert() {
         alert('등록 실패 하였습니다.')
     }
 }
-const sortList = document.querySelector(".sort_list");
+
 
 function sort(category, search) {
+    const sortList = document.querySelector(".sort_list");
     let selectedValue = sortList.value;
     if (selectedValue === "latest") {
         location.href = `/board?category=${category}&like=&search=${search}`;
