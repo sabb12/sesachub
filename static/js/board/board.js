@@ -1,6 +1,6 @@
 //수정 섬머노트js
 function decodeHtml(html) {
-    var txt = document.createElement("textarea");
+    let txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
 }
@@ -31,9 +31,9 @@ $(document).ready(function () {
                 }
             },
             onPaste: function (e) {
-                var clipboardData = e.originalEvent.clipboardData;
+                let clipboardData = e.originalEvent.clipboardData;
                 if (clipboardData && clipboardData.items && clipboardData.items.length) {
-                    var item = clipboardData.items[0];
+                    let item = clipboardData.items[0];
                     if (item.kind === "file" && item.type.indexOf("image/") !== -1) {
                         e.preventDefault();
                     }
@@ -43,31 +43,21 @@ $(document).ready(function () {
                 console.log(e.keyCode);
                 if (e.keyCode === 8 || e.keyCode === 46) {
                     // 백스페이스 또는 딜리트 키
-                    const delete_confirm = confirm(
-                        "정말 삭제하시 겠습니까?\n 백스페이스키 나 delete 키를 사용시 전체이미지가 완전히 삭제됩니다\n 마우스 왼쪽 클릭으로 삭제 권장드려요",
-                    );
-                    // 입력된 내용을 HTML로 파싱
-                    if (delete_confirm) {
-                        var htmlContent = $(this).summernote("code");
-
-                        const srcRegex = /\/uploads\\([^"]+)"/g;
-                        const imgNameList = [];
-                        let match;
-
-                        while ((match = srcRegex.exec(htmlContent)) !== null) {
-                            imgNameList.push(match[1]);
+                    let range = $('#summernote').summernote('createRange');
+                    let currentNode = range.sc;
+            
+                    // 현재 커서가 이미지에 위치하는지 확인
+                    if (currentNode.children[0].tagName.toLowerCase() === 'img') {
+                        const delete_confirm = confirm(
+                            "💥💢💥이미지 삭제는 마우스 왼쪽 클릭후 remove imgage 버튼을 이용하셔야 합니다.💥💢💥",
+                        );
+                        if (!delete_confirm) {
+                            alert("취소 하였습니다.");
+                            e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
+                        }else{
+                            alert("감사합니다 😋")
+                            e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
                         }
-                        console.log(imgNameList);
-                        // 파싱된 HTML에서 이미지 태그를 찾음
-                        var hasImage = $(htmlContent).find("img").length > 0;
-                        // 이미지를 포함하는지 확인
-                        if (hasImage) {
-                            // 이미지 삭제 로직 실행
-                            removeSummernoteImage(e, imgNameList);
-                        }
-                    } else {
-                        alert("취소 하였습니다.");
-                        e.preventDefault(); // 취소 선택 시 이벤트를 중단합니다.
                     }
                 }
             },
@@ -126,7 +116,7 @@ function page_update(b_id) {
 // 게시글 수정
 async function update_board(b_id) {
     if (confirm("글을 수정하시겠습니까?")) {
-        var content = $("#summernote").summernote("code");
+        let content = $("#summernote").summernote("code");
         const form = document.forms["update_form"];
         const srcRegex = /\/uploads\\([^"]+)"/g;
         const imgNameList = [];

@@ -53,10 +53,10 @@ function toggleDropdown() {
 // 사용자가 다른 곳을 클릭했을 때 드롭다운 내용이 닫히도록 설정
 window.onclick = function (event) {
     if (!event.target.matches(".dropbtn")) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        let i;
         for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
+            let openDropdown = dropdowns[i];
             if (openDropdown.classList.contains("show")) {
                 openDropdown.classList.remove("show");
             }
