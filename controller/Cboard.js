@@ -33,7 +33,7 @@ exports.boardList = async (req, res) => {
                 include: [
                     {
                         model: user,
-                        attributes: ["nk_name"],
+                        attributes: ["nk_name","profile_img"],
                     },
                     {
                         model: boardLike,
@@ -95,7 +95,7 @@ exports.boardList = async (req, res) => {
                 include: [
                     {
                         model: user,
-                        attributes: ["nk_name"],
+                        attributes: ["nk_name","profile_img"],
                     },
                     {
                         model: boardLike,

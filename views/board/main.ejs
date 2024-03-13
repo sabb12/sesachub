@@ -104,8 +104,9 @@
                                                 </td>
                                                 <td>
                                                         <img class="profile_img"
-                                                            src="/'<%= board.profile_img  %>'"
+                                                            src="/<%= board.user.profile_img  %>"
                                                             alt="프로필">
+                                                            <%=board.user.nk_name %>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
