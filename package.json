@@ -1,7 +1,7 @@
 {
     "name": "sesachub",
     "version": "1.0.0",
-    "description": "",
+    "description": "청년취업사관학교 도봉캠퍼스 이용자들을 위한 커뮤니티 및 소모임(스터디 등)을 위한 강의실 예약 서비스 제공",
     "main": "app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +14,7 @@
         "url": "git+https://github.com/sabb12/sesachub.git"
     },
     "keywords": [],
-    "author": "",
+    "author": "청년취업사관학교 도봉캠퍼스 웹 1기 - 1조 : 1번출구",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/sabb12/sesachub/issues"
