@@ -149,22 +149,13 @@ async function update_board(b_id) {
     }
 }
 // 게시글 삭제
-function delete_board(b_id, content) {
+ function delete_board(b_id) {
     if (confirm("글을 삭제하시겠습니까?")) {
         console.log(content);
-        const srcRegex = /\/uploads([^"]+)"/g;
-        const imgNameList = [];
-        let match;
-
-        while ((match = srcRegex.exec(content)) !== null) {
-            imgNameList.push(match[1]);
-        }
-        //새로 등록되는 이미지리스트값
-        console.log(imgNameList);
         axios({
             method: "DELETE",
             url: "/board",
-            params: { b_id: b_id, imgNameList: imgNameList },
+            params: { b_id: b_id},
         }).then(function (res) {
             if (res.status === 200) {
                 alert("글을 삭제하였습니다.");

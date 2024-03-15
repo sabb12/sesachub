@@ -258,15 +258,16 @@ exports.handleLike = async (req, res) => {
 exports.boardDelete = async (req, res) => {
     try {
         const b_id = Number(req.query.b_id);
-        const imgNameList = req.query.imgNameList;
-        if (imgNameList) {
-            const imgNames = Array.isArray(imgNameList) ? imgNameList : [imgNameList]; // 이미지 이름 배열 또는 단일 값으로 변환
 
-            // 모든 이미지에 대해 순차적으로 처리
+            const imgNames=await boardImg.findAll({
+                where:
+                {b_id:b_id}
+            })
+            
             for (const img of imgNames) {
                 try {
                     // 파일 경로 설정
-                    const filePath = `uploads/${img}`;
+                    const filePath = `uploads/${img.path}`;
 
                     // 파일 삭제
                     await fs.promises.unlink(filePath);
@@ -274,7 +275,7 @@ exports.boardDelete = async (req, res) => {
                     // 이미지 정보 삭제
                     await boardImg.destroy({
                         where: {
-                            path: img,
+                            path: img.path,
                         },
                     });
 
@@ -284,7 +285,7 @@ exports.boardDelete = async (req, res) => {
                     return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
                 }
             }
-        }
+        // }
         // 게시물 삭제
         await board.destroy({
             where: { b_id: b_id },
