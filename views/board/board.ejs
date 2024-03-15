@@ -90,7 +90,7 @@
                                         <div class="btn_wrap">
                                             <% if (board.u_id === session.u_id || session.permission === 'admin') { %>
                                                 <a href="javascript:page_update('<%= board.b_id %>');" class="btn basic">수정</a>
-                                                <a href="javascript:delete_board('<%= board.b_id %>','<%= board.content %>');" class="btn delete">삭제</a>
+                                                <a href="javascript:delete_board('<%= board.b_id %>');" class="btn delete">삭제</a>
                                             <% } %>
                                             <a href="/board" class="btn basic">목록으로</a>
                                         </div>
