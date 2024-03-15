@@ -233,8 +233,8 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
     justify-content: space-between;
+    gap: 5px;
 }
 
 .duplicate_check {
@@ -291,7 +291,7 @@ input::placeholder {
 .register_input #cs_id {
     padding: 11px 0;
     margin: 5px 0;
-    width: 425px;
+    width: 400px;
     border: 2px solid #f0f0f0;
     border-radius: 3px;
     color: #505050;
