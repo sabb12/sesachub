@@ -18,8 +18,6 @@ exports.main = async (req, res) => {
         const { u_id } = req.session;
         const userInfo = await user.findOne({ where: { u_id } });
         const courseInfo = await course.findOne({ where: { cs_id: userInfo.cs_id } });
-        // console.log("userInfo ::", userInfo);
-        // console.log("courseInfo ::", courseInfo);
         res.render("profile/main", { userInfo, courseInfo });
     } catch (error) {
         console.log("Cprofile main err :: ", error);
@@ -37,7 +35,6 @@ exports.confirmation = async (req, res) => {
         const offset = (page - 1) * objNum;
         const reservationData = await reservation.findAll({
             where: { u_id },
-            // group: ["st_room", "day"],
             order: [
                 ["day", "ASC"],
                 ["time", "ASC"],

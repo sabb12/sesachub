@@ -1,7 +1,6 @@
 .body_container {
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
     padding: 20px 350px 0 350px;
     gap: 70px;
     margin-bottom: 40px;
@@ -162,7 +161,6 @@
     cursor: pointer;
 }
 
-/*top right bottom left*/
 button {
     background-color: white;
     border: 1px solid #dcdcdc;

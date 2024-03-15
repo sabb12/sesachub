@@ -52,7 +52,6 @@
     justify-content: center;
     align-items: center;
     border-radius: 7px;
-    /* height: 99px; */
     margin-bottom: 35px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -139,14 +138,12 @@
     height: 2px;
     background: #c0c0c0;
     border-radius: 50%;
-    /* position: absolute; */
     transform: translate(10px, -7.4px);
 }
 
 .verticalLine {
     width: 1px;
     height: 4px;
-    /* position: absolute; */
     background-color: #c0c0c0;
     transform: translate(10.4px, -8px);
 }

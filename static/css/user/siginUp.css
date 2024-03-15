@@ -89,7 +89,6 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 7px;
-    /* height: 99px; */
     margin-bottom: 35px;
     box-shadow:
         rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -167,10 +166,6 @@ input::placeholder {
     text-decoration: underline;
 }
 
-/*          */
-/* register */
-/*          */
-
 .register_container {
     border: 1px solid #dcdcdc;
     display: grid;
@@ -205,7 +200,6 @@ input::placeholder {
 }
 
 .register_input label {
-    /* color: #777; */
     color: var(--primary-color);
     display: flex;
     justify-content: space-between;
@@ -219,7 +213,6 @@ input::placeholder {
     width: 400px;
     padding: 10px 8px;
     font-size: 14px;
-    /* margin: 5px 0; */
 }
 
 .register_input input {
@@ -311,16 +304,12 @@ input::placeholder {
     padding-bottom: 50px;
 }
 
-/*       */
-/* icons */
-/*       */
 .circleContainer {
     position: relative;
     height: 23px;
     width: 23px;
 }
 
-/*passwork icon*/
 .circle {
     width: 6px;
     height: 6px;
@@ -365,14 +354,12 @@ input::placeholder {
     height: 2px;
     background: #c0c0c0;
     border-radius: 50%;
-    /* position: absolute; */
     transform: translate(10px, -7.4px);
 }
 
 .verticalLine {
     width: 1px;
     height: 4px;
-    /* position: absolute; */
     background-color: #c0c0c0;
     transform: translate(10.4px, -8px);
 }

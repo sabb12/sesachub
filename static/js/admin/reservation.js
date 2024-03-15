@@ -167,8 +167,8 @@ async function reserveList(day, st_room) {
     let html = "";
 
     // 받아온 JSON 데이터를 반복하여 HTML 생성
-    if(res.data.length===0){
-        html +=` <div class="noData"><h1>😫해당 날짜에는 예약이 없습니다.</h1></div>`
+    if (res.data.length === 0) {
+        html += ` <div class="noData"><h1>😫해당 날짜에는 예약이 없습니다.</h1></div>`;
     }
     res.data.forEach((item) => {
         html += `
@@ -195,7 +195,6 @@ async function reserve(r_id) {
             url: "/admin/reserve",
             params: { r_id: r_id },
         });
-        console.log(res.data.result);
         if (res.data.result === true) {
             alert("삭제 되었습니다.");
             location.reload();

@@ -111,8 +111,6 @@ function selectDay(selectYear, selectMonth) {
     });
 }
 
-/* --------------------------------------- 이벤트 --------------------------------------- */
-
 function dayReset() {
     let selectElement = document.getElementById("count_person");
     let option = document.createElement("option");
@@ -301,8 +299,6 @@ function reservationResult() {
 
     reservationResult.innerHTML = `${date}${room}${time}${count}`;
 }
-
-/* --------------------------------------- axios --------------------------------------- */
 
 function dayRoomChoice(day, st_room) {
     axios({
