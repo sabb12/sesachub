@@ -17,8 +17,6 @@ exports.main = async (req, res) => {
 };
 
 exports.duplicateCheck = async (req, res) => {
-    // console.log("req.query ::", req.query);
-    // console.log("req.query.u_id ::", req.query.u_id);
     const { u_id, nk_name } = req.query;
     let idCheck, nkNameCheck;
     try {
@@ -31,7 +29,6 @@ exports.duplicateCheck = async (req, res) => {
                 where: { nk_name: nk_name },
             });
         }
-        // console.log("idCheck ::", idCheck, "nkNameCheck ::", nkNameCheck);
         idCheck || nkNameCheck ? res.send({ isDuplicate: true }) : res.send({ isDuplicate: false });
     } catch (error) {
         console.log("Cuser duplicateCheck err :: ", error);
@@ -74,7 +71,6 @@ exports.signin = async (req, res) => {
         if (!isUser) return res.send({ success: false });
 
         const { nk_name, permission } = isUser;
-        // console.log("isUser ::", isUser);
 
         // 회원이면 비밀번호 일치 여부 확인
         if (isUser && comparePw(pw, isUser.pw)) {
@@ -82,8 +78,8 @@ exports.signin = async (req, res) => {
             req.session.u_id = u_id;
             req.session.nk_name = nk_name;
             req.session.permission = permission;
+
             res.send({ success: true });
-            // console.log("req.session ::", req.session);
         } else res.send({ success: false });
     } catch (error) {
         console.log("signin controller err :: ", error);
@@ -111,7 +107,6 @@ exports.deleteUser = async (req, res) => {
     const { u_id, pw } = req.body;
     console.log("u_id ::", u_id, "pw ::", pw);
     try {
-        // console.log("req.session.u_id ::", req.session.u_id);
         if (!req.session.u_id) return res.send("탈퇴 권한이 없습니다. 로그인 후 이용해주세요.");
 
         if (u_id !== req.session.u_id) return res.send("아이디를 정확하게 입력해주세요.");
