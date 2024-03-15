@@ -11,11 +11,8 @@ exports.reservationData = async (req, res) => {
             return res.send({ msg: "로그인 후 이용 가능합니다." });
         }
 
-        // 전체 예약 데이터 불러오기
         const reservationData = await reservation.findAll();
-        // console.log("reservationData ::", reservationData); // reservationData :: [전체 데이터]
 
-        // reservation 페이지에 데이터 뿌리기
         res.send({ reservationData });
     } catch (error) {
         console.log("reserved controller err :: ", error);
