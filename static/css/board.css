@@ -35,17 +35,11 @@ body {
     display: flex;
 }
 
-/* .container .center header .sort_cntr .sortCategory > * {
-    padding: 10px;
-} */
-
 .container .center header .sort_cntr .sortCategory > *:hover {
     background-color: gray;
     cursor: pointer;
 }
 
-/* .container .center header .sort_cntr .sortLike {
-} */
 .boardFooter {
     text-align: center;
 }
@@ -69,7 +63,6 @@ body {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-    /* background-color: */
 }
 
 * > .postNum {
@@ -79,7 +72,6 @@ body {
 .container .center article .boardList .postInfo {
     display: flex;
     justify-content: space-between;
-    /* background-color: */
 }
 
 .container .center .boardFooter .boardPage {
@@ -91,7 +83,6 @@ body {
     padding: 10px;
 }
 
-/* 240308 */
 ul,
 li {
     margin: 0;
@@ -113,7 +104,6 @@ button {
     cursor: pointer;
     white-space: nowrap;
     padding: 6px 0;
-    /* padding: 6px 20px; */
     font-size: 15px;
     width: 80px;
 }
@@ -138,69 +128,7 @@ button {
     background-color: #cfe8cf;
     color: black;
 }
-/* 기본 셀렉트 박스 */
-/*.select_box {
-    display: inline-block;
-    min-width: 160px;
-    width: auto;
-}
-.select_box > h4 {
-    min-width: 200px;
-    width: calc(100% - 500px);
-    text-align: center;
-}
-.select_box label {
-    color: #262626;
-    font-size: 16px;
-    padding-right: 10px;
-}
-.select_box .s_txt {
-    border-radius: 2px;
-    display: inline-block;
-    vertical-align: middle;
-    padding: 18px 22px;
-    position: relative;
-    z-index: 1;
-    background-color: #fff;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    min-width: 160px;
-}
-.select_box .select_list {
-    width: 100%;
-    z-index: 2;
-    padding: 8px 10px 8px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    border: 1px solid #e4eaf4;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    background: transparent;
-    font-size: 14px;
-}
-.select_box .select_list option {
-    display: inline-block;
-    padding: 10px 0;
-}
-.select_box .arrow {
-    float: right;
-    padding: 0 10px;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    z-index: 1;
-}
-.select_box .arrow > i {
-    font-size: 13px;
-    font-weight: 500;
-    color: #535353;
-} */
+
 .top_area {
     margin-bottom: 40px;
     display: flex;
@@ -334,9 +262,6 @@ table caption {
 .content.board .table_box:not(.search_filter_box .table_box) tbody > tr:first-child {
     border-top: 1px solid #363636;
 }
-/* .content.board .table_box:not(.search_filter_box .table_box) tbody > tr:last-child {
-    border-bottom: 1px solid #363636;
-} */
 .content.board .table_box.no_border.table_box table tr:nth-child(even) {
     background-color: inherit;
 }

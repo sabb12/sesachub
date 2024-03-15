@@ -40,7 +40,6 @@ $(document).ready(function () {
                 }
             },
             onKeydown: function (e) {
-                console.log(e.keyCode);
                 if (e.keyCode === 8 || e.keyCode === 46) {
                     // 백스페이스 또는 딜리트 키
                     let range = $("#summernote").summernote("createRange");
@@ -81,7 +80,6 @@ async function uploadSummernoteImageFile(file, editor) {
             },
         });
         const imageUrl = response.data;
-        console.log(imageUrl);
         $(editor).summernote("insertImage", "/" + imageUrl);
     } catch (error) {
         console.error(error);
@@ -93,10 +91,8 @@ async function removeSummernoteImage(target, imgNameList) {
             const res = await axios.post("/board/imgdelete", { imgName: imgNameList });
             return;
         }
-        const imgName = target[0].src.split("/").pop();
-        console.log(imgName); //이미지 이름 가져옴
+        const imgName = target[0].src.split("/").pop(); // 이미지 이름 가져옴
         const res = await axios.post("/board/imgdelete", { imgName: imgName });
-        console.log("이미지 삭제 요청 성공:", res.data);
     } catch (error) {
         console.error("이미지 삭제 요청 실패:", error);
     }
@@ -126,7 +122,6 @@ async function update_board(b_id) {
             imgNameList.push(match[1]);
         }
         //새로 등록되는 이미지리스트값
-        console.log(imgNameList);
         const result = await axios({
             method: "PATCH",
             url: "/board",
@@ -151,16 +146,13 @@ async function update_board(b_id) {
 // 게시글 삭제
 function delete_board(b_id, content) {
     if (confirm("글을 삭제하시겠습니까?")) {
-        console.log(content);
         const srcRegex = /\/uploads([^"]+)"/g;
-        const imgNameList = [];
+        const imgNameList = []; // 새로 등록되는 이미지리스트값
         let match;
 
         while ((match = srcRegex.exec(content)) !== null) {
             imgNameList.push(match[1]);
         }
-        //새로 등록되는 이미지리스트값
-        console.log(imgNameList);
         axios({
             method: "DELETE",
             url: "/board",
