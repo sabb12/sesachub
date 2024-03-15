@@ -15,8 +15,11 @@ router.get("/posting", controller.findAllPosting);
 
 // /profile/deleteAccount
 router.get("/deleteAccount", controller.deleteAccount);
+
 /* ------------------ POST ------------------ */
+// pagination
 router.post("/posting/", controller.findPosts);
+
 /* ----------------- PATCH ------------------ */
 // /profile
 router.patch("/", controller.updateProfile);
@@ -26,6 +29,7 @@ router.patch("/password", controller.updatePassword);
 
 // /profile/image
 router.patch("/image", uploadDetail.single("profile_img"), controller.updateProfileImg);
+
 /* ----------------- DELETE ------------------ */
 // /profile/image
 router.delete("/image", controller.deleteProfileImg);
