@@ -146,12 +146,11 @@
                 </div>
             </div>
             <script>
-                let category = '<%=category%>'
+                let category = '<%=category%>';
                 if (category === '') {
-                    category = "all"
+                    category = "all";
                 }
-                document.querySelector(`.${category}`).classList.add('active')
-                console.log(category)
+                document.querySelector(`.${category}`).classList.add('active');
             </script>
             <script src="/static/js/board/main.js"></script>
 

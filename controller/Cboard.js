@@ -33,7 +33,7 @@ exports.boardList = async (req, res) => {
                 include: [
                     {
                         model: user,
-                        attributes: ["nk_name","profile_img"],
+                        attributes: ["nk_name", "profile_img"],
                     },
                     {
                         model: boardLike,
@@ -95,7 +95,7 @@ exports.boardList = async (req, res) => {
                 include: [
                     {
                         model: user,
-                        attributes: ["nk_name","profile_img"],
+                        attributes: ["nk_name", "profile_img"],
                     },
                     {
                         model: boardLike,
@@ -205,18 +205,6 @@ exports.board = async (req, res) => {
                 ],
             },
         });
-        // if (boarder.status === "PRIVATE") {
-        //     for (let comment of boarder.comments) {
-        //         if (
-        //             req.session.permission !== "admin" &&
-        //             boarder.u_id !== req.session.u_id &&
-        //             comment.u_id !== req.session.u_id
-        //         ) {
-        //             comment.content = "비밀 댓글입니다.";
-        //         }
-        //     }
-        // }
-        // console.log(board.comments.status);
         res.render("board/board", { board: boarder }); // 뷰 생성시 값전달
     } catch (error) {
         console.error(error);
@@ -277,8 +265,6 @@ exports.boardDelete = async (req, res) => {
                             path: img,
                         },
                     });
-
-                    console.log(`이미지 정보 ${img} 삭제 완료`);
                 } catch (error) {
                     console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
                     return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");
@@ -304,7 +290,6 @@ exports.boardWritePage = function (req, res) {
 exports.boardInsert = async (req, res) => {
     try {
         const { u_id, title, content, category, srcArray } = req.body;
-        console.log(content, srcArray);
         const insert = await board.create({
             u_id: u_id,
             title: title,
@@ -340,7 +325,6 @@ exports.boardUpdatePage = async function (req, res) {
                 b_id: b_id,
             },
         });
-        console.log(boardInfo);
         res.render("board/update", { board: boardInfo });
     } catch (error) {
         console.error(error);
@@ -474,15 +458,11 @@ exports.bookmarkInsert = async (req, res) => {
 exports.imgupload = async (req, res) => {
     // 파일 업로드가 완료되면 이 곳에서 처리합니다.
     // req.file에 업로드된 파일에 대한 정보가 담겨 있습니다.
-    console.log("진입");
-    console.log(req.file);
     const file = req.file;
     if (!file) {
         return res.status(400).send("파일이 업로드되지 않았습니다.");
     }
     const filePath = file.path; //파일경로
-    console.log("filePath ::", filePath);
-
     res.send(filePath);
 };
 
@@ -512,7 +492,6 @@ exports.imgdelete = async (req, res) => {
                             path: img,
                         },
                     });
-                    console.log(`이미지 정보 ${img} 삭제 완료`);
                 } catch (error) {
                     console.error(`이미지 정보 ${img} 삭제 중 오류:`, error);
                     return res.status(500).send("이미지 정보 삭제 중 오류가 발생했습니다.");

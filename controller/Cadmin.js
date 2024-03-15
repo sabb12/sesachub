@@ -256,7 +256,6 @@ exports.userDelete = async (req, res) => {
 exports.courseUpdate = async (req, res) => {
     try {
         const { u_id, cs_id } = req.body;
-        console.log(cs_id);
         const result = await user.update(
             {
                 cs_id: cs_id,
