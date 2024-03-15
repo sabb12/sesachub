@@ -10,16 +10,18 @@
                 <a href="/profile/deleteAccount">회원 탈회</a>
             </div>
         </div>
-        <script>
-            const currentLocation = location.href;
-            const menuItem = document.querySelectorAll(".sidebar_container a");
-            const menuLength = menuItem.length;
+   
+    <script>
+        const currentLocation = location.href;
+        const menuItem = document.querySelectorAll(".sidebar_container a");
+        const menuLength = menuItem.length;
 
-            for (let i = 0; i < menuLength; i++) {
-                if (menuItem[i].href === currentLocation) {
-                    menuItem[i].className = "active";
-                }
+        for (let i = 0; i < menuLength; i++) {
+            if (menuItem[i].href === currentLocation) {
+                menuItem[i].className = "active";
             }
-        </script>
-    </body>
+        }
+    </script>
+</body>
+
 </html>

@@ -103,15 +103,9 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <% if(board.profile_img){ %>
-                                                        <img class="profile_img"
-                                                            src="/static/images/profile/'<%= board.profile_img  %>'"
-                                                            alt="프로필">
-                                                        <% }else{ %>
-                                                            <img class="profile_img" src="/static/images/logo.png"
-                                                                alt="프로필">
-                                                            <% } %>
-                                                                <%= board.user.nk_name%>
+                                                    <img class="profile_img" src="/<%= board.user.profile_img  %>"
+                                                        alt="프로필">
+                                                    <%=board.user.nk_name %>
                                                 </td>
                                                 <td>
                                                     <%= board.createdAt.toLocaleString('ko-KR', { year: '2-digit' ,
@@ -128,36 +122,35 @@
                                     <h3 class="err_message">데이터가 없습니다</h3>
                                     <% } %>
                             </div>
-
                         </div>
-
                     </main>
-                    <div class="insert_btn">
-                        <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                    <div class="bottom_area">
+                        <div class="insert_btn invisible">
+                            <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                        </div>
+                        <!-- 페이지네이션 -->
+                        <div class="board_page">
+                            <% if(boardList.length===0){totalPages='' } %>
+                                <% for (i=1; i <=totalPages; i++) { %>
+                                    <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
+                                            <%= i %>
+                                        </a></div>
+                                    <% } %>
+                        </div>
+                        <div class="insert_btn">
+                            <% if(session.permission) { %>
+                                <input type="button" class="btn basic" onclick="page_insert()" value="글 작성">
+                                <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bottom_area">
-                <!-- 페이지네이션 -->
-                <div class="board_page">
-                    <% if(boardList.length===0){totalPages='' } %>
-                        <% for (i=1; i <=totalPages; i++) { %>
-                            <div class="page_num"><a href="/board?page=<%= i %>&category=<%= category%>">
-                                    <%= i %>
-                                </a></div>
-                            <% } %>
-                </div>
-                <!-- ///페이지네이션 -->
-
-
-            </div>
             <script>
-                let category = '<%=category%>'
+                let category = '<%=category%>';
                 if (category === '') {
-                    category = "all"
+                    category = "all";
                 }
-                document.querySelector(`.${category}`).classList.add('active')
-                console.log(category)
+                document.querySelector(`.${category}`).classList.add('active');
             </script>
             <script src="/static/js/board/main.js"></script>
 

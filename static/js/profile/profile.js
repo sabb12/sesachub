@@ -39,10 +39,9 @@ function deleteProfileImg() {
     }
 }
 
-/* --------------------------------------------------------------------- */
-
 const patterns = {
     nk_name: /^[가-힣a-zA-Z0-9]{2,16}$/,
+    newPw: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
     phone: /^(\d{9,11})$/,
     email: /^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 };
@@ -137,33 +136,55 @@ document.addEventListener("click", (e) => {
     popupContainer.classList.remove("active");
 });
 
-document.querySelector(".close_btn").addEventListener("click", (e) => {
+document.querySelector(".close_btn").addEventListener("click", async (e) => {
     e.preventDefault();
     const form = document.forms["modal_form"];
 
-    axios({
-        method: "patch",
-        url: "/profile/password",
-        data: {
-            pw: form.pw.value,
-            newPw: form.newPw.value,
-            newPwCheck: form.newPwCheck.value,
-        },
-    })
-        .then((res) => {
+    const pw = form.pw.value;
+    const newPw = form.newPw.value;
+    const newPwCheck = form.newPwCheck.value;
+
+    if (!pw || !newPw || !newPwCheck) {
+        alert("내용을 전부 입력해주세요.");
+        return;
+    }
+
+    // 새로운 비밀번호 유효성 검사
+    if (!patterns.newPw.test(newPw)) {
+        alert(
+            "새비밀번호를 양식에 맞게 작성해주세요. \n영어, 숫자, 특수문자 각 1글자 이상 (8자 이상)",
+        );
+        return;
+    }
+
+    // 새로운 비밀번호와 확인이 일치하는지 확인
+    if (newPw !== newPwCheck) {
+        alert(
+            '"새로운 비밀번호"와 "새로운 비밀번호 확인" 내용이 일치하지 않습니다. \n다시 입력해주세요.',
+        );
+        return;
+    }
+
+    try {
+        const res = await axios({
+            method: "patch",
+            url: "/profile/password",
+            data: {
+                pw: form.pw.value,
+                newPw: form.newPw.value,
+            },
+        }).then((res) => {
             const { success, msg } = res.data;
             if (success) {
                 alert(msg);
-                form.pw.value = "";
-                form.newPw.value = "";
-                form.newPwCheck.value = "";
+                form.reset();
                 popupContainer.classList.remove("active");
             } else {
                 alert(msg);
-                form.pw.value = "";
-                form.newPw.value = "";
-                form.newPwCheck.value = "";
+                form.reset();
             }
-        })
-        .catch((err) => console.error("update error", err));
+        });
+    } catch (error) {
+        console.error("update error", err);
+    }
 });

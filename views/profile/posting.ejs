@@ -16,6 +16,13 @@
                             <div class="title">내가 쓴 글 목록</div>
                             <div class="table_box">
                                 <table>
+                                    <colgroup>
+                                        <col style="width:48px">
+                                        <col style="width:66px">
+                                        <col style="width:40%">
+                                        <col style="width:96px">
+                                        <col style="width:72px">
+                                    </colgroup>
                                     <thead>
                                         <tr>
                                             <th class="check_all">
@@ -32,7 +39,8 @@
                                             <tr>
                                                 <td class="check_all">
                                                     <input type="checkbox" name="checkbox" class="posting_check-option"
-                                                        data-b-id="<%= post.b_id %>" />
+                                                        data-b-id="<%= post.b_id %>"
+                                                        data-content='<%= post.content%>' />
                                                 </td>
                                                 <td>
                                                     <%= post.b_id%>
@@ -46,7 +54,7 @@
                                                 </td>
                                                 <td>
                                                     <button class="delete_button"
-                                                        onclick="deletePosting(this, '<%= post.b_id%>')">삭제</button>
+                                                        onclick="deletePosting( '<%= post.b_id%>','<%= post.content%>')">삭제</button>
                                                 </td>
                                             </tr>
                                             <%})%>
@@ -57,6 +65,11 @@
                                                     <%}%>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="cntr_btm">
+                                <div class="confirmation_btn_container invisible">
+                                    <button class=" delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
+                                </div>
                                 <div class="pagination">
                                     <% if(postings.length===0){ totalPostPages='' } %>
                                         <% for (let i=1; i <=totalPostPages; i++) { %>
@@ -67,7 +80,7 @@
                                             <% } %>
                                 </div>
                                 <div class="confirmation_btn_container">
-                                    <button class="delete_all_btn" onclick="deletePostingAll()">전체 삭제</button>
+                                    <button class="delete_all_btn" onclick="deletePostingAll()">선택 삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +89,13 @@
                             <div class="title">북마크 목록</div>
                             <div class="table_box">
                                 <table>
+                                    <colgroup>
+                                        <col style="width:48px">
+                                        <col style="width:66px">
+                                        <col style="width:40%">
+                                        <col style="width:96px">
+                                        <col style="width:72px">
+                                    </colgroup>
                                     <thead>
                                         <tr>
                                             <th class="check_all">
@@ -119,6 +139,11 @@
 
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="cntr_btm">
+                                <div class="confirmation_btn_container invisible">
+                                    <button class=" delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
+                                </div>
                                 <div class="pagination">
                                     <% if(bookmarkPostings.length===0){ totalBookmarkPages='' } %>
                                         <% for (let i=1; i <=totalBookmarkPages; i++) { %>
@@ -129,12 +154,12 @@
                                             <% } %>
                                 </div>
                                 <div class="confirmation_btn_container">
-                                    <button class="delete_all_btn" onclick="deleteBookmarkAll()">전체 삭제</button>
+                                    <button class="delete_all_btn" onclick="deleteBookmarkAll()">선택 삭제</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <script src="/static/js/profile/posting.js"></script>
-                    <script defer src="/static/js/board/board.js"></script>
+                    <!-- <script defer src="/static/js/board/board.js"></script> -->
     </body>
 </html>
