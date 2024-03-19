@@ -62,11 +62,13 @@
 
 #### 학습한 내용을 최대한 활용하고, 실제 서비스로 운영하기 위해 예외처리에 많은 신경을 썼습니다.
 
+<br />
+
 ### 💻 시연 영상
 
-<div align="center">
-https://github.com/sabb12/sesachub/blob/develop/sesachub%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.mp4
-</div>
+https://github.com/sabb12/sesachub/assets/125553827/beb5ea95-2a20-4094-b2b1-34bdb0e00606
+
+<br />
 
 ### 1. 회원가입/로그인
 
