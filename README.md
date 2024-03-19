@@ -20,14 +20,6 @@
 -   ID: `admin123`
 -   PW: `admin123@`
 
-### 내가 맡은 역할
-- 기획 및 프로젝트 관리
-- 산출물 문서화 (FIGMA, API 리스트, Github WIKI 등)
-- 풀스택 개발
- ![image](https://github.com/sabb12/sesachub/assets/125553827/0c435f40-dc80-41c5-937c-dc51d9ba0f22)
-
-- 리드미 작성, 시연 영상 제작
-
 <br>
 <br>
 <br>
